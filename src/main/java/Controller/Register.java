@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import Beans.ErrorBean;
 import Database.CustomerDAO;
-import Database.UsersDAO;
+import Database.AdminDAO;
 import Model.Customer;
 import util.Email;
 
@@ -46,7 +46,7 @@ public class Register extends HttpServlet {
 		String url ="";
 		
 		CustomerDAO cd= new CustomerDAO();
-		UsersDAO userDAO = new UsersDAO();
+		AdminDAO userDAO = new AdminDAO();
 		ErrorBean eb = new ErrorBean();
 		if(cd.selectByUsername(username)||userDAO.selectByUsername(username)) {
 			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");

@@ -10,28 +10,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Model.Admin;
 import Model.Customer;
-import Model.Users;
 import util.PasswordEncryption;
 
 /**
  * 
  */
-public class UsersDAO implements DAOInterface<Users> {
-	private ArrayList<Users> data = new ArrayList<>();
+public class AdminDAO implements DAOInterface<Admin> {
+	private ArrayList<Admin> data = new ArrayList<>();
 
-	public UsersDAO() {
+	public AdminDAO() {
 		super();
 	}
 
 	@Override
-	public ArrayList<Users> selectAll() {
+	public ArrayList<Admin> selectAll() {
 		try {
 			// tao mot connection
 			Connection con = JDBCUtil.getConnection();
 
 			// tao cau lenh sql
-			String sql = "SELECT * FROM users ";
+			String sql = "SELECT * FROM admins ";
 
 			PreparedStatement st = con.prepareStatement(sql);
 
@@ -49,7 +49,7 @@ public class UsersDAO implements DAOInterface<Users> {
 				String avatar = rs.getString("avatar");
 				Date birthday = rs.getDate("birthday");
 
-				Users user = new Users(id, name, email, password, phoneNumber, avatar, birthday, username);
+				Admin user = new Admin(id, name, email, password, phoneNumber, avatar, birthday, username);
 
 				data.add(user);
 
@@ -64,14 +64,14 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	@Override
-	public Users selectById(String id) {
-		Users result = null;
+	public Admin selectById(String id) {
+		Admin result = null;
 
 		try {
 
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "SELECT * FROM users WHERE user_id =?";
+			String sql = "SELECT * FROM admins WHERE user_id =?";
 
 			PreparedStatement st = con.prepareStatement(sql);
 			String idUser = id;
@@ -87,7 +87,7 @@ public class UsersDAO implements DAOInterface<Users> {
 				String avatar = rs.getString("avatar");
 				Date birthday = rs.getDate("birthday");
 
-				result = new Users(id, name, email, password, phoneNumber, avatar, birthday, username);
+				result = new Admin(id, name, email, password, phoneNumber, avatar, birthday, username);
 
 				JDBCUtil.closeConnection(con);
 
@@ -100,14 +100,14 @@ public class UsersDAO implements DAOInterface<Users> {
 		return result;
 	}
 
-	public Users selectByUsernamePassword(String username, String password) {
-		Users result = null;
+	public Admin selectByUsernamePassword(String username, String password) {
+		Admin result = null;
 
 		try {
 
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "SELECT * FROM pizza.users WHERE username = ? and password=? ";
+			String sql = "SELECT * FROM pizza.admins WHERE username = ? and password=? ";
 			System.out.println(sql);
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, username);
@@ -121,7 +121,7 @@ public class UsersDAO implements DAOInterface<Users> {
 				String avatar = rs.getString("avatar");
 				Date birthday = rs.getDate("birthday");
 
-				result = new Users(id, name, email, password, phoneNumber, avatar, birthday, username);
+				result = new Admin(id, name, email, password, phoneNumber, avatar, birthday, username);
 
 
 			}
@@ -134,12 +134,12 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	@Override
-	public int insert(Users user) {
+	public int insert(Admin user) {
 		int result = 0;
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "INSERT INTO users(user_id, username, password, email, phoneNumber, name, avatar, birthday )" + "VALUE(?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO admins(user_id, username, password, email, phoneNumber, name, avatar, birthday )" + "VALUE(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			
@@ -168,9 +168,9 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	@Override
-	public int insertAll(ArrayList<Users> list) {
+	public int insertAll(ArrayList<Admin> list) {
 		int result = 0;
-		for (Users user : list) {
+		for (Admin user : list) {
 
 			;
 			if (this.insert(user) == 1)
@@ -185,7 +185,7 @@ public class UsersDAO implements DAOInterface<Users> {
 
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "SELECT * FROM pizza.users WHERE username =?";
+			String sql = "SELECT * FROM pizza.admins WHERE username =?";
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, username);
@@ -203,13 +203,13 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	@Override
-	public int delete(Users user) {
+	public int delete(Admin user) {
 		int result = 0;
 
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "DELETE from users " + "WHERE user_id=?";
+			String sql = "DELETE from admins " + "WHERE user_id=?";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			rs.setString(1, user.getId());
@@ -223,24 +223,24 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	@Override
-	public int deleteAll(ArrayList<Users> list) {
+	public int deleteAll(ArrayList<Admin> list) {
 		int result = 0;
 
-		for (Users user : list) {
+		for (Admin user : list) {
 			result += delete(user);
 		}
 		return result;
 	}
 
 	@Override
-	public int update(Users user) {
+	public int update(Admin user) {
 		int result = 0;
-		Users oldCustomer = this.selectById(user.getId() + "");
+		Admin oldCustomer = this.selectById(user.getId() + "");
 		if (oldCustomer != null) {
 			try {
 				Connection con = JDBCUtil.getConnection();
 
-				String sql = "UPDATE users SET  username=? " + ", password=? "+ ", email=? "+ ", phoneNumber=? "+ ", name=? "+ ", avatar=? " + ", birthday=? "
+				String sql = "UPDATE admins SET  username=? " + ", password=? "+ ", email=? "+ ", phoneNumber=? "+ ", name=? "+ ", avatar=? " + ", birthday=? "
 						+ "WHERE user_id =?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
@@ -264,17 +264,16 @@ public class UsersDAO implements DAOInterface<Users> {
 	}
 
 	public static void main(String[] args) {
-		UsersDAO ad = new UsersDAO();
+		AdminDAO ad = new AdminDAO();
 
-		Users user = ad.selectById("1");
+		Admin user = ad.selectById("1");
 
 		String password = PasswordEncryption.toSHA1("0405");
-	    Users user2 = new Users("1", "TDN", "21130574@gmail.com", password, "0334499506", null, null, "tdn");
-	   Users user3 = new Users("3", "tuyet", "levuanhtuyet@gmail.com", "1992003", "0522443042", null, null, "tuyet1992003");
+		Admin user2 = new Admin("1", "TDN", "21130574@gmail.com", password, "0334499506", null, null, "tdn");
         System.out.println(ad.selectByUsername("tdn"));
 	    ad.insert(user2);
-		ArrayList<Users> kq = ad.selectAll();
-		for (Users author3 : kq) {
+		ArrayList<Admin> kq = ad.selectAll();
+		for (Admin author3 : kq) {
 			System.out.println(author3.toString());
 			
 		}

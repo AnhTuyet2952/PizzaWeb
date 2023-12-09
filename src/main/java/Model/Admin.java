@@ -8,7 +8,7 @@ import java.sql.Date;
 /**
  * 
  */
-public class Users {
+public class Admin {
 	private String id;
 	private String name;
 	private String email;
@@ -19,7 +19,7 @@ public class Users {
 	private Date birthday;
 	
 
-	public Users(String id, String name, String email, String password, String phoneNumber, String avatar, Date birthday, String username) {
+	public Admin(String id, String name, String email, String password, String phoneNumber, String avatar, Date birthday, String username) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,7 +31,7 @@ public class Users {
 		this.username = username;
 	}
 
-	public Users() {
+	public Admin() {
 		super();
 	}
 	

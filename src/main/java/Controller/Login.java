@@ -13,9 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import Beans.ErrorBean;
 import Database.CustomerDAO;
-import Database.UsersDAO;
+import Database.AdminDAO;
+import Model.Admin;
 import Model.Customer;
-import Model.Users;
 import util.PasswordEncryption;
 
 @WebServlet("/login")
@@ -44,8 +44,8 @@ public class Login extends HttpServlet {
 			request.setAttribute("e_password", "chua nhap mat khau");
 		}
 		
-		UsersDAO userDAO =  new UsersDAO();
-		Users user = userDAO.selectByUsernamePassword(username, password);
+		AdminDAO adminDAO =  new AdminDAO();
+		Admin user = adminDAO.selectByUsernamePassword(username, password);
 	
 		String url="";
 

@@ -1,6 +1,7 @@
-F<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -37,6 +38,8 @@ F<%@ page language="java" contentType="text/html; charset=UTF-8"
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
 	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 	<!-- END nav -->
 
@@ -72,35 +75,33 @@ F<%@ page language="java" contentType="text/html; charset=UTF-8"
 				</div>
 			</div>
 		</div>
-		<div class="container-wrap">
-			<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
-			<div class="row no-gutters d-flex">
-				<c:forEach var="productdao" items="${productDAO.selectAll()}">
-					<div class="col-lg-4 d-flex ftco-animate">
-						<div class="services-wrap d-flex">
-							<a href="#" class="img"
-								style="background-image: url(${productdao.image});"></a>
-							<div class="text p-4">
-								<h3>${productdao.nameProduct}</h3>
-								<p>${productdao.description }</p>
-								<p>${productdao.idProduct}</p>
-								<!-- Form to add product to cart -->
-								<form action="${pageContext.request.contextPath}/addtocart"
-									method="post" id="addToCartForm">
-									<!-- Your form content -->
-									<input type="hidden" name="productId"
-										value="${productdao.idProduct}"> <input
-										class="ml-2 btn btn-white btn-outline-white" type="submit"
-										value="Add to Cart">
-								</form>
+		
+<fmt:setLocale value="${sessionScope.language}" />
+<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
 
-							</div>
-						</div>
-					</div>
-
-				</c:forEach>
-			</div>
-		</div>
+<div class="container-wrap">
+    <div class="row no-gutters d-flex">
+        <c:forEach var="productdao" items="${productDAO.selectAllLanguage(sessionScope.language)}">
+            <div class="col-lg-4 d-flex ftco-animate">
+                <div class="services-wrap d-flex">
+                    <a href="#" class="img" style="background-image: url(${productdao.image});"></a>
+                    <div class="text p-4">
+                        <h3>${productdao.nameProduct}</h3>
+                        <p>${productdao.description}</p>
+                        <p>${productdao.idProduct}</p>
+                        <!-- Form to add product to cart -->
+                        <form action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">
+                            <!-- Your form content -->
+                            <input type="hidden" name="productId" value="${productdao.idProduct}">
+                            <input class="ml-2 btn btn-white btn-outline-white" type="submit" value="Add to Cart">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+		
 	</section>
 
 

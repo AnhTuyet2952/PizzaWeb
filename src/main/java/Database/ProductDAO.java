@@ -3,16 +3,17 @@
  */
 package Database;
 
-
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import Model.Category;
 import Model.Product;
+
 
 /**
  * 
@@ -23,6 +24,40 @@ public class ProductDAO implements DAOInterface<Product> {
 	public int createId() {
 		return data.size();
 	}
+//	 // Thêm một trường để lưu giá trị ngôn ngữ
+    private String language;
+//
+//    public ProductDAO(String language) {
+//        this.language = language;
+//    }
+//	@Override
+    public ArrayList<Product> selectAllLanguage(String lang) {
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT product_id, product_name, category_id, description, price, image, product_name_en, description_en FROM products";
+            PreparedStatement st = con.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String idProduct = rs.getString("product_id");
+                String categoryId = rs.getString("category_id");
+                String nameKey = lang.equals("vi") ? "product_name" : "product_name_en";
+                String descriptionKey = lang.equals("vi") ? "description" : "description_en";
+                Double price = rs.getDouble("price");
+                String image = rs.getString("image");
+
+                Category category = new CategoryDAO().selectById(categoryId);
+                Product product = new Product(idProduct, rs.getString(nameKey), category, rs.getString(descriptionKey), price, image);
+                data.add(product);
+            }
+
+            JDBCUtil.closeConnection(con);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 
 	@Override
 	public ArrayList<Product> selectAll() {
@@ -32,6 +67,7 @@ public class ProductDAO implements DAOInterface<Product> {
 
 			// tao cau lenh sql
 			String sql = "SELECT * FROM products ";
+//			String sql = "SELECT product_id, product_name, description, product_name_en, description_en, category_id, price, image FROM products";
 
 			PreparedStatement st = con.prepareStatement(sql);
 
