@@ -57,4 +57,7 @@ public class Cart_item {
 	public double totalProduct() {
 		return quantity*product.getPrice();
 	}
+	public String getProductName(String language) {
+	    return (language != null && language.equals("en")) ? this.product.getNameProducten() : this.product.getNameProduct();
+	}
 }

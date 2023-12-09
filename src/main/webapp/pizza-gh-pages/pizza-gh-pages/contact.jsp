@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,6 +32,8 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+  <fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
   	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 
 
@@ -44,8 +47,8 @@
           <div class="row slider-text justify-content-center align-items-center">
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            	<h1 class="mb-3 mt-5 bread">Contact Us</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp">Home</a></span> <span>Contact</span></p>
+            	<h1 class="mb-3 mt-5 bread"><fmt:message bundle="${bnd}" key="contact.title"/></h1>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.jsp"><fmt:message bundle="${bnd}" key="contact.home"/></a></span> <span><fmt:message bundle="${bnd}" key="contact.contact"/></span></p>
             </div>
 
           </div>
@@ -59,19 +62,19 @@
 					<div class="col-md-4 contact-info ftco-animate">
 						<div class="row">
 							<div class="col-md-12 mb-4">
-	              <h2 class="h4">Contact Information</h2>
+	              <h2 class="h4"><fmt:message bundle="${bnd}" key="contact.content"/></h2>
 	            </div>
 	            <div class="col-md-12 mb-3">
-	              <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+	              <p><span><fmt:message bundle="${bnd}" key="contact.address"/>:</span><fmt:message bundle="${bnd}" key="about.address"/></p>
 	            </div>
 	            <div class="col-md-12 mb-3">
-	              <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+	              <p><span><fmt:message bundle="${bnd}" key="contact.phone"/>:</span> <a href="tel://1234567920"><fmt:message bundle="${bnd}" key="about.phone"/></a></p>
 	            </div>
 	            <div class="col-md-12 mb-3">
-	              <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+	              <p><span><fmt:message bundle="${bnd}" key="contact.email"/>:</span> <a href="mailto:info@yoursite.com"><fmt:message bundle="${bnd}" key="footer.emal"/></a></p>
 	            </div>
 	            <div class="col-md-12 mb-3">
-	              <p><span>Website:</span> <a href="#">yoursite.com</a></p>
+	              <p><span><fmt:message bundle="${bnd}" key="contact.web"/>:</span> <a href="#"><fmt:message bundle="${bnd}" key="contact.website"/></a></p>
 	            </div>
 						</div>
 					</div>
@@ -81,23 +84,23 @@
             	<div class="row">
             		<div class="col-md-6">
 	                <div class="form-group">
-	                  <input type="text" class="form-control" placeholder="Your Name">
+	                  <input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="contact.name"/>">
 	                </div>
                 </div>
                 <div class="col-md-6">
 	                <div class="form-group">
-	                  <input type="text" class="form-control" placeholder="Your Email">
+	                  <input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="contact.email"/>">
 	                </div>
 	                </div>
               </div>
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Subject">
+                <input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="contact.subject"/>">
               </div>
               <div class="form-group">
-                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+                <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="contact.message"/>"></textarea>
               </div>
               <div class="form-group">
-                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                <input type="submit" value="<fmt:message bundle="${bnd}" key="contact.send"/>" class="btn btn-primary py-3 px-5">
               </div>
             </form>
           </div>

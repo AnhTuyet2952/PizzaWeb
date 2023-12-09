@@ -43,7 +43,9 @@ public class OrderDetail {
 		this.price = price;
 	}
 	
-
+	public String getProductName(String language) {
+	    return (language != null && language.equals("en")) ? this.products.getNameProducten() : this.products.getNameProduct();
+	}
 	
 	
 }

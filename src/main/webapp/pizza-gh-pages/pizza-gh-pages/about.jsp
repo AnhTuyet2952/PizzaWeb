@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +38,8 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
 	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 	<!-- END nav -->
 
@@ -51,9 +54,9 @@
 					class="row slider-text justify-content-center align-items-center">
 
 					<div class="col-md-7 col-sm-12 text-center ftco-animate">
-						<h1 class="mb-3 mt-5 bread">About</h1>
+						<h1 class="mb-3 mt-5 bread"><fmt:message bundle="${bnd}" key="about.title"/></h1>
 						<p class="breadcrumbs">
-							<span class="mr-2"><a href="index.jsp">Home</a></span> <span>About</span>
+							<span class="mr-2"><a href="index.jsp"><fmt:message bundle="${bnd}" key="about.home"/></a></span> <span><fmt:message bundle="${bnd}" key="about.title"/></span>
 						</p>
 					</div>
 
@@ -73,8 +76,7 @@
 								<span class="icon-phone"></span>
 							</div>
 							<div class="text">
-								<h3>000 (123) 456 7890</h3>
-								<p>A small river named Duden flows</p>
+								<h3><fmt:message bundle="${bnd}" key="about.phone"/></h3>
 							</div>
 						</div>
 						<div class="col-md-4 d-flex ftco-animate">
@@ -82,8 +84,7 @@
 								<span class="icon-my_location"></span>
 							</div>
 							<div class="text">
-								<h3>198 West 21th Street</h3>
-								<p>Suite 721 New York NY 10016</p>
+								<h3><fmt:message bundle="${bnd}" key="about.address"/></h3>
 							</div>
 						</div>
 						<div class="col-md-4 d-flex ftco-animate">
@@ -91,7 +92,7 @@
 								<span class="icon-clock-o"></span>
 							</div>
 							<div class="text">
-								<h3>Open Monday-Friday</h3>
+								<h3><fmt:message bundle="${bnd}" key="about.time"/></h3>
 								<p>8:00am - 9:00pm</p>
 							</div>
 						</div>
@@ -117,18 +118,11 @@
 		<div class="one-half ftco-animate">
 			<div class="heading-section ftco-animate ">
 				<h2 class="mb-4">
-					Welcome to <span class="flaticon-pizza">Pizza</span> A Restaurant
+					<fmt:message bundle="${bnd}" key="about.welcome"/><span class="flaticon-pizza"><fmt:message bundle="${bnd}" key="about.welcome.pizza"/></span>
 				</h2>
 			</div>
 			<div>
-				<p>On her way she met a copy. The copy warned the Little Blind
-					Text, that where it came from it would have been rewritten a
-					thousand times and everything that was left from its origin would
-					be the word "and" and the Little Blind Text should turn around and
-					return to its own, safe country. But nothing the copy said could
-					convince her and so it didnât take long until a few insidious
-					Copy Writers ambushed her, made her drunk with Longe and Parole and
-					dragged her into their agency, where they abused her for their.</p>
+				<p><fmt:message bundle="${bnd}" key="about.content"/></p>
 			</div>
 		</div>
 	</section>
@@ -137,14 +131,12 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate text-center">
-					<h2 class="mb-4">Our Chef</h2>
+					<h2 class="mb-4"><fmt:message bundle="${bnd}" key="about.ourchef"/></h2>
 					<p class="flip">
 						<span class="deg1"></span><span class="deg2"></span><span
 							class="deg3"></span>
 					</p>
-					<p class="mt-5">Far far away, behind the word mountains, far
-						from the countries Vokalia and Consonantia, there live the blind
-						texts.</p>
+					<p class="mt-5"><fmt:message bundle="${bnd}" key="about.chefcontent"/></p>
 				</div>
 			</div>
 			<div class="row">
@@ -154,12 +146,11 @@
 							style="background-image: url(images/person_1.jpg);"></div>
 						<div class="info text-center">
 							<h3>
-								<a href="teacher-single.html">Tom Smith</a>
+								<a href="teacher-single.html"><fmt:message bundle="${bnd}" key="about.chef1_name"/></a>
 							</h3>
-							<span class="position">Hair Specialist</span>
+							<span class="position"><fmt:message bundle="${bnd}" key="about.chef1_Specialty"/></span>
 							<div class="text">
-								<p>Far far away, behind the word mountains, far from the
-									countries Vokalia and Consonantia, there live the blind texts.</p>
+								<p><fmt:message bundle="${bnd}" key="about.chef1_about"/></p>
 							</div>
 						</div>
 					</div>
@@ -170,12 +161,11 @@
 							style="background-image: url(images/person_2.jpg);"></div>
 						<div class="info text-center">
 							<h3>
-								<a href="teacher-single.html">Mark Wilson</a>
+								<a href="teacher-single.html"><fmt:message bundle="${bnd}" key="about.chef2_name"/></a>
 							</h3>
-							<span class="position">Beard Specialist</span>
+							<span class="position"><fmt:message bundle="${bnd}" key="about.chef2_Specialty"/></span>
 							<div class="text">
-								<p>Far far away, behind the word mountains, far from the
-									countries Vokalia and Consonantia, there live the blind texts.</p>
+								<p><fmt:message bundle="${bnd}" key="about.chef2_about"/></p>
 							</div>
 						</div>
 					</div>
@@ -186,12 +176,11 @@
 							style="background-image: url(images/person_3.jpg);"></div>
 						<div class="info text-center">
 							<h3>
-								<a href="teacher-single.html">Patrick Jacobson</a>
+								<a href="teacher-single.html"><fmt:message bundle="${bnd}" key="about.chef3_name"/>n</a>
 							</h3>
-							<span class="position">Hair Stylist</span>
+							<span class="position"><fmt:message bundle="${bnd}" key="about.chef3_Specialty"/></span>
 							<div class="text">
-								<p>Far far away, behind the word mountains, far from the
-									countries Vokalia and Consonantia, there live the blind texts.</p>
+								<p><fmt:message bundle="${bnd}" key="about.chef3_about"/></p>
 							</div>
 						</div>
 					</div>
@@ -202,12 +191,11 @@
 							style="background-image: url(images/person_4.jpg);"></div>
 						<div class="info text-center">
 							<h3>
-								<a href="teacher-single.html">Ivan Dorchsner</a>
+								<a href="teacher-single.html"><fmt:message bundle="${bnd}" key="about.chef4_name"/></a>
 							</h3>
-							<span class="position">Beard Specialist</span>
+							<span class="position"><fmt:message bundle="${bnd}" key="about.chef4_Specialty"/></span>
 							<div class="text">
-								<p>Far far away, behind the word mountains, far from the
-									countries Vokalia and Consonantia, there live the blind texts.</p>
+								<p><fmt:message bundle="${bnd}" key="about.chef4_about"/></p>
 							</div>
 						</div>
 					</div>
@@ -232,8 +220,7 @@
 									<div class="icon">
 										<span class="flaticon-pizza-1"></span>
 									</div>
-									<strong class="number" data-number="100">0</strong> <span>Pizza
-										Branches</span>
+									<strong class="number" data-number="100">0</strong> <span><fmt:message bundle="${bnd}" key="about.branches"/></span>
 								</div>
 							</div>
 						</div>
@@ -244,8 +231,7 @@
 									<div class="icon">
 										<span class="flaticon-medal"></span>
 									</div>
-									<strong class="number" data-number="85">0</strong> <span>Number
-										of Awards</span>
+									<strong class="number" data-number="85">0</strong> <span><fmt:message bundle="${bnd}" key="about.awards"/></span>
 								</div>
 							</div>
 						</div>
@@ -256,8 +242,7 @@
 									<div class="icon">
 										<span class="flaticon-laugh"></span>
 									</div>
-									<strong class="number" data-number="10567">0</strong> <span>Happy
-										Customer</span>
+									<strong class="number" data-number="10567">0</strong> <span><fmt:message bundle="${bnd}" key="about.happy"/></span>
 								</div>
 							</div>
 						</div>
@@ -268,7 +253,7 @@
 									<div class="icon">
 										<span class="flaticon-chef"></span>
 									</div>
-									<strong class="number" data-number="900">0</strong> <span>Staff</span>
+									<strong class="number" data-number="900">0</strong> <span><fmt:message bundle="${bnd}" key="about.staff"/></span>
 								</div>
 							</div>
 						</div>
@@ -287,24 +272,24 @@
 					<div id="map"></div>
 				</div>
 				<div class="col-md-6 appointment ftco-animate">
-					<h3 class="mb-3">Contact Us</h3>
+					<h3 class="mb-3"><fmt:message bundle="${bnd}" key="about.contact"/></h3>
 					<form action="#" class="appointment-form">
 						<div class="d-md-flex">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="First Name">
+								<input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="about.firstName"/>">
 							</div>
 						</div>
 						<div class="d-me-flex">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Last Name">
+								<input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="about.lastname"/>">
 							</div>
 						</div>
 						<div class="form-group">
 							<textarea name="" id="" cols="30" rows="3" class="form-control"
-								placeholder="Message"></textarea>
+								placeholder="<fmt:message bundle="${bnd}" key="about.message"/>"></textarea>
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Send"
+							<input type="submit" value="<fmt:message bundle="${bnd}" key="about.send"/>"
 								class="btn btn-primary py-3 px-4">
 						</div>
 					</form>

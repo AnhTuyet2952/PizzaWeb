@@ -124,9 +124,11 @@ public class ProductDAO implements DAOInterface<Product> {
 				String description = rs.getString("description");
 				Double price = rs.getDouble("price");
 				String image = rs.getString("image");
+				String nameProducten = rs.getString("product_name_en");
+				String descriptionen = rs.getString("description_en");
 
 				Category category = new CategoryDAO().selectById(categoryId);
-				Product product = new Product(idProduct, nameProduct, category, description, price, image);
+				Product product = new Product(idProduct, nameProduct, category, description, price, image,nameProducten,descriptionen);
 
 				listProduct.add(product);
 
@@ -191,9 +193,10 @@ public class ProductDAO implements DAOInterface<Product> {
 				String description = rs.getString("description");
 				Double price = rs.getDouble("price");
 				String image = rs.getString("image");
-
+				String nameProducten = rs.getString("product_name_en");
+				String descriptionen = rs.getString("description_en");
 				Category category = new CategoryDAO().selectById(categoryId);
-				result = new Product(idProduct, nameProduct, category, description, price, image);
+				result = new Product(idProduct, nameProduct, category, description, price, image,nameProducten,descriptionen);
 
 			}
 
@@ -211,8 +214,8 @@ public class ProductDAO implements DAOInterface<Product> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "INSERT INTO products(product_id, product_name, category_id, description, price, image)"
-					+ "VALUE(?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO products(product_id, product_name, category_id, description, price, image, product_name_en, description_en)"
+					+ "VALUE(?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 
@@ -222,6 +225,8 @@ public class ProductDAO implements DAOInterface<Product> {
 			rs.setString(4, product.getDescription());
 			rs.setDouble(5, product.getPrice());
 			rs.setString(6, product.getImage());
+			rs.setString(7, product.getNameProducten());
+			rs.setString(8, product.getDescriptionen());
 
 			result = rs.executeUpdate();
 
@@ -287,7 +292,7 @@ public class ProductDAO implements DAOInterface<Product> {
 				Connection con = JDBCUtil.getConnection();
 
 				String sql = "UPDATE pizza.products SET  product_name=? " + ", category_id=? " + ", description=? "
-						+ ", price=? " + ", image=? " + "WHERE product_id =?";
+						+ ", price=? " + ", image=? "+", product_name_en=?"+", description_en=?" + "WHERE product_id =?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
 
@@ -296,7 +301,9 @@ public class ProductDAO implements DAOInterface<Product> {
 				rs.setString(3, product.getDescription());
 				rs.setDouble(4, product.getPrice());
 				rs.setString(5, product.getImage());
-				rs.setString(6, product.getIdProduct());
+				rs.setString(6, product.getNameProducten());
+				rs.setString(7, product.getDescriptionen());
+				rs.setString(8, product.getIdProduct());
 
 				result = rs.executeUpdate();
 			} catch (Exception e) {

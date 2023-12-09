@@ -13,7 +13,11 @@ public class Product {
 	private String description;
 	private double price;
 	private String image;
-	public Product(String idProduct, String nameProduct, Category category, String description, double price, String image) {
+	private String nameProducten;
+	private String descriptionen;
+
+	public Product(String idProduct, String nameProduct, Category category, String description, double price,
+			String image) {
 		super();
 		this.idProduct = idProduct;
 		this.nameProduct = nameProduct;
@@ -22,6 +26,20 @@ public class Product {
 		this.price = price;
 		this.image = image;
 	}
+
+	public Product(String idProduct, String nameProduct, Category category, String description, double price,
+			String image, String nameProducten, String descriptionen) {
+		super();
+		this.idProduct = idProduct;
+		this.nameProduct = nameProduct;
+		this.category = category;
+		this.description = description;
+		this.price = price;
+		this.image = image;
+		this.nameProducten = nameProducten;
+		this.descriptionen = descriptionen;
+	}
+
 	public Product() {
 		super();
 	}
@@ -70,6 +88,22 @@ public class Product {
 	}
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getNameProducten() {
+		return nameProducten;
+	}
+
+	public void setNameProducten(String nameProducten) {
+		this.nameProducten = nameProducten;
+	}
+
+	public String getDescriptionen() {
+		return descriptionen;
+	}
+
+	public void setDescriptionen(String descriptionen) {
+		this.descriptionen = descriptionen;
 	}
 	
 

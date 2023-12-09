@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="true" %>
 <html lang="en">
 <head>
@@ -39,7 +40,8 @@
 </head>
 
 	<body>
-
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
 		<!-- Start Header/Navigation -->
 		<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 
@@ -74,37 +76,37 @@
               <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
             </svg>
           </span>
-          <h2 class="display-3 text-black">Thank you!</h2>
-          <p class="lead mb-5">You order was successfuly completed.</p>
+          <h2 class="display-3 text-black"><fmt:message bundle="${bnd}" key="thank.title"/></h2>
+          <p class="lead mb-5"><fmt:message bundle="${bnd}" key="thank.content"/></p>
           <div class="row">
     <div class="col-md-6" style="text-align: left; font-size: 22px">
         <!-- Thông tin khách hàng -->
-        <h2>Thông tin khách hàng</h2>
-        <label for="name"> Họ & tên: ${customer.getName()}</label><br>
-		<label for="email"> Email: ${customer.getEmail()}</label><br>
-		<label for="phone"> Số điện thoại: ${customer.getPhoneNumber()}</label><br>
+        <h2><fmt:message bundle="${bnd}" key="thank.inf.cus"/></h2>
+        <label for="name"> <fmt:message bundle="${bnd}" key="checkout.bill.name"/>: ${customer.getName()}</label><br>
+		<label for="email"> <fmt:message bundle="${bnd}" key="checkout.bill.email"/>: ${customer.getEmail()}</label><br>
+		<label for="phone"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/>: ${customer.getPhoneNumber()}</label><br>
     </div>
 
     <div class="col-md-6" style="text-align: left; font-size: 22px">
         <!-- Thông tin đặt hàng -->
-        <h2>Thông tin đặt hàng</h2>
-        <label for="Address"> Địa chỉ: ${order.getAddress()}</label><br>
-		<label for="status"> Ghi chú: ${order.getStatus()}</label><br>
+        <h2><fmt:message bundle="${bnd}" key="thank.inf.order"/></h2>
+        <label for="Address"><fmt:message bundle="${bnd}" key="checkout.bill.address"/>: ${order.getAddress()}</label><br>
+		<label for="status"><fmt:message bundle="${bnd}" key="checkout.bill.note"/>: ${order.getStatus()}</label><br>
 <c:set var="subtotal" value="0" />
 <c:set var="total" value="0" />
 
 <table class="table site-block-order-table mb-5" style="text-align: left;">
     <thead>
-        <th>Product</th>
-        <th>Total</th>
+        <th><fmt:message bundle="${bnd}" key="checkout.product"/></th>
+        <th><fmt:message bundle="${bnd}" key="checkout.total"/></th>
     </thead>
     <tbody>
-        <c:forEach var="item" items="${orderDetails}">
+        <c:forEach var="item" items="${sessionScope.orderDetails}">
             <c:set var="itemTotal" value="${item.products.price * item.quantity}" />
             <tr>
                 <td>
                     <img style="width: 60px; height: 45px;" src="<c:out value="${item.products.image}" />" alt="Image" class="img-fluid">
-                    <b><c:out value="${item.products.nameProduct}" /></b>
+                    <b><c:out value="${(sessionScope.language == 'en') ? item.products.nameProducten : item.products.nameProduct}" /></b>
                     <strong class="mx-2">x</strong><c:out value="${item.quantity}" />
                 </td>
                 <td><c:out value="${itemTotal}" /></td>
@@ -113,11 +115,11 @@
             <c:set var="total" value="${total + itemTotal}" />
         </c:forEach>
         <tr>
-            <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+            <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.sub"/></strong></td>
             <td class="text-black"><c:out value="${subtotal}" /></td>
         </tr>
         <tr>
-            <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+            <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.ordertotal"/></strong></td>
             <td class="text-black font-weight-bold"><strong><c:out value="${total}" /></strong></td>
         </tr>
     </tbody>
@@ -128,7 +130,7 @@
     </div>
 </div>
           
-          <p><a href="index.jsp" class="btn btn-primary btn-outline-primary">Back to shop</a></p>
+          <p><a href="index.jsp" class="btn btn-primary btn-outline-primary"><fmt:message bundle="${bnd}" key="thank.backtoshop"/></a></p>
         </div>
       </div>
     </div>

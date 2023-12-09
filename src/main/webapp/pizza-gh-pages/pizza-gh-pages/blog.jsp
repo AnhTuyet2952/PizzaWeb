@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +38,8 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
 	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 	<!-- END nav -->
 
@@ -51,9 +54,9 @@
 					class="row slider-text justify-content-center align-items-center">
 
 					<div class="col-md-7 col-sm-12 text-center ftco-animate">
-						<h1 class="mb-3 mt-5 bread">Read our Blog</h1>
+						<h1 class="mb-3 mt-5 bread"><fmt:message bundle="${bnd}" key="blog.title"/></h1>
 						<p class="breadcrumbs">
-							<span class="mr-2"><a href="index.html">Home</a></span> <span>Blog</span>
+							<span class="mr-2"><a href="index.html"><fmt:message bundle="${bnd}" key="blog.home"/></a></span> <span><fmt:message bundle="${bnd}" key="blog.blog"/></span>
 						</p>
 					</div>
 
@@ -67,20 +70,19 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate text-center">
-					<h2 class="mb-4">Read our blog</h2>
-					<p>Far far away, behind the word mountains, far from the
-						countries Vokalia and Consonantia, there live the blind texts.</p>
+					<h2 class="mb-4"><fmt:message bundle="${bnd}" key="blog.title"/></h2>
+					<p><fmt:message bundle="${bnd}" key="blog.content"/></p>
 				</div>
 			</div>
 			<div class="row d-flex">
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_1.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -91,21 +93,20 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog1_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog1_content"/></p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_2.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -116,21 +117,20 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog1_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog1_content"/></p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_3.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -141,21 +141,20 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog1_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog1_content"/></p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_4.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -166,21 +165,20 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog2_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog2_content"/></p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_5.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -191,21 +189,20 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog3_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog3_content"/></p>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 d-flex ftco-animate">
 					<div class="blog-entry align-self-stretch">
-						<a href="blog-single.html" class="block-20"
+						<a href="blog-single.jsp" class="block-20"
 							style="background-image: url('images/image_6.jpg');"> </a>
 						<div class="text py-4 d-block">
 							<div class="meta">
 								<div>
-									<a href="#">Sept 10, 2018</a>
+									<a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a>
 								</div>
 								<div>
 									<a href="#">Admin</a>
@@ -216,10 +213,9 @@
 								</div>
 							</div>
 							<h3 class="heading mt-2">
-								<a href="#">The Delicious Pizza</a>
+								<a href="#"><fmt:message bundle="${bnd}" key="blog.blog4_name"/></a>
 							</h3>
-							<p>A small river named Duden flows by their place and
-								supplies it with the necessary regelialia.</p>
+							<p><fmt:message bundle="${bnd}" key="blog.blog4_content"/></p>
 						</div>
 					</div>
 				</div>

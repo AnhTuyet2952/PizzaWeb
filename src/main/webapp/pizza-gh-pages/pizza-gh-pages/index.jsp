@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%><!DOCTYPE html>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html lang="en">
   <head>
     <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -30,6 +31,8 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
+  <fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="lang.messages" var="bnd"/>
 <jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 
 
@@ -43,10 +46,10 @@
           <div class="row slider-text align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-6 col-sm-12 ftco-animate">
-            	<span class="subheading">Thơm ngon</span>
-              <h1 class="mb-4">Pizza Ý</h1>
-              <p class="mb-4 mb-md-5">Pizza Ý đến từ sự kết hợp tài tình giữa vị ngọt của sốt cà chua, độ béo của phô mai mozzarella, và hương thơm của các loại gia vị như húng quế và dầu ôliu trên lớp vỏ mỏng và giòn.</p>
-              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem Menu</a></p>
+            	<span class="subheading"><fmt:message bundle="${bnd}" key="home.titlepizza"/></span>
+              <h1 class="mb-4"><fmt:message bundle="${bnd}" key="home.pizzatitle"/></h1>
+              <p class="mb-4 mb-md-5"><fmt:message bundle="${bnd}" key="home.content1"/></p>
+              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3"><fmt:message bundle="${bnd}" key="home.viewmenu"/></a></p>
             </div>
             <div class="col-md-6 ftco-animate">
             	<img src="images/bg_1.png" class="img-fluid" alt="">
@@ -62,10 +65,10 @@
           <div class="row slider-text align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-6 col-sm-12 order-md-last ftco-animate">
-            	<span class="subheading">Hấp dẫn</span>
-              <h1 class="mb-4">Pizza Ý</h1>
-              <p class="mb-4 mb-md-5">Pizza Ý quyến rũ với lớp vỏ mỏng giòn, phô mai sữa tươi béo ngậy, sốt cà chua đậm đà và hương thơm của các loại gia vị tạo nên một trải nghiệm ẩm mọng và hấp dẫn khó cưỡng.</p>
-              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem Menu</a></p>
+            	<span class="subheading"><fmt:message bundle="${bnd}" key="home.titlepizza2"/></span>
+              <h1 class="mb-4"><fmt:message bundle="${bnd}" key="home.pizzatitle"/></h1>
+              <p class="mb-4 mb-md-5"><fmt:message bundle="${bnd}" key="home.content2"/></p>
+              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3"><fmt:message bundle="${bnd}" key="home.viewmenu"/></a></p>
             </div>
             <div class="col-md-6 ftco-animate">
             	<img src="images/bg_2.png" class="img-fluid" alt="">
@@ -81,10 +84,10 @@
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Chào mừng</span>
-              <h1 class="mb-4">Chúng tôi đã làm món Pizza theo công thức bạn yêu thích.</h1>
-              <p class="mb-4 mb-md-5">Chúng tôi đã thực hiện công thức Pizza mà bạn mong muốn và đã nấu nó theo cách đặc biệt và độc đáo.</p>
-              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Xem Menu</a></p>
+            	<span class="subheading"><fmt:message bundle="${bnd}" key="home.welcome"/></span>
+              <h1 class="mb-4"><fmt:message bundle="${bnd}" key="home.welcomecontent"/></h1>
+              <p class="mb-4 mb-md-5"><fmt:message bundle="${bnd}" key="home.welcomecontent2"/></p>
+              <p><a href="menu.jsp" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3"><fmt:message bundle="${bnd}" key="home.viewmenu"/></a></p>
             </div>
 
           </div>
@@ -100,21 +103,19 @@
 	    				<div class="col-md-4 d-flex ftco-animate">
 	    					<div class="icon"><span class="icon-phone"></span></div>
 	    					<div class="text">
-	    						<h3>000 (123) 456 7890</h3>
-	    						<p>A small river named Duden flows</p>
+	    						<h3><fmt:message bundle="${bnd}" key="about.phone"/></h3>
 	    					</div>
 	    				</div>
 	    				<div class="col-md-4 d-flex ftco-animate">
 	    					<div class="icon"><span class="icon-my_location"></span></div>
 	    					<div class="text">
-	    						<h3>198 West 21th Street</h3>
-	    						<p>Suite 721 New York NY 10016</p>
+	    						<h3><fmt:message bundle="${bnd}" key="about.address"/></h3>
 	    					</div>
 	    				</div>
 	    				<div class="col-md-4 d-flex ftco-animate">
 	    					<div class="icon"><span class="icon-clock-o"></span></div>
 	    					<div class="text">
-	    						<h3>Open Monday-Friday</h3>
+	    						<h3><fmt:message bundle="${bnd}" key="about.time"/></h3>
 	    						<p>8:00am - 9:00pm</p>
 	    					</div>
 	    				</div>
@@ -135,11 +136,10 @@
     	<div class="one-half img" style="background-image: url(images/about.jpg);"></div>
     	<div class="one-half ftco-animate">
         <div class="heading-section ftco-animate ">
-          <h2 class="mb-4">Chào mừng <span class="flaticon-pizza">Pizza</span> Ý</h2>
+          <h2 class="mb-4"><fmt:message bundle="${bnd}" key="about.welcome"/><span class="flaticon-pizza"><fmt:message bundle="${bnd}" key="about.welcome.pizza"/></span></h2>
         </div>
         <div>
-  				<p>
-Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi để thưởng thức pizza, mà là cuộc phiêu lưu vào thế giới hương vị đặc sắc. Tại đây, mỗi chiếc pizza là một tác phẩm nghệ thuật, từ vỏ giòn tan đến sự kết hợp tinh tế của nguyên liệu tươi ngon. Hãy cùng chúng tôi khám phá không gian ấm áp và thưởng thức hương vị độc đáo tại đây.</p>
+  				<p><fmt:message bundle="${bnd}" key="about.content"/></p>
   			</div>
     	</div>
     </section>
@@ -158,7 +158,7 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-pizza-1"></span></div>
 		              	<strong class="number" data-number="100">0</strong>
-		              	<span>Pizza Branches</span>
+		              	<span><fmt:message bundle="${bnd}" key="about.branches"/></span>
 		              </div>
 		            </div>
 		          </div>
@@ -167,7 +167,7 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-medal"></span></div>
 		              	<strong class="number" data-number="85">0</strong>
-		              	<span>Number of Awards</span>
+		              	<span><fmt:message bundle="${bnd}" key="about.awards"/></span>
 		              </div>
 		            </div>
 		          </div>
@@ -176,7 +176,7 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-laugh"></span></div>
 		              	<strong class="number" data-number="10567">0</strong>
-		              	<span>Happy Customer</span>
+		              	<span><fmt:message bundle="${bnd}" key="about.happy"/></span>
 		              </div>
 		            </div>
 		          </div>
@@ -185,7 +185,7 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
 		              <div class="text">
 		              	<div class="icon"><span class="flaticon-chef"></span></div>
 		              	<strong class="number" data-number="900">0</strong>
-		              	<span>Staff</span>
+		              	<span><fmt:message bundle="${bnd}" key="about.staff"/></span>
 		              </div>
 		            </div>
 		          </div>
@@ -201,8 +201,8 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
       <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section ftco-animate text-center">
-            <h2 class="mb-4">Recent from blog</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+            <h2 class="mb-4"><fmt:message bundle="${bnd}" key="home.blog"/></h2>
+            <p><fmt:message bundle="${bnd}" key="home.blog.content"/></p>
           </div>
         </div>
         <div class="row d-flex">
@@ -212,12 +212,12 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
               </a>
               <div class="text py-4 d-block">
               	<div class="meta">
-                  <div><a href="#">Sept 10, 2018</a></div>
+                  <div><a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a></div>
                   <div><a href="#">Admin</a></div>
                   <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
                 </div>
-                <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <h3 class="heading mt-2"><a href="#"><fmt:message bundle="${bnd}" key="blog.blog1_name"/></a></h3>
+                <p><fmt:message bundle="${bnd}" key="blog.blog1_content"/></p>
               </div>
             </div>
           </div>
@@ -227,12 +227,12 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
               </a>
               <div class="text py-4 d-block">
               	<div class="meta">
-                  <div><a href="#">Sept 10, 2018</a></div>
+                  <div><a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a></div>
                   <div><a href="#">Admin</a></div>
                   <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
                 </div>
-                <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <h3 class="heading mt-2"><a href="#"><fmt:message bundle="${bnd}" key="blog.blog2_name"/></a></h3>
+                <p><fmt:message bundle="${bnd}" key="blog.blog2_content"/></p>
               </div>
             </div>
           </div>
@@ -242,12 +242,12 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
               </a>
               <div class="text py-4 d-block">
               	<div class="meta">
-                  <div><a href="#">Sept 10, 2018</a></div>
+                  <div><a href="#"><fmt:message bundle="${bnd}" key="blog.time"/></a></div>
                   <div><a href="#">Admin</a></div>
                   <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
                 </div>
-                <h3 class="heading mt-2"><a href="#">The Delicious Pizza</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <h3 class="heading mt-2"><a href="#"><fmt:message bundle="${bnd}" key="blog.blog3_name"/></a></h3>
+                <p><fmt:message bundle="${bnd}" key="blog.blog3_content"/></p>
               </div>
             </div>
           </div>
@@ -256,37 +256,39 @@ Chào mừng bạn đến với Pizza Ý! Chúng tôi không chỉ là nơi đ�
     </section>
 
 		
-		<section class="ftco-appointment">
-			<div class="overlay"></div>
-    	<div class="container-wrap">
-    		<div class="row no-gutters d-md-flex align-items-center">
-    			<div class="col-md-6 d-flex align-self-stretch">
-    				<div id="map"></div>
-    			</div>
-	    		<div class="col-md-6 appointment ftco-animate">
-	    			<h3 class="mb-3">Contact Us</h3>
-	    			<form action="#" class="appointment-form">
-	    				<div class="d-md-flex">
-		    				<div class="form-group">
-		    					<input type="text" class="form-control" placeholder="First Name">
-		    				</div>
-	    				</div>
-	    				<div class="d-me-flex">
-	    					<div class="form-group">
-		    					<input type="text" class="form-control" placeholder="Last Name">
-		    				</div>
-	    				</div>
-	    				<div class="form-group">
-	              <textarea name="" id="" cols="30" rows="3" class="form-control" placeholder="Message"></textarea>
-	            </div>
-	            <div class="form-group">
-	              <input type="submit" value="Send" class="btn btn-primary py-3 px-4">
-	            </div>
-	    			</form>
-	    		</div>    			
-    		</div>
-    	</div>
-    </section>
+<section class="ftco-appointment">
+		<div class="overlay"></div>
+		<div class="container-wrap">
+			<div class="row no-gutters d-md-flex align-items-center">
+				<div class="col-md-6 d-flex align-self-stretch">
+					<div id="map"></div>
+				</div>
+				<div class="col-md-6 appointment ftco-animate">
+					<h3 class="mb-3"><fmt:message bundle="${bnd}" key="about.contact"/></h3>
+					<form action="#" class="appointment-form">
+						<div class="d-md-flex">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="about.firstName"/>">
+							</div>
+						</div>
+						<div class="d-me-flex">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="about.lastname"/>">
+							</div>
+						</div>
+						<div class="form-group">
+							<textarea name="" id="" cols="30" rows="3" class="form-control"
+								placeholder="<fmt:message bundle="${bnd}" key="about.message"/>"></textarea>
+						</div>
+						<div class="form-group">
+							<input type="submit" value="<fmt:message bundle="${bnd}" key="about.send"/>"
+								class="btn btn-primary py-3 px-4">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
 
     <footer class="ftco-footer ftco-section img">
     	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/footer.jsp" />

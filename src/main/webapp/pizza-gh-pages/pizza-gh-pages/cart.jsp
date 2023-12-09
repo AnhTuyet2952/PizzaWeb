@@ -9,7 +9,7 @@
     pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@taglib uri="http://java.sun.com/jstl/fmt" prefix="f" %>
+
 
 
 
@@ -99,13 +99,14 @@
                         </tr>
                       </thead>
                       <tbody>
-                      <c:forEach var="item" items="${cart.cart_items}">
+                      <c:forEach var="item" items="${sessionScope.cart.cart_items}">
                         <tr>
                           <td class="product-thumbnail">
                             <img style="width: 160px; height: 160px;" src="${item.product.image}" alt="Image" class="img-fluid">
                           </td>
                           <td class="product-name">
-                            <h2 class="h5 text-black">${item.product.nameProduct}</h2>
+                           <h2 class="h5 text-black">${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</h2>
+  
                           </td>
                           <td>${item.product.price}</td>
                              <td>
@@ -154,7 +155,6 @@
                   <div class="row">
                     <div class="col-md-12">
                       <label class="text-black h4" for="coupon"><fmt:message bundle="${bnd}" key="cart.coupon.title"/></label>
-                      <p>Enter your coupon code if you have one.</p>
                     </div>
                     <div class="col-md-8 mb-3 mb-md-0">
                       <input type="text" class="form-control py-3" id="coupon" placeholder="<fmt:message bundle="${bnd}" key="cart.coupon.enter"/>">

@@ -54,9 +54,9 @@
 					class="row slider-text justify-content-center align-items-center">
 
 					<div class="col-md-7 col-sm-12 text-center ftco-animate">
-						<h1 class="mb-3 mt-5 bread">Our Menu</h1>
+						<h1 class="mb-3 mt-5 bread"><fmt:message bundle="${bnd}" key="menu.title"/></h1>
 						<p class="breadcrumbs">
-							<span class="mr-2"><a href="index.html">Home</a></span> <span>Menu</span>
+							<span class="mr-2"><a href="index.jsp"><fmt:message bundle="${bnd}" key="menu.home"/></a></span> <span><fmt:message bundle="${bnd}" key="menu.menu"/></span>
 						</p>
 					</div>
 
@@ -69,9 +69,8 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate text-center">
-					<h2 class="mb-4">Our Menu</h2>
-					<p>Far far away, behind the word mountains, far from the
-						countries Vokalia and Consonantia, there live the blind texts.</p>
+					<h2 class="mb-4"><fmt:message bundle="${bnd}" key="menu.title"/></h2>
+					<p><fmt:message bundle="${bnd}" key="menu.content"/></p>
 				</div>
 			</div>
 		</div>
@@ -88,12 +87,11 @@
                     <div class="text p-4">
                         <h3>${productdao.nameProduct}</h3>
                         <p>${productdao.description}</p>
-                        <p>${productdao.idProduct}</p>
                         <!-- Form to add product to cart -->
                         <form action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">
                             <!-- Your form content -->
                             <input type="hidden" name="productId" value="${productdao.idProduct}">
-                            <input class="ml-2 btn btn-white btn-outline-white" type="submit" value="Add to Cart">
+                            <input class="ml-2 btn btn-white btn-outline-white" type="submit" value="<fmt:message bundle="${bnd}" key="menu.addcart"/>">
                         </form>
                     </div>
                 </div>

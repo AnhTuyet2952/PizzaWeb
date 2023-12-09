@@ -1,4 +1,4 @@
-@font-face {
+<fmt:message bundle="${bnd}" key="cart.title"/><fmt:message bundle="${bnd}" key="cart.title"/>@font-face {
   font-family: 'icomoon';
   src:  url('../fonts/icomoon/icomoon.eot?6tt51o');
   src:  url('../fonts/icomoon/icomoon.eot?6tt51o#iefix') format('embedded-opentype'),
