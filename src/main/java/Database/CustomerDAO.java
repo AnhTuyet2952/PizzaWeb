@@ -131,17 +131,17 @@ public class CustomerDAO implements DAOInterface<Customer> {
 		return result;
 	}
 	
-	public Customer selectByUsername2(String username) {
+	public Customer selectByEmail2(String email) {
 		Customer result = null;
 
 		try {
 
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "SELECT * FROM pizza.customers WHERE username = ?";
+			String sql = "SELECT * FROM pizza.customers WHERE email = ?";
             System.out.println(sql);
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(1, username);
+			st.setString(1, email);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				String id = rs.getString("customer_id");
@@ -150,7 +150,7 @@ public class CustomerDAO implements DAOInterface<Customer> {
 				Date birthday = rs.getDate("birthday");
 				String gt = rs.getString("sexual");
 				String phoneNumber = rs.getString("phoneNumber");
-				String email = rs.getString("username");
+				String username = rs.getString("username");
 				String avatar = rs.getString("avatar");
 			
 				result = new Customer(id, username, password, name, birthday, gt,phoneNumber, email, avatar);
@@ -178,6 +178,30 @@ public class CustomerDAO implements DAOInterface<Customer> {
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				return true;
+
+			}
+
+		} catch (Exception e) {
+			 e.printStackTrace();
+		}
+
+		return false;
+	}
+	
+	public boolean selectByEmail(String email) {
+		
+
+		try {
+
+			Connection con = JDBCUtil.getConnection();
+
+			String sql = "SELECT * FROM pizza.customers WHERE email =?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, email);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				return true;
@@ -303,10 +327,10 @@ int result =0;
 	public static void main(String[] args) {
 		CustomerDAO ad = new CustomerDAO();
 		
-		Customer customerAdd = new Customer("2", "Trang", "1234", "Ngo Thuy Trang",  new Date(2003, 12, 13), "nu", "0334499506", "trang@gmail.com", null);
-		ad.insert(customerAdd);
+//		Customer customerAdd = new Customer("2", "Trang", "1234", "Ngo Thuy Trang",  new Date(2003, 12, 13), "nu", "0334499506", "trang@gmail.com", null);
+//		ad.insert(customerAdd);
 		
-		Customer customer = ad.selectByUsernamePassword("trang", "1234");
+		Customer customer = ad.selectByEmail2("trangthuyjungkook@gmail.com");
 		
         System.out.println(customer.getUsername());
 //		

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Beans.ErrorBean;
+import Database.AdminDAO;
 import Database.CustomerDAO;
 import Model.Customer;
 
@@ -52,13 +53,36 @@ public class ChangeInformation extends HttpServlet {
 		CustomerDAO customerDAO = new CustomerDAO();
 		Customer customer = customerDAO.selectById(id);
 		
+		AdminDAO userDAO = new AdminDAO();
+		ErrorBean eb = new ErrorBean();
+		 if((customerDAO.selectByUsername(username)&&!customer.getUsername().equals(username))||userDAO.selectByUsername(username)) {
+			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
+			request.setAttribute("name", "");
+			request.setAttribute("errorBean", eb);
+			error+=eb.getError();
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+            return;
+
+		 }
+		 
+		 if(customerDAO.selectByEmail(email)) {
+				eb.setError("ten email da ton tai, vui long chon email khac");
+				request.setAttribute("name", "");
+				request.setAttribute("errorBean", eb);
+				error+=eb.getError();
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+	            return;
+
+			}
 		//kiem tra sdt co hop le khong
 		
 		
 		if((phoneNumber.length()!=10)||!phoneNumber.startsWith("0")) {
 			error+="số điện thoại nhập vào không hợp lệ, vui lòng nhập bắt đầu từ số 0 và gồm 10 chữ số!";
 			request.setAttribute("Error", error);
-			ErrorBean eb = new ErrorBean();
+			eb = new ErrorBean();
        	    eb.setError((String)request.getAttribute("Error"));
        	    request.setAttribute("errorBean", eb);
        	    url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";
@@ -86,7 +110,7 @@ public class ChangeInformation extends HttpServlet {
         	 response.sendRedirect(request.getContextPath() + url);
 		}else {
 			request.setAttribute("Error", error);
-			ErrorBean eb = new ErrorBean();
+		   
        	    eb.setError((String)request.getAttribute("Error"));
        	    request.setAttribute("errorBean", eb);
        	    url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";

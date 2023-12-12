@@ -54,6 +54,7 @@ public class OrderDAO implements DAOInterface<Order> {
 
 				Customer user = new CustomerDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status);
+				
 
 				data.add(order);
 
@@ -91,7 +92,46 @@ public class OrderDAO implements DAOInterface<Order> {
 			}
 		}
 		
-	
+		public ArrayList<Order> selectByCustomerId(String customerId) {
+			ArrayList<Order>result = new ArrayList<Order>();
+			try {
+				// tao mot connection
+				Connection con = JDBCUtil.getConnection();
+
+				// tao cau lenh sql
+				String sql = "SELECT * FROM orders WHERE customer_id=?";
+
+				PreparedStatement st = con.prepareStatement(sql);
+	            st.setString(1, customerId);
+				// thuc thi
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+
+					String orderId = rs.getString("order_id");
+					String idCustomer = rs.getString("customer_id");
+					String addredd = rs.getString("Address");
+					String note = rs.getString("note");
+					Double total = rs.getDouble("total");
+					Date bookingDate = rs.getDate("booking_date");
+					String status = rs.getString("status");
+
+					Customer user = new CustomerDAO().selectById(idCustomer);
+					Order order = new Order(orderId, user, addredd, note, total, bookingDate,status);
+
+					result.add(order);
+
+				}
+
+				JDBCUtil.closeConnection(con);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+
 	@Override
 	public Order selectById(String id) {
 		Order result = null;

@@ -87,11 +87,8 @@
 														<td>${customer.sexual }</td>
 														<td>${customer.email}</td>
 														<td>${customer.phoneNumber }</td>
-														<td><a
-															href="<c:url value='/admin/pages/product-features/sua.jsp?id=${customer.customerId }'/>"
-															class="center">Edit</a> | <a
-															href="<c:url value='/admin/product/delete?id=${customer.customerId }'/>"
-															class="center">Delete</a></td>
+														<td><a href="${pageContext.request.contextPath}/userDetail?id=${customer.customerId }">${customer.customerId }</a></td>
+														
 
 													</tr>
 												</c:forEach>

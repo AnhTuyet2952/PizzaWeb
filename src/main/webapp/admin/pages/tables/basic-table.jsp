@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -97,50 +98,30 @@
               <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Hoverable Table</h4>
-                    <p class="card-description"> Add class <code>.table-hover</code>
-                    </p>
+                    <h4 class="card-title">Tất cả đơn hàng</h4>
+                  
                     <div class="table-responsive">
-                      <table class="table table-hover">
+                      <table style="border: 1px" class="table table-hover">
                         <thead>
                           <tr>
                             <th>User</th>
                             <th>Product</th>
-                            <th>Sale</th>
+                            <th>Price</th>
                             <th>Status</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
+                         <jsp:useBean id="orderDAO" class="Database.OrderDAO"></jsp:useBean>
+                        <c:forEach var="order" items="${orderDAO.selectAll()}">
+                         <tr>
+                            <td>${order.user.username}</td>
+                             <td><a href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
+                            <td class="text-danger"> ${order.total}<i class="mdi mdi-arrow-down"></i></td>
+                            <td><label class="badge badge-danger">${order.status}</label></td>
                           </tr>
-                          <tr>
-                            <td>Messsy</td>
-                            <td>Flash</td>
-                            <td class="text-danger"> 21.06% <i class="mdi mdi-arrow-down"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
-                          </tr>
-                          <tr>
-                            <td>John</td>
-                            <td>Premier</td>
-                            <td class="text-danger"> 35.00% <i class="mdi mdi-arrow-down"></i></td>
-                            <td><label class="badge badge-info">Fixed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Peter</td>
-                            <td>After effects</td>
-                            <td class="text-success"> 82.00% <i class="mdi mdi-arrow-up"></i></td>
-                            <td><label class="badge badge-success">Completed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Dave</td>
-                            <td>53275535</td>
-                            <td class="text-success"> 98.05% <i class="mdi mdi-arrow-up"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
-                          </tr>
+                        </c:forEach>
+                          
+                         
                         </tbody>
                       </table>
                     </div>

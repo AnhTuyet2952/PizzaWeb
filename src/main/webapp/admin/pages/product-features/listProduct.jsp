@@ -60,7 +60,7 @@
 								<div class="panel-body">
 									<div class="table-responsive">
 										<table class="table table-striped table-bordered table-hover"
-											id="dataTables-example">
+											id="dataTables-example"  >
 											<thead>
 												<tr>
 													<th>ID</th>
@@ -68,7 +68,7 @@
 													<th>Name</th>
 													<th>Price($)</th>
 													<th>Category</th>
-													<th>Description</th>
+												
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -81,8 +81,8 @@
 
 														<td>${pro.nameProduct }</td>
 														<td>${pro.price }</td>
-														<td>${pro.category.categoryName }</td>
-														<td>${pro.description }</td>
+														<td style="width:50%">${pro.category.categoryName }</td>
+														
 														<td><a
 															href="<c:url value='/product/detail?id=${pro.idProduct }'/>"
 															class="center">Detail</a> | <a

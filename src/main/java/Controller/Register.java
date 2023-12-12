@@ -57,8 +57,16 @@ public class Register extends HttpServlet {
             response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
             return;
 
-		}else
-		if (password != null && !password.equals(enterThePassword)) {
+		}else if(cd.selectByEmail(email)) {
+				eb.setError("ten email da ton tai, vui long chon email khac");
+				request.setAttribute("name", "");
+				request.setAttribute("errorBean", eb);
+				baoLoi+=eb.getError();
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+	            return;
+
+			}else if (password != null && !password.equals(enterThePassword)) {
 			eb.setError(" mat khau nhap lai khong dung");
 			request.setAttribute("password", "");
 			request.setAttribute("errorBean", eb);

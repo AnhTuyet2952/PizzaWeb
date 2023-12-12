@@ -99,8 +99,7 @@ body {
 					<div class="card-body">
 						<div class="form-group">
 						<div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div> 
-						<label for="user-for-pass">Nhập user của bạn</label> <input
-								class="form-control" type="text" name="user" id="user" required="required">
+					
 							<label for="email-for-pass">Nhập địa chỉ email của bạn</label> <input
 								class="form-control" type="email" name="email" id="email-for-pass" required="required"><small
 								class="form-text text-muted">Chúng tôi sẽ gửi mã OTP tới email bạn đã nhập</small>
@@ -108,7 +107,7 @@ body {
 					</div>
 					<div class="card-footer">
 						<button class="btn btn-success" type="submit">Tạo mật khẩu mới</button>
-						<a class="btn btn-danger" href="dangnhap.jsp">Quay trở lại trang đăng nhập</a>
+						<a class="btn btn-danger" href="login.jsp">Quay trở lại trang đăng nhập</a>
 					</div>
 				</form>
 			</div>

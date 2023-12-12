@@ -57,10 +57,10 @@ public class ForgotPassword extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String email = request.getParameter("email");
-		String user = request.getParameter("user");
+	
 		
 		CustomerDAO customerDAO = new CustomerDAO();
-		Customer customer = customerDAO.selectByUsername2(user);
+		Customer customer = customerDAO.selectByEmail2(email);
 		if(customer!=null) {
 			HttpSession mySession = request.getSession();
 			mySession.setAttribute("customerId", customer.getCustomerId());

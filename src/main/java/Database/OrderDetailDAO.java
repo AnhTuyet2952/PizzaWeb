@@ -58,6 +58,41 @@ public class OrderDetailDAO implements DAOInterface<OrderDetail>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public ArrayList<OrderDetail> selectByOrderId(String id) {
+		try {
+			// tao mot connection
+			Connection con = JDBCUtil.getConnection();
+
+			// tao cau lenh sql
+			String sql = "SELECT * FROM orderdetails WHERE order_id=?";
+
+			PreparedStatement st = con.prepareStatement(sql);
+            st.setString(1, id);
+			// thuc thi
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				String orderId = rs.getString("order_id");
+				String idProduct = rs.getString("product_id");
+				Integer quantity = rs.getInt("quantity");
+				Double price = rs.getDouble("price");
+				
+				Order order = new OrderDAO().selectById(orderId);
+				Product product = new ProductDAO().selectById(idProduct);
+				OrderDetail orderDetail = new OrderDetail(order, product, quantity, price);
+				data.add(orderDetail);
+				
+			}
+
+			JDBCUtil.closeConnection(con);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return data;
+	}
 	public OrderDetail selectById(String orderId, String productId) {
 	    OrderDetail result = null;
 

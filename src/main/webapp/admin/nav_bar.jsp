@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
@@ -12,11 +13,9 @@
 		<li class="nav-item profile">
 			<div class="profile-desc">
 				<div class="profile-pic">
-					<div class="count-indicator">
-						<img class="img-xs rounded-circle "
-							src="assets/images/faces/face15.jpg" alt=""> <span
-							class="count bg-success"></span>
-					</div>
+				
+				<img class="img-xs rounded-circle" src="${admin.avatar}" alt="">
+				
 					<div class="profile-name">
 						<h5 class="mb-0 font-weight-normal">Admin</h5>
 						<span>Gold Member</span>
@@ -68,7 +67,7 @@
 		<li class="nav-item nav-category"><span class="nav-link">Các
 				Chức Năng</span></li>
 		<li class="nav-item menu-items"><a class="nav-link"
-			href="/Pizza/admin/index.jsp"> <span class="menu-icon">
+			href="/pizza_web/admin/index.jsp"> <span class="menu-icon">
 					<i class="mdi mdi-speedometer"></i>
 			</span> <span class="menu-title">Thống Kê</span>
 		</a></li>
@@ -80,15 +79,13 @@
 		</a>
 			<div class="collapse" id="user-management">
 				<ul class="nav flex-column sub-menu">
+				    <li class="nav-item"><a class="nav-link"
+						href="/pizza_web/admin/pages/ui-features/listUser.jsp">Danh sách người dùng</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/ui-features/them.jsp">Thêm</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/ui-features/xoa.jsp">Xóa</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/ui-features/datlaimatkhau.jsp">Đặt
+						href="/pizza_web/admin/pages/ui-features/datlaimatkhau.jsp">Đặt
 							lại mật khẩu</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/ui-features/khoamotaikhoan.jsp">Khóa
+						href="/pizza_web/admin/pages/ui-features/khoamotaikhoan.jsp">Khóa
 							hoặc mở tài khoản</a></li>
 				</ul>
 			</div></li>
@@ -102,33 +99,25 @@
 			<div class="collapse" id="product-management">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/product-features/them.jsp">Thêm</a></li>
+						href="/pizza_web/admin/pages/product-features/them.jsp">Thêm</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/product-features/listProduct.jsp">Danh sách sản phẩm</a></li>
+						href="/pizza_web/admin/pages/product-features/listProduct.jsp">Danh sách sản phẩm</a></li>
 							
 				</ul>
 			</div></li>
 
+		
 		<li class="nav-item menu-items"><a class="nav-link"
-			href="/Pizza/admin/pages/forms/basic_elements.jsp"> <span
-				class="menu-icon"> <i class="mdi mdi-playlist-play"></i>
-			</span> <span class="menu-title">Thêm nội dung</span>
-		</a></li>
-		<li class="nav-item menu-items"><a class="nav-link"
-			href="/Pizza/admin/pages/tables/basic-table.jsp"> <span
+			href="/pizza_web/admin/pages/tables/basic-table.jsp"> <span
 				class="menu-icon"> <i class="mdi mdi-table-large"></i>
 			</span> <span class="menu-title">Đơn đã mua</span>
 		</a></li>
 		<li class="nav-item menu-items"><a class="nav-link"
-			href="/Pizza/admin/pages/charts/chartjs.jsp"> <span
+			href="/pizza_web/admin/pages/charts/chartjs.jsp"> <span
 				class="menu-icon"> <i class="mdi mdi-chart-bar"></i>
 			</span> <span class="menu-title">Báo cáo hoạt động</span>
 		</a></li>
-		<li class="nav-item menu-items"><a class="nav-link"
-			href="/Pizza/admin/pages/icons/mdi.jsp"> <span
-				class="menu-icon"> <i class="mdi mdi-contacts"></i>
-			</span> <span class="menu-title">Icons</span>
-		</a></li>
+		
 		<li class="nav-item menu-items"><a class="nav-link"
 			data-toggle="collapse" href="#auth" aria-expanded="false"
 			aria-controls="auth"> <span class="menu-icon"> <i
@@ -138,16 +127,16 @@
 			<div class="collapse" id="auth">
 				<ul class="nav flex-column sub-menu">
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/samples/blank-page.jsp"> Blank
+						href="/pizza_web/admin/pages/samples/blank-page.jsp"> Blank
 							Page </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/samples/error-404.html"> 404 </a></li>
+						href="/pizza_web/admin/pages/samples/error-404.html"> 404 </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/samples/error-500.html"> 500 </a></li>
+						href="/pizza_web/admin/pages/samples/error-500.html"> 500 </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/samples/login.jsp"> Login </a></li>
+						href="/pizza_web/admin/pages/samples/login.jsp"> Login </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/Pizza/admin/pages/samples/register.jsp"> Register
+						href="/pizza_web/admin/pages/samples/register.jsp"> Register
 					</a></li>
 				</ul>
 			</div></li>
