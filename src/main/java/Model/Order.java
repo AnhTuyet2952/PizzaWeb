@@ -12,22 +12,30 @@ public class Order {
 	private String oderId;
 	private Customer user;
 	private String address;
-	private String status;
+	private String note;
 	private double total;
 	private Date bookingDate;
-	public Order(String i, Customer user, String address, String status, double total, Date bookingDate) {
+	private String status = "processing"; //dang xu ly, confirmed: chap nhan, rejected:tu choi
+	public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String status) {
 		super();
 		this.oderId = i;
 		this.user = user;
 		this.address = address;
-		this.status = status;
+		this.note = note;
 		this.total = total;
 		this.bookingDate = bookingDate;
+		this.status = status;
 	}
 	public Order() {
 		super();
 	}
 	
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
 	public String getOderId() {
 		return oderId;
 	}

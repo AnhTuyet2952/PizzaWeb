@@ -91,7 +91,7 @@
         <!-- Thông tin đặt hàng -->
         <h2><fmt:message bundle="${bnd}" key="thank.inf.order"/></h2>
         <label for="Address"><fmt:message bundle="${bnd}" key="checkout.bill.address"/>: ${order.getAddress()}</label><br>
-		<label for="status"><fmt:message bundle="${bnd}" key="checkout.bill.note"/>: ${order.getStatus()}</label><br>
+		<label for="note"><fmt:message bundle="${bnd}" key="checkout.bill.note"/>: ${order.getNote()}</label><br>
 <c:set var="subtotal" value="0" />
 <c:set var="total" value="0" />
 

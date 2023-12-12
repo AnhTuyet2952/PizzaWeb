@@ -36,6 +36,7 @@ public class CheckoutController extends HttpServlet {
 	            throws ServletException, IOException {
 	        String address = request.getParameter("Address");
 	        String status = request.getParameter("status");
+	        String note = request.getParameter("note");
 	        String phone = request.getParameter("phone");
 	        String name = request.getParameter("name");
 	        String email = request.getParameter("email");
@@ -69,7 +70,7 @@ public class CheckoutController extends HttpServlet {
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
 	        Date currentDateTime = new Date();
-	        Order order = new Order(orderDAO.creatId()+"", customer, address, status, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()));
+	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), status);
 
 	        // Thực hiện insert vào cơ sở dữ liệu
 	        order.setStatus(status);

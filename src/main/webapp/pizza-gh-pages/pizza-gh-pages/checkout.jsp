@@ -108,8 +108,8 @@
 		              </div>
 		            </div>	      
 		            <div class="form-group">
-		              <label for="status" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.note"/></label>
-		              <textarea name="status" id="status" cols="30" rows="5" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="checkout.bill.note.write"/>"></textarea>
+		              <label for="note" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.note"/></label>
+		              <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="checkout.bill.note.write"/>"></textarea>
 		            </div>
 
 		          </div>

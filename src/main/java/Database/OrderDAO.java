@@ -47,12 +47,13 @@ public class OrderDAO implements DAOInterface<Order> {
 				String orderId = rs.getString("order_id");
 				String idCustomer = rs.getString("customer_id");
 				String addredd = rs.getString("Address");
-				String status = rs.getString("status");
+				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
 				Date bookingDate = rs.getDate("booking_date");
+				String status = rs.getString("status");
 
 				Customer user = new CustomerDAO().selectById(idCustomer);
-				Order order = new Order(orderId, user, addredd, status, total, bookingDate);
+				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status);
 
 				data.add(order);
 
@@ -65,7 +66,32 @@ public class OrderDAO implements DAOInterface<Order> {
 		}
 		return data;
 	}
-
+	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
+	public void confirmOrder(String orderId) {
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "UPDATE orders SET status = 'confirmed' WHERE order_id=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, orderId);
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//phuong thưc cap nhap trang thai cho don hang thành 'rejected'
+		public void rejectOrder(String orderId) {
+			try {
+				Connection con = JDBCUtil.getConnection();
+				String sql = "UPDATE orders SET status = 'rejected' WHERE order_id=?";
+				PreparedStatement st = con.prepareStatement(sql);
+				st.setString(1, orderId);
+				st.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	
 	@Override
 	public Order selectById(String id) {
 		Order result = null;
@@ -83,13 +109,14 @@ public class OrderDAO implements DAOInterface<Order> {
 				String idOrder = rs.getString("order_id");
 				String idCustomer = rs.getString("customer_id");
 				String address = rs.getString("Address");
-				String status = rs.getString("status");
+				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
 				Date bookingDate = rs.getDate("booking_date");
+				String status = rs.getString("status");
 
 				Customer user = new CustomerDAO().selectById(idCustomer);
 
-				result = new Order(idOrder, user, address, status, total, bookingDate);
+				result = new Order(idOrder, user, address, note, total, bookingDate, status);
 
 
 			}
@@ -108,17 +135,18 @@ public class OrderDAO implements DAOInterface<Order> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = " INSERT INTO orders(order_id, customer_id, Address, status, total, booking_date)"
-					+ "VALUES(?, ?, ?, ?, ?, ?)";
+			String sql = " INSERT INTO orders(order_id, customer_id, Address, note, total, booking_date, status)"
+					+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			
 			rs.setString(1, order.getOderId());
 			rs.setString(2, order.getUser().getCustomerId());
 			rs.setString(3, order.getAddress());
-			rs.setString(4, order.getStatus());
+			rs.setString(4, order.getNote());
 			rs.setDouble(5, order.getTotal());
 			rs.setDate(6, order.getBookingDate());
+			rs.setString(7, order.getStatus());
 
 			result = rs.executeUpdate();
 
@@ -181,17 +209,18 @@ public class OrderDAO implements DAOInterface<Order> {
 			try {
 				Connection con = JDBCUtil.getConnection();
 
-				String sql = "UPDATE orders SET  customer_id=? " + ", Address=? " + ", status=? " + ", total=? "
-						+ ", booking_date=? " + "WHERE order_id =?";
+				String sql = "UPDATE orders SET  customer_id=? " + ", Address=? " + ", note=? " + ", total=? "
+						+ ", booking_date=? " + "WHERE order_id =?" + "status=?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
 
 				rs.setString(1, order.getUser().getCustomerId());
 				rs.setString(2, order.getAddress());
-				rs.setString(3, order.getStatus());
+				rs.setString(3, order.getNote());
 				rs.setDouble(4, order.getTotal());
 				rs.setDate(5, order.getBookingDate());
 				rs.setString(6, oldOrder.getOderId());
+				rs.setString(7, order.getStatus());
 
 				result = rs.executeUpdate();
 			} catch (Exception e) {
