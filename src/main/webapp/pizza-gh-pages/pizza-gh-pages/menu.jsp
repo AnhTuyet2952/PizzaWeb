@@ -88,7 +88,7 @@
                         <h3>${productdao.nameProduct}</h3>
                         <p>${productdao.description}</p>
                         <!-- Form to add product to cart -->
-                        <form action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">
+                        <form class="add-to-cart-form" action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">
                             <!-- Your form content -->
                             <input type="hidden" name="productId" value="${productdao.idProduct}">
                             <input class="ml-2 btn btn-white btn-outline-white" type="submit" value="<fmt:message bundle="${bnd}" key="menu.addcart"/>">
@@ -140,5 +140,28 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
+<script>
+         $(document).ready(function () {
+                $(".add-to-cart-form").on("submit", function (event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: form.attr("action"),
+                        data: form.serialize(),
+                        success: function (data) {
+                           alert("Đã đặt hàng thành công!");
+                           var currentQuantity = parseInt($(".cart-item-count").text(), 10);
+                           var newQuantity = currentQuantity + 1;
+                           $(".cart-item-count").text(newQuantity);
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                            alert("Đã đặt lỗi");
+                        }
+                    });
+                });
+            });
+     </script> 
 </body>
 </html>

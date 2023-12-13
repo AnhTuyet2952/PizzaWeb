@@ -52,7 +52,7 @@ public class CheckoutController extends HttpServlet {
 	        }
 	        CustomerDAO customerDAO = new CustomerDAO();
 	     // Cập nhật thông tin khách hàng
-	        if (phone != null && name != null && email != null) {
+	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
 	            customer.setName(name);
 	            customer.setPhoneNumber(phone);
 	            customer.setEmail(email);
@@ -70,7 +70,7 @@ public class CheckoutController extends HttpServlet {
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
 	        Date currentDateTime = new Date();
-	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), status);
+	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), "processing");
 
 	        // Thực hiện insert vào cơ sở dữ liệu
 	        order.setStatus(status);
@@ -107,6 +107,7 @@ public class CheckoutController extends HttpServlet {
 	        	}
 	        	if (overallResult > 0) {
 	                // Nếu kết quả chung là thành công, thực hiện các bước khác
+	        		 orderDAO.UpdateOrderStatus(order.getOderId(), "processing");
 	        		// Nếu insert thành công, xóa giỏ hàng và chuyển hướng đến trang thankyou
 	        		cart.clearCart();
 	        		request.setAttribute("order", order);

@@ -29,7 +29,15 @@
 			<ul class="custom-navbar-cta navbar-nav ml-auto mb-2 mb-md-0 ms-5">
 				<li><a class="nav-link" href="cart.jsp"> <img
 						src="images/cart.svg" alt="Cart Icon"> <span
-						class="cart-item-count">${cart.calculateTotalQuantity()}</span>
+						class="cart-item-count"> <c:choose>
+								<c:when test="${empty cart.calculateTotalQuantity()}">
+                        0
+                    </c:when>
+								<c:otherwise>
+                        ${cart.calculateTotalQuantity()}
+                    </c:otherwise>
+							</c:choose>
+					</span>
 				</a></li>
 			</ul>
 <form action="${pageContext.request.contextPath}/changeLanguage" method="post">

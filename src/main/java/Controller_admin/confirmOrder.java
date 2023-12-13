@@ -16,35 +16,23 @@ import Database.OrderDAO;
 public class confirmOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        OrderDAO orderDAO = new OrderDAO();
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public confirmOrder() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderId = request.getParameter("orderId");
 		String action = request.getParameter("action");
 		String url = "";
 		if("confirm".equals(action)) {
-			orderDAO.confirmOrder(orderId);
+			orderDAO.UpdateOrderStatus(orderId, "Chấp nhận");
 		}else if("reject".equals(action)) {
-			orderDAO.rejectOrder(orderId);
+//			orderDAO.rejectOrder(orderId);
+			boolean reject = orderDAO.rejectOrder(orderId);
+			 if (!reject) {
+	                // Xử lý khi từ chối đơn hàng không thành công
+	                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to reject order");
+	                return;
+	            }
 		}
-		url = "/admin/pages/product-features/them.jsp";	
+		url = "/admin/pages/tables/basin-table.jsp";	
    	    response.sendRedirect(request.getContextPath() + url);
 	}
 

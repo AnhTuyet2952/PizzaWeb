@@ -24,7 +24,7 @@ public class Order {
 		this.note = note;
 		this.total = total;
 		this.bookingDate = bookingDate;
-		this.status = status;
+		this.status = "processing";
 	}
 	public Order() {
 		super();

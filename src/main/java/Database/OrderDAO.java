@@ -4,13 +4,12 @@
 package Database;
 
 import java.sql.Connection;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
+import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.List;
 
 import Model.Customer;
 import Model.Order;
@@ -67,30 +66,124 @@ public class OrderDAO implements DAOInterface<Order> {
 		}
 		return data;
 	}
-	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
-	public void confirmOrder(String orderId) {
+	public List<Order> selectConfirmedOrders(){
+		List<Order> confirmedOrders = new ArrayList<Order>();
 		try {
 			Connection con = JDBCUtil.getConnection();
-			String sql = "UPDATE orders SET status = 'confirmed' WHERE order_id=?";
+			String sql = "SELECT * FROM orders WHERE status = 'processing'";
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(1, orderId);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+
+				String orderId = rs.getString("order_id");
+				String idCustomer = rs.getString("customer_id");
+				String addredd = rs.getString("Address");
+				String note = rs.getString("note");
+				Double total = rs.getDouble("total");
+				Date bookingDate = rs.getDate("booking_date");
+				String status = rs.getString("status");
+
+				Customer user = new CustomerDAO().selectById(idCustomer);
+				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status);
+				
+
+				confirmedOrders.add(order);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return confirmedOrders;
+	}
+	public List<Order> selectAcceptOrders(){
+		List<Order> confirmedOrders = new ArrayList<Order>();
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orders WHERE status = 'Accept'";
+			PreparedStatement st = con.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+
+				String orderId = rs.getString("order_id");
+				String idCustomer = rs.getString("customer_id");
+				String addredd = rs.getString("Address");
+				String note = rs.getString("note");
+				Double total = rs.getDouble("total");
+				Date bookingDate = rs.getDate("booking_date");
+				String status = rs.getString("status");
+
+				Customer user = new CustomerDAO().selectById(idCustomer);
+				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status);
+				
+
+				confirmedOrders.add(order);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return confirmedOrders;
+	}
+//	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
+//	public void confirmOrder(String orderId) {
+//		try {
+//			Connection con = JDBCUtil.getConnection();
+//			String sql = "UPDATE orders SET status = 'Accept' WHERE order_id=?";
+//			PreparedStatement st = con.prepareStatement(sql);
+//			st.setString(1, orderId);
+//			st.executeUpdate();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
+	public void UpdateOrderStatus(String orderId, String status) {
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "UPDATE orders SET status =? WHERE order_id=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, status);
+			st.setString(2, orderId);
 			st.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	//phuong thưc cap nhap trang thai cho don hang thành 'rejected'
-		public void rejectOrder(String orderId) {
-			try {
-				Connection con = JDBCUtil.getConnection();
-				String sql = "UPDATE orders SET status = 'rejected' WHERE order_id=?";
-				PreparedStatement st = con.prepareStatement(sql);
-				st.setString(1, orderId);
-				st.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//	//phuong thưc cap nhap trang thai cho don hang thành 'rejected'
+//		public void rejectOrder(String orderId) {
+//			try {
+//				Connection con = JDBCUtil.getConnection();
+//				String sql = "DELETE FROM orders WHERE order_id=?";
+//				PreparedStatement st = con.prepareStatement(sql);
+//				st.setString(1, orderId);
+//				st.executeUpdate();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+    // Phương thức từ chối đơn hàng và xóa dữ liệu
+    public boolean rejectOrder(String orderId) {
+        String deleteOrder = "DELETE FROM orders WHERE order_id = ?";
+        String deleteOrderDetails = "DELETE FROM order_details WHERE order_id = ?";
+        try {
+        	// tao mot connection
+			Connection con = JDBCUtil.getConnection();
+			PreparedStatement deleteOrderst = con.prepareStatement(deleteOrder);
+			PreparedStatement deleteOrderDetailst = con.prepareStatement(deleteOrderDetails);
+			//xoa don hang
+			deleteOrderst.setString(1, orderId);
+			int rowsDeleteOrder = deleteOrderst.executeUpdate();
+			//xoa chi tiet don hang
+			deleteOrderDetailst.setString(1, orderId);
+			int rowDeleteOrderDetail = deleteOrderDetailst.executeUpdate();
+			//kiem tra co dong nao da duoc xoa hay khong
+			return rowsDeleteOrder>0||rowDeleteOrderDetail>0;
+		} catch (Exception e) {
+			e.printStackTrace(); 
+			return false;
 		}
+    }
+
 		
 		public ArrayList<Order> selectByCustomerId(String customerId) {
 			ArrayList<Order>result = new ArrayList<Order>();

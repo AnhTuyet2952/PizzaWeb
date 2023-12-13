@@ -53,7 +53,6 @@
 					<div class="row justify-content-between">
 						<div class="col-lg-5">
 							<div class="intro-excerpt">
-								<h1>Cart</h1>
 							</div>
 						</div>
 						<div class="col-lg-7">
@@ -64,7 +63,22 @@
 			</div>
 		<!-- End Hero Section -->
 
-		
+		<c:if test="${not empty order}">
+    <p>Your order with ID ${order.oderId} has been placed successfully.</p>
+    
+    <c:choose>
+        <c:when test="${order.status eq 'processing'}">
+            <p>Your order is currently being processed. Please wait for confirmation.</p>
+        </c:when>
+        <c:when test="${order.status eq 'Chấp nhận'}">
+            <p>Your order has been accepted. Thank you for your purchase!</p>
+        </c:when>
+        <c:when test="${order.status eq 'Từ chối'}">
+            <p>We're sorry, but your order has been rejected. Please contact customer support for assistance.</p>
+        </c:when>
+    </c:choose>
+    
+
 
 		<div class="untree_co-section">
     <div class="container">
@@ -135,6 +149,7 @@
       </div>
     </div>
   </div>
+  </c:if>
 		<!-- Start Footer Section -->
 <footer class="ftco-footer ftco-section img">
 		<jsp:include page="/pizza-gh-pages/pizza-gh-pages/footer.jsp" />
