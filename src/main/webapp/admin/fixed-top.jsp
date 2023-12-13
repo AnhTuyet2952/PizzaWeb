@@ -154,8 +154,8 @@
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="../../assets/images/faces/face15.jpg" alt="">
-                    <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                    <img class="img-xs rounded-circle" src="${admin.avatar}" alt="">
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">${admin.username}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>
                 </a>
@@ -180,7 +180,7 @@
                       </div>
                     </div>
                     <div class="preview-item-content">
-                    <a href="/Pizza/pizza-gh-pages/pizza-gh-pages/login.jsp"><p class="preview-subject mb-1">Log out</p></a>
+                    <a href="/pizza_web/pizza-gh-pages/pizza-gh-pages/login.jsp"><p class="preview-subject mb-1">Log out</p></a>
                       
                     </div>
                   </a>

@@ -21148,3 +21148,10 @@ div.tagsinput {
     background-color: #218838;
     border-color: #218838;
 }
+.pricing-entry .img {
+    width: 60px;
+    height: 60px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%; }

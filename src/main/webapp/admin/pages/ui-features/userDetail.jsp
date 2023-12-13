@@ -124,4 +124,3 @@
 			<!-- endinject -->
 </body>
 </html>
-/html>
