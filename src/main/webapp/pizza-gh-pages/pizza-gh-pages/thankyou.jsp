@@ -113,7 +113,10 @@
         <th><fmt:message bundle="${bnd}" key="checkout.total"/></th>
     </thead>
     <tbody>
-        <c:forEach var="item" items="${sessionScope.orderDetails}">
+    <jsp:useBean id="orderDetailDAO" class="Database.OrderDetailDAO"></jsp:useBean>
+<c:set var="orderId" value="${sessionScope.order.oderId}" />
+<c:set var="orderDetails" value="${orderDetailDAO.selectByOrderId(orderId)}" />
+        <c:forEach var="item" items="${orderDetails}">
             <c:set var="itemTotal" value="${item.products.price * item.quantity}" />
             <tr>
                 <td>
