@@ -15,8 +15,10 @@ public class Order {
 	private String note;
 	private double total;
 	private Date bookingDate;
-	private String status ; //dang xu ly, confirmed: chap nhan, rejected:tu choi
-	  public Order(String i, Customer user, String address, String note, double total, Date bookingDate) {
+	private String status ; //processing: dang xu ly, accept: chap nhan, reject:tu choi
+	private String nameConsignee; //ten nguoi nhan hang
+	private String phoneConsignee; //so dien thoai cua nguoi nhan
+	  public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String nameConsignee, String phoneConsignee) {
 	        this.oderId = i;
 	        this.user = user;
 	        this.address = address;
@@ -24,11 +26,13 @@ public class Order {
 	        this.total = total;
 	        this.bookingDate = bookingDate;
 	        this.status = "processing";
+	        this.nameConsignee=nameConsignee;
+	        this.phoneConsignee=phoneConsignee;
 	    }
 
 	    // Constructor cho việc sửa đổi status
-	    public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String status) {
-	        this(i, user, address, note, total, bookingDate);
+	    public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String status, String nameConsignee, String phoneConsignee) {
+	        this(i, user, address, note, total, bookingDate, nameConsignee, phoneConsignee);
 	        this.status = status;
 	    }
 
@@ -36,6 +40,22 @@ public class Order {
 		super();
 	}
 	
+	public String getNameConsignee() {
+		return nameConsignee;
+	}
+
+	public void setNameConsignee(String nameConsignee) {
+		this.nameConsignee = nameConsignee;
+	}
+
+	public String getPhoneConsignee() {
+		return phoneConsignee;
+	}
+
+	public void setPhoneConsignee(String phoneConsignee) {
+		this.phoneConsignee = phoneConsignee;
+	}
+
 	public String getNote() {
 		return note;
 	}

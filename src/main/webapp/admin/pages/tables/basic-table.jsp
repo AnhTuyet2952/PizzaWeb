@@ -81,7 +81,7 @@
 																<input type="hidden" name="orderId"
 																	value="${order.oderId}"> <input type="submit"
 																	name="action" value="Accept"> <input
-																	type="submit" name="action" value="reject">
+																	type="submit" name="action" value="Reject">
 															</form>
 														</td>
 													</tr>
@@ -93,6 +93,48 @@
 							</div>
 						</div>
 						<jsp:useBean id="orderDAO" class="Database.OrderDAO"></jsp:useBean>
+						<div class="col-lg-6 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Đơn hàng đã từ chối</h4>
+
+									<div class="table-responsive">
+										<table style="border: 1px" class="table table-hover">
+											<thead>
+												<tr>
+													<th>User</th>
+													<th>Product</th>
+													<th>Price</th>
+													<th>Status</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="order" items="${orderDAO.selectRejectOrders()}">
+													<tr>
+														<td>${order.user.username}</td>
+														<td><a
+															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
+														<td class="text-danger">${order.total}<i
+															class="mdi mdi-arrow-down"></i></td>
+														<td><label class="badge badge-danger">${order.status}</label></td>
+														<td><form
+																action="${pageContext.request.contextPath}/confirmOrder"
+																method="post">
+																<input type="hidden" name="orderId"
+																	value="${order.oderId}"> <input
+																	type="submit" name="action" value="delete">
+															</form></td>
+													</tr>
+												</c:forEach>
+
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+							<jsp:useBean id="orderDAO2" class="Database.OrderDAO"></jsp:useBean>
 						<div class="col-lg-6 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
@@ -109,7 +151,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="order" items="${orderDAO.selectAcceptOrders()}">
+												<c:forEach var="order" items="${orderDAO2.selectAcceptOrders()}">
 													<tr>
 														<td>${order.user.username}</td>
 														<td><a

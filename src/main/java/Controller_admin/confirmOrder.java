@@ -30,7 +30,12 @@ public class confirmOrder extends HttpServlet {
 			 order.setStatus("Accept");
 			message = "Order accepted successfully.";
 			System.out.println(order.getStatus());
-		}else if("reject".equals(action)) {
+		}else if("Reject".equals(action)) {
+			orderDAO.UpdateOrderStatus(orderId, "Reject");
+			 order.setStatus("Reject");
+			message = "Order Rejected successfully.";
+			System.out.println(order.getStatus());
+		}else if("delete".equals(action)) {
 			order.setOderId(orderId);
 			int result = orderDAO.rejectOrder(order);
 			  if (result > 0) {

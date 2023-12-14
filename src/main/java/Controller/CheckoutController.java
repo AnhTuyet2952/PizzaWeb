@@ -37,9 +37,9 @@ public class CheckoutController extends HttpServlet {
 	        String address = request.getParameter("Address");
 	        String status = request.getParameter("status");
 	        String note = request.getParameter("note");
-	        String phone = request.getParameter("phone");
-	        String name = request.getParameter("name");
-	        String email = request.getParameter("email");
+	        String phoneConsignee = request.getParameter("phoneConsignee");
+	        String nameConsignee = request.getParameter("nameConsignee");
+//	        String email = request.getParameter("email");
 
 	        String url = "";
 	     // Lấy customer_id từ session
@@ -52,12 +52,12 @@ public class CheckoutController extends HttpServlet {
 	        }
 	        CustomerDAO customerDAO = new CustomerDAO();
 	     // Cập nhật thông tin khách hàng
-	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
-	            customer.setName(name);
-	            customer.setPhoneNumber(phone);
-	            customer.setEmail(email);
-	            customerDAO.update(customer);
-	        }
+//	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
+//	            customer.setName(name);
+//	            customer.setPhoneNumber(phone);
+//	            customer.setEmail(email);
+//	            customerDAO.update(customer);
+//	        }
 	        // Kiểm tra giỏ hàng
 	        Cart cart = (Cart) session.getAttribute("cart");
 
@@ -70,9 +70,11 @@ public class CheckoutController extends HttpServlet {
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
 	        Date currentDateTime = new Date();
-	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()));
+	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), nameConsignee, phoneConsignee);
 
 	        // Thực hiện insert vào cơ sở dữ liệu
+	        order.setNameConsignee(nameConsignee);
+	        order.setPhoneConsignee(phoneConsignee);
 	        order.setNote(note);
 	        order.setAddress(address);
 	        //luu thong tin vao session

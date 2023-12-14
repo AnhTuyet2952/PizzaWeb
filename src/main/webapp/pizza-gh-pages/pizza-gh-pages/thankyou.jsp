@@ -64,17 +64,20 @@
 
 		<!-- End Hero Section -->
 
-		<p>Order Status: ${order.status}</p>
-<c:if test="${order.getStatus() eq 'processing'}">
-    <p>Đơn hàng của bạn đang chờ xử lý. Vui lòng đợi xác nhận.</p>
+
+<jsp:useBean id="orderDAO" class="Database.OrderDAO"></jsp:useBean>
+<c:set var="orderId" value="${sessionScope.order.oderId}" />
+<c:set var="orders" value="${orderDAO.selectById(orderId)}" />
+
+
+<c:if test="${orders.getStatus() eq 'processing'}">
+    <h2 class="display-3 text-black" style="text-align: center;s">Đơn hàng của bạn đang chờ xử lý. Vui lòng đợi xác nhận.</h2>
 </c:if>
-<c:out value="${order.getStatus()}" />
-<c:out value="${order.oderId}" />
+
+<c:if test="${orders.getStatus() eq 'Accept'}">
+
+
 <!-- Trong trang thankyou -->
-<c:if test="${order.getStatus() eq 'Accept'}">
-    <p>Đơn hàng của bạn đã được chấp nhận. Cảm ơn bạn đã mua hàng!</p>
-<c:out value="${order.getStatus()}" />
-<c:out value="${order.oderId}" />
 
 		<div class="untree_co-section">
     <div class="container">
@@ -92,9 +95,8 @@
     <div class="col-md-6" style="text-align: left; font-size: 22px">
         <!-- Thông tin khách hàng -->
         <h2><fmt:message bundle="${bnd}" key="thank.inf.cus"/></h2>
-        <label for="name"> <fmt:message bundle="${bnd}" key="checkout.bill.name"/>: ${customer.getName()}</label><br>
-		<label for="email"> <fmt:message bundle="${bnd}" key="checkout.bill.email"/>: ${customer.getEmail()}</label><br>
-		<label for="phone"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/>: ${customer.getPhoneNumber()}</label><br>
+        <label for="nameConsignee"> <fmt:message bundle="${bnd}" key="checkout.bill.name"/>: ${order.getNameConsignee()}</label><br>
+		<label for="phoneConsignee"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/>: ${order.getPhoneConsignee()}</label><br>
     </div>
 
     <div class="col-md-6" style="text-align: left; font-size: 22px">
@@ -150,8 +152,8 @@
     </div>
   </div>
   </c:if>
-<c:if test="${order.getStatus() eq 'reject'}">
-    <p>Xin lỗi, đơn hàng của bạn đã bị từ chối. Vui lòng liên hệ chăm sóc khách hàng để biết thêm chi tiết.</p>
+<c:if test="${orders.getStatus() eq 'Reject'}">
+    <h2 class="display-3 text-black">Xin lỗi, đơn hàng của bạn đã bị từ chối. Vui lòng liên hệ chăm sóc khách hàng để biết thêm chi tiết.</h2>
 </c:if>
 
 		<!-- Start Footer Section -->
