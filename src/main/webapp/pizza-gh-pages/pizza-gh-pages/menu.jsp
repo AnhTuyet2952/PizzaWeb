@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
 <meta charset="utf-8">

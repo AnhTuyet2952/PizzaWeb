@@ -70,7 +70,7 @@ public class OrderDAO implements DAOInterface<Order> {
 		List<Order> confirmedOrders = new ArrayList<Order>();
 		try {
 			Connection con = JDBCUtil.getConnection();
-			String sql = "SELECT * FROM orders WHERE status = 'processing'";
+			String sql = "SELECT * FROM orders WHERE status like 'processing'";
 			PreparedStatement st = con.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -99,8 +99,11 @@ public class OrderDAO implements DAOInterface<Order> {
 		List<Order> confirmedOrders = new ArrayList<Order>();
 		try {
 			Connection con = JDBCUtil.getConnection();
-			String sql = "SELECT * FROM orders WHERE status = 'Accept'";
+			String sql = "SELECT * FROM orders WHERE status=?";
 			PreparedStatement st = con.prepareStatement(sql);
+			 // Thiết lập giá trị tham số cho truy vấn
+	        st.setString(1, "Accept");
+
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 
@@ -138,17 +141,23 @@ public class OrderDAO implements DAOInterface<Order> {
 //	}
 	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
 	public void UpdateOrderStatus(String orderId, String status) {
-		try {
-			Connection con = JDBCUtil.getConnection();
-			String sql = "UPDATE orders SET status =? WHERE order_id=?";
-			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(1, status);
-			st.setString(2, orderId);
-			st.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    try (Connection con = JDBCUtil.getConnection();
+	         PreparedStatement st = con.prepareStatement("UPDATE orders SET status = ? WHERE order_id = ?")) {
+	        st.setString(1, status);
+	        st.setString(2, orderId);
+
+	        int rowsAffected = st.executeUpdate();
+
+	        if (rowsAffected > 0) {
+	            System.out.println("Order status updated successfully.");
+	        } else {
+	            System.out.println("Failed to update order status.");
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
 //	//phuong thưc cap nhap trang thai cho don hang thành 'rejected'
 //		public void rejectOrder(String orderId) {
 //			try {
@@ -162,26 +171,36 @@ public class OrderDAO implements DAOInterface<Order> {
 //			}
 //		}
     // Phương thức từ chối đơn hàng và xóa dữ liệu
-    public boolean rejectOrder(String orderId) {
+    public int rejectOrder(Order orderId) {
+    	int result = 0;
         String deleteOrder = "DELETE FROM orders WHERE order_id = ?";
-        String deleteOrderDetails = "DELETE FROM order_details WHERE order_id = ?";
+        String deleteOrderDetails = "DELETE FROM orderdetails WHERE order_id = ?";
         try {
         	// tao mot connection
 			Connection con = JDBCUtil.getConnection();
 			PreparedStatement deleteOrderst = con.prepareStatement(deleteOrder);
 			PreparedStatement deleteOrderDetailst = con.prepareStatement(deleteOrderDetails);
-			//xoa don hang
-			deleteOrderst.setString(1, orderId);
-			int rowsDeleteOrder = deleteOrderst.executeUpdate();
+			con.setAutoCommit(false);
 			//xoa chi tiet don hang
-			deleteOrderDetailst.setString(1, orderId);
-			int rowDeleteOrderDetail = deleteOrderDetailst.executeUpdate();
+			deleteOrderDetailst.setString(1, orderId.getOderId());
+			result = deleteOrderDetailst.executeUpdate();
+			//xoa don hang
+			if(result>0) {
+				deleteOrderst.setString(1, orderId.getOderId());
+				result = deleteOrderst.executeUpdate();
+				
+			}
+			 if (result > 0) {
+		            con.commit(); // Commit nếu mọi thứ đều thành công
+		        } else {
+		            con.rollback(); // Rollback nếu có lỗi xảy ra
+		        }
 			//kiem tra co dong nao da duoc xoa hay khong
-			return rowsDeleteOrder>0||rowDeleteOrderDetail>0;
+//			return rowsDeleteOrder>0||rowDeleteOrderDetail>0;
 		} catch (Exception e) {
 			e.printStackTrace(); 
-			return false;
 		}
+        return result;
     }
 
 		

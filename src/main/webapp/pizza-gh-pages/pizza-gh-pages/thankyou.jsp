@@ -61,24 +61,20 @@
 					</div>
 				</div>
 			</div>
+
 		<!-- End Hero Section -->
 
-		<c:if test="${not empty order}">
-    <p>Your order with ID ${order.oderId} has been placed successfully.</p>
-    
-    <c:choose>
-        <c:when test="${order.status eq 'processing'}">
-            <p>Your order is currently being processed. Please wait for confirmation.</p>
-        </c:when>
-        <c:when test="${order.status eq 'Chấp nhận'}">
-            <p>Your order has been accepted. Thank you for your purchase!</p>
-        </c:when>
-        <c:when test="${order.status eq 'Từ chối'}">
-            <p>We're sorry, but your order has been rejected. Please contact customer support for assistance.</p>
-        </c:when>
-    </c:choose>
-    
-
+		<p>Order Status: ${order.status}</p>
+<c:if test="${order.getStatus() eq 'processing'}">
+    <p>Đơn hàng của bạn đang chờ xử lý. Vui lòng đợi xác nhận.</p>
+</c:if>
+<c:out value="${order.getStatus()}" />
+<c:out value="${order.oderId}" />
+<!-- Trong trang thankyou -->
+<c:if test="${order.getStatus() eq 'Accept'}">
+    <p>Đơn hàng của bạn đã được chấp nhận. Cảm ơn bạn đã mua hàng!</p>
+<c:out value="${order.getStatus()}" />
+<c:out value="${order.oderId}" />
 
 		<div class="untree_co-section">
     <div class="container">
@@ -143,6 +139,10 @@
 		              
     </div>
 </div>
+
+
+
+
           
           <p><a href="index.jsp" class="btn btn-primary btn-outline-primary"><fmt:message bundle="${bnd}" key="thank.backtoshop"/></a></p>
         </div>
@@ -150,6 +150,10 @@
     </div>
   </div>
   </c:if>
+<c:if test="${order.getStatus() eq 'reject'}">
+    <p>Xin lỗi, đơn hàng của bạn đã bị từ chối. Vui lòng liên hệ chăm sóc khách hàng để biết thêm chi tiết.</p>
+</c:if>
+
 		<!-- Start Footer Section -->
 <footer class="ftco-footer ftco-section img">
 		<jsp:include page="/pizza-gh-pages/pizza-gh-pages/footer.jsp" />

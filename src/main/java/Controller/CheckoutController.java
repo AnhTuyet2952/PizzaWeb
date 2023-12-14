@@ -70,10 +70,10 @@ public class CheckoutController extends HttpServlet {
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
 	        Date currentDateTime = new Date();
-	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), "processing");
+	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()));
 
 	        // Thực hiện insert vào cơ sở dữ liệu
-	        order.setStatus(status);
+	        order.setNote(note);
 	        order.setAddress(address);
 	        //luu thong tin vao session
 	        session.setAttribute("order", order);
@@ -110,6 +110,8 @@ public class CheckoutController extends HttpServlet {
 	        		 orderDAO.UpdateOrderStatus(order.getOderId(), "processing");
 	        		// Nếu insert thành công, xóa giỏ hàng và chuyển hướng đến trang thankyou
 	        		cart.clearCart();
+	        		System.out.println("Order Status: " + order.getStatus());
+//	        		order.setStatus("Accept");
 	        		request.setAttribute("order", order);
 	        		url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/thankyou.jsp";
 	        		response.sendRedirect(url);

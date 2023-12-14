@@ -45,7 +45,6 @@
 							</ol>
 						</nav>
 					</div>
-					<input type="hidden" name="order_Id" value="${order.orderId}">
 					<div class="row">
 						<div class="col-lg-6 grid-margin stretch-card">
 							<div class="card">
@@ -81,7 +80,7 @@
 																method="post">
 																<input type="hidden" name="orderId"
 																	value="${order.oderId}"> <input type="submit"
-																	name="action" value="accept"> <input
+																	name="action" value="Accept"> <input
 																	type="submit" name="action" value="reject">
 															</form>
 														</td>

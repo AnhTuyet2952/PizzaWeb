@@ -131,6 +131,9 @@
 		              </div>
 		            </div>
 		          </div>
+		          <!-- Trong trang thanh toán -->
+
+
 		          <div class="row mb-5">
 		            <div class="col-md-12">
 		              <h2 class="h3 mb-3 text-black"><fmt:message bundle="${bnd}" key="checkout.order"/></h2>
