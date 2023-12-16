@@ -32,7 +32,7 @@ public class confirmOrder extends HttpServlet {
 	                return;
 	            }
 		}
-		url = "/admin/pages/tables/basin-table.jsp";	
+		url = "/admin/pages/tables/basic-table.jsp";	
    	    response.sendRedirect(request.getContextPath() + url);
 	}
 

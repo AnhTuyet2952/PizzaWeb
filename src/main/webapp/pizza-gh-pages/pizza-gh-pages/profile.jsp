@@ -72,7 +72,7 @@
                                                 <ul class="list-unstyled">
                                                    <li><img src="images/icons8-email-32 (1).png"> : ${customer.email}</li>
                                                    <li><img src="images/icons8-telephone-32.png"> : ${customer.phoneNumber}</li>
-                                                   <li><img src="images/birthday-cake (1).png"> : ${customer.birthday.toString()}</li>
+                                                   <li><img src="images/birthday-cake (1).png"> : ${customer.birthday}</li>
                                                    <li><img src="images/sexual-harassment.png"> : ${customer.sexual}</li>
                                                 </ul>
                                              </div>

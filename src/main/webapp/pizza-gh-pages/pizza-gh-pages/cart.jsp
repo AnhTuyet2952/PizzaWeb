@@ -112,7 +112,7 @@
                              <td>
             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                         <div class="input-group-prepend">
-                        <form action="${pageContext.request.contextPath}/updateQuantity" method="post">
+                        <form class="add-to-cart-form" action="${pageContext.request.contextPath}/updateQuantity" method="post">
                             <input type="hidden" name=idproduct value="${item.product.idProduct}">
                             <input type="hidden" name="quantity" value="${item.quantity - 1}">
                             <button type="submit" class="btn btn-outline-black">-</button>
@@ -120,7 +120,7 @@
                     </div>
                     <input type="text" class="form-control text-center quantity-amount" value="${item.quantity}" readonly>
                     <div class="input-group-append">
-                        <form action="${pageContext.request.contextPath}/updateQuantity" method="post">
+                        <form class="add-to-cart-form" action="${pageContext.request.contextPath}/updateQuantity" method="post">
                             <input type="hidden" name="idproduct" value="${item.product.idProduct}">
                             <input type="hidden" name="quantity" value="${item.quantity + 1}">
                             <button type="submit" class="btn btn-outline-black">+</button>
@@ -129,7 +129,7 @@
             </div>
         </td>
                           <td>${item.product.price*item.quantity}</td>
-                         <td><form action="${pageContext.request.contextPath}/removeItem" method="post">
+                         <td><form class="add-to-cart-form" action="${pageContext.request.contextPath}/removeItem" method="post">
                          <input type="hidden" name="productId" value="${item.product.idProduct}">
                          
                           <button type="submit" class="btn btn-black btn-sm">X</button>
@@ -244,4 +244,27 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
+<script>
+         $(document).ready(function () {
+                $(".add-to-cart-form").on("submit", function (event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    $.ajax({
+                        type: "POST",
+                        url: form.attr("action"),
+                        data: form.serialize(),
+                        success: function (data) {
+                           alert("Đã đặt hàng thành công!");
+                           var currentQuantity = parseInt($(".cart-item-count").text(), 10);
+                           var newQuantity = currentQuantity + 1;
+                           $(".cart-item-count").text(newQuantity);
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                            alert("Đã đặt lỗi");
+                        }
+                    });
+                });
+            });
+     </script> 
 </html>

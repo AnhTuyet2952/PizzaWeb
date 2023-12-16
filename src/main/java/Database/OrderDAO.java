@@ -99,7 +99,7 @@ public class OrderDAO implements DAOInterface<Order> {
 		List<Order> confirmedOrders = new ArrayList<Order>();
 		try {
 			Connection con = JDBCUtil.getConnection();
-			String sql = "SELECT * FROM orders WHERE status = 'Accept'";
+			String sql = "SELECT * FROM pizza.orders WHERE status = 'Accept'";
 			PreparedStatement st = con.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -362,5 +362,12 @@ public class OrderDAO implements DAOInterface<Order> {
 		}
 		return result;
 	}
-
+public static void main(String[] args) {
+	OrderDAO OD = new OrderDAO();
+	List<Order> selectAcceptOrders = OD.selectAcceptOrders();
+	for (int i = 0; i < selectAcceptOrders.size(); i++) {
+		System.out.println(selectAcceptOrders.get(i).getOderId());
+	}
+	
+}
 }

@@ -51,10 +51,12 @@ public class Login extends HttpServlet {
 
 
         if(user!=null) {
-       	 HttpSession session = request.getSession();
-       	 session.setAttribute("admin", user);
-       	 url = "/admin/index.jsp";
-       	 response.sendRedirect(request.getContextPath() + url);
+        	//username cua admin la tdn
+        	 HttpSession session = request.getSession();
+        	    session.setAttribute("admin", user);
+        	    session.setAttribute("admin", true);
+        	    url = "/admin/index.jsp";
+        	    response.sendRedirect(request.getContextPath() + url);
            
        	 
         }else {
@@ -65,6 +67,7 @@ public class Login extends HttpServlet {
              if(customer!=null) {
             	 HttpSession session = request.getSession();
             	 session.setAttribute("customer", customer);
+            	 session.setMaxInactiveInterval(1000000000);
             	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
             	 response.sendRedirect(request.getContextPath() + url);
                 

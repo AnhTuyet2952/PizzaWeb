@@ -55,6 +55,7 @@
 										<table class="table">
 											<thead>
 												<tr>
+												   <th>Time Order</th>
 													<th>User</th>
 													<th>Product</th>
 													<th>Price</th>
@@ -68,6 +69,7 @@
 												<c:forEach var="order"
 													items="${orderDAO1.selectConfirmedOrders()}">
 													<tr>
+													    <td>${order.bookingDate.toString()}</td>
 														<td>${order.user.username}</td>
 														<td><a
 															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
@@ -76,13 +78,9 @@
 														<td><label class="badge badge-danger">${order.status}</label>
 														</td>
 														<td>
-															<form
-																action="${pageContext.request.contextPath}/confirmOrder"
-																method="post">
-																<input type="hidden" name="orderId"
-																	value="${order.oderId}"> <input type="submit"
-																	name="action" value="accept"> <input
-																	type="submit" name="action" value="reject">
+															<form action="${pageContext.request.contextPath}/confirmOrder" method="post">
+																<input type="hidden" name="orderId" value="${order.oderId}"> <input type="submit" name="action" value="accept">
+																 <input type="submit" name="action" value="reject">
 															</form>
 														</td>
 													</tr>
@@ -103,18 +101,20 @@
 										<table style="border: 1px" class="table table-hover">
 											<thead>
 												<tr>
+												    <th>Time Order</th>
 													<th>User</th>
 													<th>Product</th>
 													<th>Price</th>
 													<th>Status</th>
+													
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="order" items="${orderDAO.selectAcceptOrders()}">
 													<tr>
+													    <td>${order.bookingDate.toString()}</td>
 														<td>${order.user.username}</td>
-														<td><a
-															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
+														<td><a href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
 														<td class="text-danger">${order.total}<i
 															class="mdi mdi-arrow-down"></i></td>
 														<td><label class="badge badge-danger">${order.status}</label></td>

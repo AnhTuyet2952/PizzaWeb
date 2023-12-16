@@ -1,6 +1,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.security.Principal" %>
+<%@ page import="java.util.Arrays" %>
+
+<!-- partial
+<c:choose>
+ <c:when test="${empty admin.username}">
+
+   
+     <h3>Vui lòng đăng nhập để chuyển đến trang quản lý</h3>
+     <a href="${pageContext.request.contextPath}/pizza-gh-pages/pizza-gh-pages/login.jsp">Log out</a>
+   
+ </c:when >
+ <c:otherwise> -->
+
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 	<div
 		class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
@@ -147,3 +161,6 @@
 </nav>
 
 <!-- partial -->
+ <!--</c:otherwise>
+</c:choose>-->
+

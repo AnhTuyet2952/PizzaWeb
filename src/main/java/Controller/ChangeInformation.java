@@ -66,12 +66,12 @@ public class ChangeInformation extends HttpServlet {
 
 		 }
 		 
-		 if(customerDAO.selectByEmail(email)) {
+		 if(customerDAO.selectByEmail(email)&& !(customer.getEmail().equals(email))) {
 				eb.setError("ten email da ton tai, vui long chon email khac");
 				request.setAttribute("name", "");
 				request.setAttribute("errorBean", eb);
 				error+=eb.getError();
-				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";
 	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
 	            return;
 
