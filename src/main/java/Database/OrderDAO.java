@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Customer;
+import Model.User;
 import Model.Order;
 
 
@@ -44,7 +44,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			while (rs.next()) {
 
 				String orderId = rs.getString("order_id");
-				String idCustomer = rs.getString("customer_id");
+				String idCustomer = rs.getString("user_id");
 				String addredd = rs.getString("Address");
 				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
@@ -53,7 +53,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
 
-				Customer user = new CustomerDAO().selectById(idCustomer);
+				User user = new UserDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
 				
 
@@ -79,7 +79,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			while (rs.next()) {
 
 				String orderId = rs.getString("order_id");
-				String idCustomer = rs.getString("customer_id");
+				String idCustomer = rs.getString("user_id");
 				String addredd = rs.getString("Address");
 				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
@@ -88,7 +88,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
 
-				Customer user = new CustomerDAO().selectById(idCustomer);
+				User user = new UserDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
 				
 
@@ -114,7 +114,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			while (rs.next()) {
 
 				String orderId = rs.getString("order_id");
-				String idCustomer = rs.getString("customer_id");
+				String idCustomer = rs.getString("user_id");
 				String addredd = rs.getString("Address");
 				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
@@ -123,7 +123,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
 
-				Customer user = new CustomerDAO().selectById(idCustomer);
+				User user = new UserDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
 				
 
@@ -149,7 +149,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			while (rs.next()) {
 
 				String orderId = rs.getString("order_id");
-				String idCustomer = rs.getString("customer_id");
+				String idCustomer = rs.getString("user_id");
 				String addredd = rs.getString("Address");
 				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
@@ -158,7 +158,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
 
-				Customer user = new CustomerDAO().selectById(idCustomer);
+				User user = new UserDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
 				
 
@@ -230,7 +230,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				Connection con = JDBCUtil.getConnection();
 
 				// tao cau lenh sql
-				String sql = "SELECT * FROM orders WHERE customer_id=?";
+				String sql = "SELECT * FROM orders WHERE user_id=?";
 
 				PreparedStatement st = con.prepareStatement(sql);
 	            st.setString(1, customerId);
@@ -241,7 +241,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				while (rs.next()) {
 
 					String orderId = rs.getString("order_id");
-					String idCustomer = rs.getString("customer_id");
+					String idCustomer = rs.getString("user_id");
 					String addredd = rs.getString("Address");
 					String note = rs.getString("note");
 					Double total = rs.getDouble("total");
@@ -250,7 +250,7 @@ public class OrderDAO implements DAOInterface<Order> {
 					String nameConsignee = rs.getString("nameConsignee");
 					String phoneConsignee = rs.getString("phoneConsignee");
 
-					Customer user = new CustomerDAO().selectById(idCustomer);
+					User user = new UserDAO().selectById(idCustomer);
 					Order order = new Order(orderId, user, addredd, note, total, bookingDate,status,nameConsignee,phoneConsignee);
 
 					result.add(order);
@@ -280,7 +280,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				String idOrder = rs.getString("order_id");
-				String idCustomer = rs.getString("customer_id");
+				String idCustomer = rs.getString("user_id");
 				String address = rs.getString("Address");
 				String note = rs.getString("note");
 				Double total = rs.getDouble("total");
@@ -289,7 +289,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
 
-				Customer user = new CustomerDAO().selectById(idCustomer);
+				User user = new UserDAO().selectById(idCustomer);
 
 				result = new Order(idOrder, user, address, note, total, bookingDate, status,nameConsignee,phoneConsignee);
 
@@ -310,13 +310,13 @@ public class OrderDAO implements DAOInterface<Order> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = " INSERT INTO orders(order_id, customer_id, Address, note, total, booking_date, status, nameConsignee, phoneConsignee)"
+			String sql = " INSERT INTO orders(order_id, user_id, Address, note, total, booking_date, status, nameConsignee, phoneConsignee)"
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			
 			rs.setString(1, order.getOderId());
-			rs.setString(2, order.getUser().getCustomerId());
+			rs.setString(2, order.getUser().getUserId());
 			rs.setString(3, order.getAddress());
 			rs.setString(4, order.getNote());
 			rs.setDouble(5, order.getTotal());
@@ -386,12 +386,12 @@ public class OrderDAO implements DAOInterface<Order> {
 			try {
 				Connection con = JDBCUtil.getConnection();
 
-				String sql = "UPDATE orders SET  customer_id=? " + ", Address=? " + ", note=? " + ", total=? "
+				String sql = "UPDATE orders SET  user_id=? " + ", Address=? " + ", note=? " + ", total=? "
 						+ ", booking_date=? " + "WHERE order_id =?" + "status=?" + "nameConsignee=?" + "phoneConsignee=?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
 
-				rs.setString(1, order.getUser().getCustomerId());
+				rs.setString(1, order.getUser().getUserId());
 				rs.setString(2, order.getAddress());
 				rs.setString(3, order.getNote());
 				rs.setDouble(4, order.getTotal());

@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import Model.Customer;
+import Model.User;
 import Model.Order;
 import Model.OrderDetail;
 import Model.Product;

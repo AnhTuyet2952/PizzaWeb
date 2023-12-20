@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Beans.ErrorBean;
-import Database.CustomerDAO;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 import util.PasswordEncryption;
 
 @WebServlet("/changePassword")
@@ -35,8 +35,8 @@ public class ChangePassword extends HttpServlet {
 	
 		password = PasswordEncryption.toSHA1(password);
 		newPassword = PasswordEncryption.toSHA1(newPassword);
-		CustomerDAO customerDAO = new CustomerDAO();
-		Customer customer = customerDAO.selectByUsernamePassword(username, password);
+		UserDAO customerDAO = new UserDAO();
+		User customer = customerDAO.selectByUsernamePassword(username, password);
 		System.out.println(customer);
 		String url="";
 		if(customer!=null) {

@@ -10,7 +10,7 @@ import java.sql.Date;
  */
 public class Order {
 	private String oderId;
-	private Customer user;
+	private User user;
 	private String address;
 	private String note;
 	private double total;
@@ -18,7 +18,7 @@ public class Order {
 	private String status ; //processing: dang xu ly, accept: chap nhan, reject:tu choi
 	private String nameConsignee; //ten nguoi nhan hang
 	private String phoneConsignee; //so dien thoai cua nguoi nhan
-	  public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String nameConsignee, String phoneConsignee) {
+	  public Order(String i, User user, String address, String note, double total, Date bookingDate, String nameConsignee, String phoneConsignee) {
 	        this.oderId = i;
 	        this.user = user;
 	        this.address = address;
@@ -31,7 +31,7 @@ public class Order {
 	    }
 
 	    // Constructor cho việc sửa đổi status
-	    public Order(String i, Customer user, String address, String note, double total, Date bookingDate, String status, String nameConsignee, String phoneConsignee) {
+	    public Order(String i, User user, String address, String note, double total, Date bookingDate, String status, String nameConsignee, String phoneConsignee) {
 	        this(i, user, address, note, total, bookingDate, nameConsignee, phoneConsignee);
 	        this.status = status;
 	    }
@@ -70,11 +70,11 @@ public class Order {
 		this.oderId = oderId;
 	}
 	
-	public Customer getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Customer user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

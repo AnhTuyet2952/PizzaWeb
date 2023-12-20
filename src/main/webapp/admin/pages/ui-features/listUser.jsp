@@ -26,7 +26,7 @@
 </head>
 <body>
 
-  <jsp:useBean id="customer" class="Database.CustomerDAO"></jsp:useBean>
+  <jsp:useBean id="customer" class="Database.UserDAO"></jsp:useBean>
 
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->

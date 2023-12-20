@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.CustomerDAO;
+import Database.UserDAO;
 import Database.OrderDAO;
 import Database.OrderDetailDAO;
 import Model.Order;
