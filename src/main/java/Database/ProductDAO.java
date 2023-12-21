@@ -24,13 +24,7 @@ public class ProductDAO implements DAOInterface<Product> {
 	public int createId() {
 		return data.size();
 	}
-//	 // Thêm một trường để lưu giá trị ngôn ngữ
-    private String language;
-//
-//    public ProductDAO(String language) {
-//        this.language = language;
-//    }
-//	@Override
+
     public ArrayList<Product> selectAllLanguage(String lang) {
         try {
             Connection con = JDBCUtil.getConnection();

@@ -256,7 +256,8 @@ public class OrderDAO implements DAOInterface<Order> {
 					result.add(order);
 
 				}
-
+				st.close();
+				rs.close();
 				JDBCUtil.closeConnection(con);
 
 			} catch (Exception e) {

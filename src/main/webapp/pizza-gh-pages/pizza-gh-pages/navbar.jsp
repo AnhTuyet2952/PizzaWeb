@@ -118,10 +118,15 @@
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Assistant</p>
 									</a>
-									</a> <a href="thankyou.jsp"
+									<a href="thankyou.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Đơn đặt hàng</p>
+									</a>
+									<a href="order.jsp"
+										class="d-flex align-items-center gap-2 dropdown-item"> <i
+										class="ti ti-list-check fs-6"></i>
+										<p class="mb-0 fs-3">Đơn đặt hàng2</p>
 									</a>
 									<c:url var="logoutUrl" value="/logout" />
 									<a href="${logoutUrl}"
