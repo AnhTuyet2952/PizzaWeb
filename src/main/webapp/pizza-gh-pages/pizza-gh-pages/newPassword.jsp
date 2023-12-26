@@ -77,7 +77,7 @@
                     <label for="agree" class="form-label">Agree to <a>the company's terms</a></label>
                     
                   </div>
-                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="Sign Up" style="display : hidden;">
+                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="Change" style="display : hidden;">
                   
                   <div class="d-flex align-items-center justify-content-center">
                     <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>

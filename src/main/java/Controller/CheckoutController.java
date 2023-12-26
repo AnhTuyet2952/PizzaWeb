@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Database.CustomerDAO;
+import Database.UserDAO;
 import Database.OrderDAO;
 import Database.OrderDetailDAO;
 import Database.ProductDAO;
 import Model.Cart;
 import Model.Cart_item;
-import Model.Customer;
+import Model.User;
 import Model.Order;
 import Model.OrderDetail;
 import Model.Product;
@@ -37,27 +37,27 @@ public class CheckoutController extends HttpServlet {
 	        String address = request.getParameter("Address");
 	        String status = request.getParameter("status");
 	        String note = request.getParameter("note");
-	        String phone = request.getParameter("phone");
-	        String name = request.getParameter("name");
-	        String email = request.getParameter("email");
+	        String phoneConsignee = request.getParameter("phoneConsignee");
+	        String nameConsignee = request.getParameter("nameConsignee");
+//	        String email = request.getParameter("email");
 
 	        String url = "";
 	     // Lấy customer_id từ session
 	        HttpSession session = request.getSession();
-	        Customer customer = (Customer) session.getAttribute("customer");
+	        User customer = (User) session.getAttribute("customer");
 	     //kt dang nhap
 	        if (customer == null) {
 	        	response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp");
 	        	return;
 	        }
-	        CustomerDAO customerDAO = new CustomerDAO();
+	        UserDAO customerDAO = new UserDAO();
 	     // Cập nhật thông tin khách hàng
-	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
-	            customer.setName(name);
-	            customer.setPhoneNumber(phone);
-	            customer.setEmail(email);
-	            customerDAO.update(customer);
-	        }
+//	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
+//	            customer.setName(name);
+//	            customer.setPhoneNumber(phone);
+//	            customer.setEmail(email);
+//	            customerDAO.update(customer);
+//	        }
 	        // Kiểm tra giỏ hàng
 	        Cart cart = (Cart) session.getAttribute("cart");
 
@@ -70,10 +70,12 @@ public class CheckoutController extends HttpServlet {
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
 	        Date currentDateTime = new Date();
-	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), "processing");
+	        Order order = new Order(orderDAO.creatId()+"", customer, address, note, cart.calculateTotal(), new java.sql.Date(currentDateTime.getTime()), nameConsignee, phoneConsignee);
 
 	        // Thực hiện insert vào cơ sở dữ liệu
-	        order.setStatus(status);
+	        order.setNameConsignee(nameConsignee);
+	        order.setPhoneConsignee(phoneConsignee);
+	        order.setNote(note);
 	        order.setAddress(address);
 	        //luu thong tin vao session
 	        session.setAttribute("order", order);
@@ -110,6 +112,8 @@ public class CheckoutController extends HttpServlet {
 	        		 orderDAO.UpdateOrderStatus(order.getOderId(), "processing");
 	        		// Nếu insert thành công, xóa giỏ hàng và chuyển hướng đến trang thankyou
 	        		cart.clearCart();
+	        		System.out.println("Order Status: " + order.getStatus());
+//	        		order.setStatus("Accept");
 	        		request.setAttribute("order", order);
 	        		url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/thankyou.jsp";
 	        		response.sendRedirect(url);

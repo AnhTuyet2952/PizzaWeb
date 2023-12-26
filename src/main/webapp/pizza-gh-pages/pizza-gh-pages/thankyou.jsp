@@ -61,24 +61,23 @@
 					</div>
 				</div>
 			</div>
+
 		<!-- End Hero Section -->
 
-		<c:if test="${not empty order}">
-    <p>Your order with ID ${order.oderId} has been placed successfully.</p>
-    
-    <c:choose>
-        <c:when test="${order.status eq 'processing'}">
-            <p>Your order is currently being processed. Please wait for confirmation.</p>
-        </c:when>
-        <c:when test="${order.status eq 'Chấp nhận'}">
-            <p>Your order has been accepted. Thank you for your purchase!</p>
-        </c:when>
-        <c:when test="${order.status eq 'Từ chối'}">
-            <p>We're sorry, but your order has been rejected. Please contact customer support for assistance.</p>
-        </c:when>
-    </c:choose>
-    
 
+<jsp:useBean id="orderDAO" class="Database.OrderDAO"></jsp:useBean>
+<c:set var="orderId" value="${sessionScope.order.oderId}" />
+<c:set var="orders" value="${orderDAO.selectById(orderId)}" />
+
+
+<c:if test="${orders.getStatus() eq 'processing'}">
+    <h2 class="display-3 text-black" style="text-align: center;s">Đơn hàng của bạn đang chờ xử lý. Vui lòng đợi xác nhận.</h2>
+</c:if>
+
+<c:if test="${orders.getStatus() eq 'Accept'}">
+
+
+<!-- Trong trang thankyou -->
 
 		<div class="untree_co-section">
     <div class="container">
@@ -96,9 +95,8 @@
     <div class="col-md-6" style="text-align: left; font-size: 22px">
         <!-- Thông tin khách hàng -->
         <h2><fmt:message bundle="${bnd}" key="thank.inf.cus"/></h2>
-        <label for="name"> <fmt:message bundle="${bnd}" key="checkout.bill.name"/>: ${customer.getName()}</label><br>
-		<label for="email"> <fmt:message bundle="${bnd}" key="checkout.bill.email"/>: ${customer.getEmail()}</label><br>
-		<label for="phone"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/>: ${customer.getPhoneNumber()}</label><br>
+        <label for="nameConsignee"> <fmt:message bundle="${bnd}" key="checkout.bill.name"/>: ${order.getNameConsignee()}</label><br>
+		<label for="phoneConsignee"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/>: ${order.getPhoneConsignee()}</label><br>
     </div>
 
     <div class="col-md-6" style="text-align: left; font-size: 22px">
@@ -115,7 +113,10 @@
         <th><fmt:message bundle="${bnd}" key="checkout.total"/></th>
     </thead>
     <tbody>
-        <c:forEach var="item" items="${sessionScope.orderDetails}">
+    <jsp:useBean id="orderDetailDAO" class="Database.OrderDetailDAO"></jsp:useBean>
+<c:set var="orderId" value="${sessionScope.order.oderId}" />
+<c:set var="orderDetails" value="${orderDetailDAO.selectByOrderId(orderId)}" />
+        <c:forEach var="item" items="${orderDetails}">
             <c:set var="itemTotal" value="${item.products.price * item.quantity}" />
             <tr>
                 <td>
@@ -143,6 +144,10 @@
 		              
     </div>
 </div>
+
+
+
+
           
           <p><a href="index.jsp" class="btn btn-primary btn-outline-primary"><fmt:message bundle="${bnd}" key="thank.backtoshop"/></a></p>
         </div>
@@ -150,6 +155,10 @@
     </div>
   </div>
   </c:if>
+<c:if test="${orders.getStatus() eq 'Reject'}">
+    <h2 class="display-3 text-black">Xin lỗi, đơn hàng của bạn đã bị từ chối. Vui lòng liên hệ chăm sóc khách hàng để biết thêm chi tiết.</h2>
+</c:if>
+
 		<!-- Start Footer Section -->
 <footer class="ftco-footer ftco-section img">
 		<jsp:include page="/pizza-gh-pages/pizza-gh-pages/footer.jsp" />

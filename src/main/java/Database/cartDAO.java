@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import Model.Cart;
 import Model.Category;
-import Model.Customer;
+import Model.User;
 import Model.Product;
 
 public class cartDAO implements DAOInterface<Cart> {
@@ -35,10 +35,10 @@ public class cartDAO implements DAOInterface<Cart> {
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				String cartId = rs.getString("cart_id");
-				String customerId = rs.getString("customer_id");
+				String customerId = rs.getString("user_id");
 				Date buydate = rs.getDate("buyDate");
 
-				Customer customer = new CustomerDAO().selectById(customerId);
+				User customer = new UserDAO().selectById(customerId);
 				Cart cart = new Cart(cartId, customer, buydate);
 				data.add(cart);
 			}
@@ -63,10 +63,10 @@ public class cartDAO implements DAOInterface<Cart> {
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				String cartId = rs.getString("cart_id");
-				String customerId = rs.getString("customer_id");
+				String customerId = rs.getString("user_id");
 				Date buydate = rs.getDate("buyDate");
 
-				Customer customer = new CustomerDAO().selectById(customerId);
+				User customer = new UserDAO().selectById(customerId);
 				result = new Cart(cartId, customer, buydate);
 				JDBCUtil.closeConnection(con);
 			}
@@ -82,11 +82,11 @@ public class cartDAO implements DAOInterface<Cart> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "INSERT INTO carts(cart_id, customer_id, buyDate)" + "VALUE(?, ?, ?)";
+			String sql = "INSERT INTO carts(cart_id, user_id, buyDate)" + "VALUE(?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			rs.setString(1, t.getCartId());
-			rs.setString(2, t.getBuyer().getCustomerId());
+			rs.setString(2, t.getBuyer().getUserId());
 			rs.setDate(3, t.getBuyDate());
 
 			result = rs.executeUpdate();
@@ -148,10 +148,10 @@ public class cartDAO implements DAOInterface<Cart> {
 			try {
 				Connection con = JDBCUtil.getConnection();
 
-				String sql = "UPDATE carts SET customer_id=?, buyDate=? WHERE cart_id=?";
+				String sql = "UPDATE carts SET user_id=?, buyDate=? WHERE cart_id=?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
-				rs.setString(1, t.getBuyer().getCustomerId());
+				rs.setString(1, t.getBuyer().getUserId());
 				rs.setDate(2, t.getBuyDate());
 				rs.setString(3, t.getCartId());
 

@@ -12,10 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Beans.ErrorBean;
-import Database.CustomerDAO;
-import Database.AdminDAO;
-import Model.Admin;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 import util.PasswordEncryption;
 
 @WebServlet("/login")
@@ -44,42 +42,45 @@ public class Login extends HttpServlet {
 			request.setAttribute("e_password", "chua nhap mat khau");
 		}
 		
-		AdminDAO adminDAO =  new AdminDAO();
-		Admin user = adminDAO.selectByUsernamePassword(username, password);
+		UserDAO test =  new UserDAO();
+		 User user = test.selectByUsernamePassword(username, password);
+        System.out.println("nguoi dung: "+ username);
 	
 		String url="";
 
 
         if(user!=null) {
-       	 HttpSession session = request.getSession();
-       	 session.setAttribute("admin", user);
-       	 url = "/admin/index.jsp";
-       	 response.sendRedirect(request.getContextPath() + url);
-           
+        	 HttpSession session = request.getSession();
+        	 session.setMaxInactiveInterval(30*60);
+        	if(user.getRole_id()==1) {
+        		 
+        		 session.setAttribute("customer", user);
+               	 session.setAttribute("admin", user);
+                	url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
+               	 response.sendRedirect(request.getContextPath() + url);
+                   
+        	}else {
+            	
+                if(user!=null) {
+               	 session.setAttribute("customer", user);
+               	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
+               	 response.sendRedirect(request.getContextPath() + url);
+                   
+               	 
+                }
+           }
+       	
        	 
         }else {
-        	 CustomerDAO test =  new CustomerDAO();
-    		 Customer customer = test.selectByUsernamePassword(username, password);
-
-
-             if(customer!=null) {
-            	 HttpSession session = request.getSession();
-            	 session.setAttribute("customer", customer);
-            	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
-            	 response.sendRedirect(request.getContextPath() + url);
-                
-            	 
-             }else {
-            	 request.setAttribute("Error", "ten dang nhap hoac mat khau chua chinh xac!");
-            	 ErrorBean eb = new ErrorBean();
-            	 eb.setError((String)request.getAttribute("Error"));
-            	 request.setAttribute("errorBean", eb);
-            	 
-            	 url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
-                 response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
-                 return;
-             }
-        }
+          	 request.setAttribute("Error", "ten dang nhap hoac mat khau chua chinh xac!");
+          	 ErrorBean eb = new ErrorBean();
+          	 eb.setError((String)request.getAttribute("Error"));
+          	 request.setAttribute("errorBean", eb);
+          	 
+          	 url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+               response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+               return;
+           }
 		
 		
 		

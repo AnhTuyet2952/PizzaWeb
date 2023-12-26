@@ -38,7 +38,7 @@
 				<jsp:include page="/admin/fixed-top.jsp" />
 				<!-- partial -->
 
-				<jsp:useBean id="customerDao" class="Database.CustomerDAO"></jsp:useBean>
+				<jsp:useBean id="customerDao" class="Database.UserDAO"></jsp:useBean>
 				<jsp:useBean id="orderDao" class="Database.OrderDAO"></jsp:useBean>
 
 				<jsp:useBean id="orderDetailDao" class="Database.OrderDetailDAO"></jsp:useBean>

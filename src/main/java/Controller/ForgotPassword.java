@@ -22,8 +22,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptorMBean;
 
 import Beans.ErrorBean;
-import Database.CustomerDAO;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 import util.Email;
 
 /**
@@ -59,11 +59,11 @@ public class ForgotPassword extends HttpServlet {
 		String email = request.getParameter("email");
 	
 		
-		CustomerDAO customerDAO = new CustomerDAO();
-		Customer customer = customerDAO.selectByEmail2(email);
+		UserDAO customerDAO = new UserDAO();
+		User customer = customerDAO.selectByEmail2(email);
 		if(customer!=null) {
 			HttpSession mySession = request.getSession();
-			mySession.setAttribute("customerId", customer.getCustomerId());
+			mySession.setAttribute("customerId", customer.getUserId());
 			
 			int otpvalue = 0;
 			

@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Beans.ErrorBean;
-import Database.AdminDAO;
-import Database.CustomerDAO;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 
 /**
  * Servlet implementation class ChangeInformation
@@ -36,7 +35,7 @@ public class ChangeInformation extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		HttpSession sesion  = request.getSession();
-		String id = request.getParameter("customerId");
+		String id = request.getParameter("user_id");
 		System.out.println("id: "+id);
 		String username = request.getParameter("username");
 		String sexual = request.getParameter("gender");
@@ -49,13 +48,20 @@ public class ChangeInformation extends HttpServlet {
 
 		String url="";
 		String error = "";
-		
-		CustomerDAO customerDAO = new CustomerDAO();
-		Customer customer = customerDAO.selectById(id);
-		
-		AdminDAO userDAO = new AdminDAO();
 		ErrorBean eb = new ErrorBean();
-		 if((customerDAO.selectByUsername(username)&&!customer.getUsername().equals(username))||userDAO.selectByUsername(username)) {
+		
+		
+		UserDAO customerDAO = new UserDAO();
+		User customer = customerDAO.selectById(id);
+		
+		if(customer==null) {
+			eb.setError("Vui long dang nhap de sua thong tin ca nhan");
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+		}
+		
+		
+		 if(customerDAO.selectByUsername(username)&&!customer.getUsername().equals(username)) {
 			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
 			request.setAttribute("name", "");
 			request.setAttribute("errorBean", eb);

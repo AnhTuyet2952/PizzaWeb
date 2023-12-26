@@ -81,8 +81,8 @@
 		          <div class="p-3 p-lg-5 border bg-white">
 		            <div class="form-group row">
 		              <div class="col-md-6">
-		                <label for="name" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.name"/><span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="name" name="name" required="required">
+		                <label for="nameConsignee" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.name"/><span class="text-danger">*</span></label>
+		                <input type="text" class="form-control" id="nameConsignee" name="nameConsignee" required="required">
 		              </div>
 		            </div>
 	        
@@ -99,12 +99,8 @@
 
 		            <div class="form-group row mb-5">
 		              <div class="col-md-6">
-		                <label for="email" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.email"/><span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="email" name="email" required="required">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="phone" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/><span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="phone" name="phone" required="required">
+		                <label for="phoneConsignee" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.phone"/><span class="text-danger">*</span></label>
+		                <input type="text" class="form-control" id="phoneConsignee" name="phoneConsignee" required="required">
 		              </div>
 		            </div>	      
 		            <div class="form-group">
@@ -131,6 +127,9 @@
 		              </div>
 		            </div>
 		          </div>
+		          <!-- Trong trang thanh toán -->
+
+
 		          <div class="row mb-5">
 		            <div class="col-md-12">
 		              <h2 class="h3 mb-3 text-black"><fmt:message bundle="${bnd}" key="checkout.order"/></h2>

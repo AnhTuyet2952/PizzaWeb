@@ -26,7 +26,7 @@
 </head>
 <body>
 
-  <jsp:useBean id="customer" class="Database.CustomerDAO"></jsp:useBean>
+  <jsp:useBean id="customer" class="Database.UserDAO"></jsp:useBean>
 
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
@@ -75,9 +75,9 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${customer.selectAll()}" var="customer">
+												<c:forEach items="${customer.selectCustomer()}" var="customer">
 													<tr class="odd gradeX">
-														<td>${customer.customerId}</td>
+														<td>${customer.userId}</td>
 														<c:url value="/image?fname=${customer.avatar }" var="imgUrl"></c:url>
 														<td><img height="150" width="200" src="${imgUrl}" /></td>
 
@@ -87,7 +87,7 @@
 														<td>${customer.sexual }</td>
 														<td>${customer.email}</td>
 														<td>${customer.phoneNumber }</td>
-														<td><a href="${pageContext.request.contextPath}/userDetail?id=${customer.customerId }">${customer.customerId }</a></td>
+														<td><a href="${pageContext.request.contextPath}/userDetail?id=${customer.userId }">${customer.userId }</a></td>
 														
 
 													</tr>

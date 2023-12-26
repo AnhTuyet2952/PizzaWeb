@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Cart {
 	private String cartId;
-    private Customer buyer;
+    private User buyer;
     private Date buyDate;
     private List<Cart_item> cart_items; 
-	public Cart(String cartId, Customer buyer, Date buyDate) {
+	public Cart(String cartId, User buyer, Date buyDate) {
 		super();
 		this.cartId = cartId;
 		this.buyer = buyer;
@@ -30,10 +30,10 @@ public class Cart {
 	public void setCart_items(List<Cart_item> cart_items) {
 		this.cart_items = cart_items;
 	}
-	public Customer getBuyer() {
+	public User getBuyer() {
 		return buyer;
 	}
-	public void setBuyer(Customer buyer) {
+	public void setBuyer(User buyer) {
 		this.buyer = buyer;
 	}
 	public String getCartId() {

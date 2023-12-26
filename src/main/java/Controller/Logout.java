@@ -27,11 +27,18 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		session.removeAttribute("customer");
-		session.invalidate();
+		HttpSession session = request.getSession();
+		if (session != null) {
+	        // Xóa đối tượng "customer" khỏi phiên làm việc
+//			session.setAttribute("customer", null);
+//			session.setAttribute("admin", null);
+//	        session.removeAttribute("customer");
+//	        
+	        // Hủy phiên làm việc
+	        session.invalidate();
+	    }
 		
-		String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+		String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/index.jsp";
 		response.sendRedirect(url);
 	}
 

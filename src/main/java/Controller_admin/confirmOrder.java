@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Database.OrderDAO;
+import Model.Order;
 
 /**
  * Servlet implementation class confirmOrder
@@ -21,18 +22,32 @@ public class confirmOrder extends HttpServlet {
 		String orderId = request.getParameter("orderId");
 		String action = request.getParameter("action");
 		String url = "";
-		if("confirm".equals(action)) {
-			orderDAO.UpdateOrderStatus(orderId, "Chấp nhận");
-		}else if("reject".equals(action)) {
-//			orderDAO.rejectOrder(orderId);
-			boolean reject = orderDAO.rejectOrder(orderId);
-			 if (!reject) {
-	                // Xử lý khi từ chối đơn hàng không thành công
-	                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to reject order");
-	                return;
+		String message = "";
+		Order order = new Order();
+		if("Accept".equals(action)) {
+//			order.setStatus("Accept");
+			orderDAO.UpdateOrderStatus(orderId, "Accept");
+			 order.setStatus("Accept");
+			message = "Order accepted successfully.";
+			System.out.println(order.getStatus());
+		}else if("Reject".equals(action)) {
+			orderDAO.UpdateOrderStatus(orderId, "Reject");
+			 order.setStatus("Reject");
+			message = "Order Rejected successfully.";
+			System.out.println(order.getStatus());
+		}else if("delete".equals(action)) {
+			order.setOderId(orderId);
+			int result = orderDAO.rejectOrder(order);
+			  if (result > 0) {
+	                message = "Order rejected successfully.";
+	            } else {
+	                message = "Failed to reject order. Please try again.";
 	            }
 		}
-		url = "/admin/pages/tables/basin-table.jsp";	
+		request.setAttribute("order", order);
+		request.setAttribute("action", action);
+		 request.setAttribute("message", message);
+		url = "/admin/pages/tables/basic-table.jsp";	
    	    response.sendRedirect(request.getContextPath() + url);
 	}
 
