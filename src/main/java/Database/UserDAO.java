@@ -216,7 +216,7 @@ public class UserDAO implements DAOInterface<User> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "INSERT INTO pizza.users(user_id, username, password ,name, birthday, sexual,phoneNumber, email, avatar, role_id)"
+			String sql = "INSERT INTO pizza.users(user_id, username, password ,name, birthday, sexual, phoneNumber, email, avatar, role_id)"
 					+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			System.out.println(sql);
 			PreparedStatement rs = con.prepareStatement(sql);

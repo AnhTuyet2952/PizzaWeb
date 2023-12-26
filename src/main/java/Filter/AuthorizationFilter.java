@@ -28,7 +28,7 @@ public class AuthorizationFilter implements Filter{
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-		Filter.super.destroy();
+//		Filter.super.destroy();
 	}
 
 	@Override

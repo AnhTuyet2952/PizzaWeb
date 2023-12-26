@@ -62,6 +62,7 @@ public class Login extends HttpServlet {
             	
                 if(user!=null) {
                	 HttpSession session = request.getSession();
+               	session.setMaxInactiveInterval(30*60);
                	 session.setAttribute("customer", user);
                	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
                	 response.sendRedirect(request.getContextPath() + url);
