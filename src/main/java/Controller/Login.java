@@ -73,7 +73,6 @@ public class Login extends HttpServlet {
        	
        	 
         }else {
-<<<<<<< HEAD
           	 request.setAttribute("Error", "ten dang nhap hoac mat khau chua chinh xac!");
           	 ErrorBean eb = new ErrorBean();
           	 eb.setError((String)request.getAttribute("Error"));
@@ -83,31 +82,6 @@ public class Login extends HttpServlet {
                response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
                return;
            }
-=======
-        	 CustomerDAO test =  new CustomerDAO();
-    		 Customer customer = test.selectByUsernamePassword(username, password);
-
-
-             if(customer!=null) {
-            	 HttpSession session = request.getSession();
-            	 session.setMaxInactiveInterval(30*60);
-            	 session.setAttribute("customer", customer);
-            	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
-            	 response.sendRedirect(request.getContextPath() + url);
-                
-            	 
-             }else {
-            	 request.setAttribute("Error", "ten dang nhap hoac mat khau chua chinh xac!");
-            	 ErrorBean eb = new ErrorBean();
-            	 eb.setError((String)request.getAttribute("Error"));
-            	 request.setAttribute("errorBean", eb);
-            	 
-            	 url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
-                 response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
-                 return;
-             }
-        }
->>>>>>> update/AnhTuyet
 		
 		
 		
