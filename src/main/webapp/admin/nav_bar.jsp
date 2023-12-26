@@ -4,9 +4,9 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
 	<div
 		class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-		<a class="navbar-brand" href="index.html"><span
+		<a class="navbar-brand" href="/pizza_web/pizza-gh-pages/pizza-gh-pages/index.jsp"><span
 			class="flaticon-pizza-1 mr-1"></span>Pizza<br> <small>Delicous</small></a>
-		<a class="sidebar-brand brand-logo-mini" href="index.jsp"><img
+		<a class="sidebar-brand brand-logo-mini" href="/pizza_web/pizza-gh-pages/pizza-gh-pages/index.jsp"><img
 			src="assets/images/logo-mini.svg" alt="logo" /></a>
 	</div>
 	<ul class="nav">

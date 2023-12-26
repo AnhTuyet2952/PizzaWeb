@@ -59,56 +59,10 @@
 			</div>
 		</div>
 	</div>
-
+hello
 <jsp:useBean id="orderDAO" class="Database.OrderDAO" />
-<c:set var="customerId" value="${sessionScope.customer.getCustomerId()}" />
-<c:set var="orders" value="${orderDAO.selectByCustomerId(customerId)}" />
-
-<div class="table-responsive">
-    <h4 class="card-title">Danh sách sản phẩm đơn hàng</h4>
-    <c:forEach var="order" items="${orders}">
-        <div class="order-item">
-            <h5>Mã đơn hàng: ${order.oderId}</h5>
-            <div class="list_oder">
-                <jsp:useBean id="orderDetailDAO" class="Database.OrderDetailDAO" />
-                <!-- Lưu trữ thông tin chi tiết của đơn hàng hiện tại -->
-                <c:set var="currentOrderDetails" value="${orderDetailDAO.selectByOrderId(order.oderId)}"></c:set>
-
-                <!-- Hiển thị chỉ sản phẩm đầu tiên -->
-                <c:if test="${not empty currentOrderDetails}">
-                    <c:set var="firstProduct" value="${currentOrderDetails[0]}" />
-                    <div class="sp">
-                        <img style="width: 30px; height: 30px" alt="" src="${firstProduct.products.image}" />
-                        <b><c:out value="${(sessionScope.language == 'en') ? firstProduct.products.nameProducten : firstProduct.products.nameProduct}" /></b>x<b>${firstProduct.quantity}</b>
-                    </div>
-
-                    <!-- Hiển thị thêm sản phẩm khi bấm vào -->
-                    <div class="view-more" onclick="toggleProducts('${order.oderId}')">Xem thêm sản phẩm</div>
-                </c:if>
-
-                <!-- Hiển thị đầy đủ sản phẩm ẩn -->
-                <c:if test="${not empty currentOrderDetails and currentOrderDetails.size() > 1}">
-                    <div class="full-product-list" id="products_${order.oderId}" style="display: none;">
-                        <c:forEach var="orderDetail" items="${currentOrderDetails}" begin="1">
-                            <c:if test="${orderDetail.products ne null}">
-                                <div class="sp">
-                                    <img style="width: 30px; height: 30px" alt="" src="${orderDetail.products.image}" />
-                                    <b><c:out value="${(sessionScope.language == 'en') ? orderDetail.products.nameProducten : orderDetail.products.nameProduct}" /></b>x<b>${orderDetail.quantity}</b>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                        <!-- Hiển thị nút "Ẩn bớt sản phẩm" ở cuối danh sách sản phẩm -->
-                        <div class="view-more" onclick="toggleProducts('${order.oderId}')">Ẩn bớt sản phẩm</div>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-    </c:forEach>
-</div>
-
-
-
-
+<c:set var="userId" value="${sessionScope.user.userId}" />
+${userId}
 
 </body>
 

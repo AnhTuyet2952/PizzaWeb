@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Database.CustomerDAO;
+import Database.UserDAO;
 import Database.OrderDAO;
 import Database.OrderDetailDAO;
 import Database.ProductDAO;
 import Model.Cart;
 import Model.Cart_item;
-import Model.Customer;
+import Model.User;
 import Model.Order;
 import Model.OrderDetail;
 import Model.Product;
@@ -44,13 +44,13 @@ public class CheckoutController extends HttpServlet {
 	        String url = "";
 	     // Lấy customer_id từ session
 	        HttpSession session = request.getSession();
-	        Customer customer = (Customer) session.getAttribute("customer");
+	        User customer = (User) session.getAttribute("customer");
 	     //kt dang nhap
 	        if (customer == null) {
 	        	response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp");
 	        	return;
 	        }
-	        CustomerDAO customerDAO = new CustomerDAO();
+	        UserDAO customerDAO = new UserDAO();
 	     // Cập nhật thông tin khách hàng
 //	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
 //	            customer.setName(name);

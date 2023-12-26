@@ -3,7 +3,6 @@ package Controller;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Beans.ErrorBean;
-import Database.CustomerDAO;
-import Database.AdminDAO;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 import util.Email;
 
 @WebServlet("/register" )
@@ -45,10 +43,9 @@ public class Register extends HttpServlet {
 		
 		String url ="";
 		
-		CustomerDAO cd= new CustomerDAO();
-		AdminDAO userDAO = new AdminDAO();
+		UserDAO cd= new UserDAO();
 		ErrorBean eb = new ErrorBean();
-		if(cd.selectByUsername(username)||userDAO.selectByUsername(username)) {
+		if(cd.selectByUsername(username)) {
 			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
 			request.setAttribute("name", "");
 			request.setAttribute("errorBean", eb);
@@ -77,8 +74,8 @@ public class Register extends HttpServlet {
 		}
 
 		if(baoLoi.length()==0) {
-			Customer customer = new Customer((cd.creatId()+1)+"", username, password, name,null, null, null, email, null);
-			System.out.println("id cua customer: "+ customer.getCustomerId());
+			User customer = new User((cd.creatId()+1)+"", username, password, name,null, null, null, email, null,  2);
+			System.out.println("id cua customer: "+ customer.getUserId());
 			cd.insert(customer);
 			Email.sendEmail(email, "Chuc mung ban da tro thanh khach hang than thiet cua cua hang chung toi!", "Thong bao dang ky tai khoan thanh cong");
 			url=request.getContextPath()+"/pizza-gh-pages/pizza-gh-pages/index.jsp";

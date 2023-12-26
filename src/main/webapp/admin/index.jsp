@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ page import="Database.CustomerDAO"%>
+<%@ page import="Database.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -53,7 +53,7 @@
 									<div class="row">
 										<div class="col-9">
 											<div class="d-flex align-items-center align-self-start">
-												<jsp:useBean id="customerDAO" class="Database.CustomerDAO"
+												<jsp:useBean id="customerDAO" class="Database.UserDAO"
 													scope="request"></jsp:useBean>
 												<h3 class="mb-0">${customerDAO.creatId()}</h3>
 												<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>

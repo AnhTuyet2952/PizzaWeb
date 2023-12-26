@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Beans.ErrorBean;
-import Database.CustomerDAO;
-import Model.Customer;
+import Database.UserDAO;
+import Model.User;
 import util.PasswordEncryption;
 
 /**
@@ -42,8 +42,8 @@ public class NewPassword extends HttpServlet {
 
 				password = PasswordEncryption.toSHA1(password);
 				
-				CustomerDAO customerDAO = new CustomerDAO();
-				Customer customer = customerDAO.selectById(id);
+				UserDAO customerDAO = new UserDAO();
+				User customer = customerDAO.selectById(id);
 				System.out.println(customer);
 				String url="";
 				if(customer!=null) {

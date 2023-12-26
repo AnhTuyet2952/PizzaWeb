@@ -2,7 +2,6 @@ package Controller_admin;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Database.CustomerDAO;
-import Database.OrderDAO;
-import Database.OrderDetailDAO;
-import Model.Order;
-import Model.OrderDetail;
 
 /**
  * Servlet implementation class UserDetailController
