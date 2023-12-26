@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+
 import Model.User;
 import util.PasswordEncryption;
 
@@ -45,6 +46,46 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
+				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
+
+
+				data.add(customer);
+
+			}
+
+			JDBCUtil.closeConnection(con);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return data;
+	}
+	public ArrayList<User> selectCustomer() {
+		try {
+			// tao mot connection
+			Connection con = JDBCUtil.getConnection();
+
+			// tao cau lenh sql
+			String sql = "SELECT * FROM pizza.users WHERE role_id =2";
+
+			PreparedStatement st = con.prepareStatement(sql);
+
+			// thuc thi
+			
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("user_id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				Date birthday = rs.getDate("birthday");
+				String gt = rs.getString("sexual");
+				String phoneNumber = rs.getString("phoneNumber");
+				String email = rs.getString("email");
+				String avatar = rs.getString("avatar");
+				int role_id = rs.getInt("role_id");
 				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar,
 						role_id);
 
@@ -60,7 +101,6 @@ public class UserDAO implements DAOInterface<User> {
 		}
 		return data;
 	}
-
 	public User selectById(String id) {
 		User result = null;
 
@@ -326,3 +366,4 @@ public class UserDAO implements DAOInterface<User> {
         ad.insert(admin);
 	}
 }
+

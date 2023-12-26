@@ -1,7 +1,6 @@
 package Controller_admin;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +11,12 @@ import Database.OrderDAO;
 import Model.Order;
 
 /**
- * Servlet implementation class confirmOrder
+ * Servlet implementation class CancelAdmin
  */
-@WebServlet("/confirmOrder")
-public class confirmOrder extends HttpServlet {
+@WebServlet("/CancelAdmin")
+public class CancelAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       OrderDAO orderDAO = new OrderDAO();
+	OrderDAO orderDAO = new OrderDAO();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String orderId = request.getParameter("orderId");
@@ -25,25 +24,26 @@ public class confirmOrder extends HttpServlet {
 		String url = "";
 		String message = "";
 		Order order = new Order();
-		if("Accept".equals(action)) {
+		if ("Cancel".equals(action)) {
+			// Xử lý hủy đơn hàng (cập nhật trạng thái)
+			orderDAO.UpdateOrderStatus(orderId, "Request cancellation");
+			order.setStatus("Request cancellation");
+
+			// Cập nhật thành công
+			message = "Order canceled successfully.";
+			request.setAttribute("message", message);
+		}else if("Not accepted".equals(action)) {
 			orderDAO.UpdateOrderStatus(orderId, "Accept");
 			 order.setStatus("Accept");
-			message = "Order accepted successfully.";
+			message = "Order Accepted successfully.";
 			System.out.println(order.getStatus());
-		}else if("Reject".equals(action)) {
+		}else if("Cancelled".equals(action)) {
 			orderDAO.UpdateOrderStatus(orderId, "Cancel");
 			 order.setStatus("Cancel");
 			message = "Order Canceled successfully.";
 			System.out.println(order.getStatus());
-		}else if("delete".equals(action)) {
-			order.setOderId(orderId);
-			int result = orderDAO.rejectOrder(order);
-			  if (result > 0) {
-	                message = "Order rejected successfully.";
-	            } else {
-	                message = "Failed to reject order. Please try again.";
-	            }
 		}
+
 		request.setAttribute("order", order);
 		request.setAttribute("action", action);
 		 request.setAttribute("message", message);

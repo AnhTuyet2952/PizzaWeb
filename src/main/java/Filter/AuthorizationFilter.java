@@ -40,7 +40,7 @@ public class AuthorizationFilter implements Filter{
 		
 		String url = request.getRequestURI();
 		
-		if(url.contains("/changeInformation")||url.contains("/changePassword")||url.contains("/profile")) {
+		if(url.contains("/changeInformation")||url.contains("/changePassword")) {
 			User customer = (User) request.getSession().getAttribute("customer");
 			if(customer!=null) {
 				filterChain.doFilter(servletRequest, servletResponse);

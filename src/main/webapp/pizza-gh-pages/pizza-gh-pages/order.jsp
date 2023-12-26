@@ -37,6 +37,38 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<style type="text/css">
+/* CSS để làm đẹp bảng */
+#dataTables-example {
+	width: 98%; /* Đặt chiều rộng của bảng */
+	margin: 0 auto; /* Căn giữa bảng bằng cách sử dụng margin */
+	border-collapse: collapse;
+	margin-top: 20px;
+	max-height: 300px; /* Đặt chiều cao tối đa của bảng */
+	overflow-y: auto;
+	/* Cho phép cuộn nếu nội dung vượt quá chiều cao tối đa */
+}
+
+#dataTables-example th, #dataTables-example td {
+	padding: 8px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* CSS để làm đẹp link chi tiết */
+#dataTables-example a {
+	color: #007bff; /* Màu chữ là màu xanh dương */
+	text-decoration: none; /* Loại bỏ đường gạch chân */
+}
+
+#dataTables-example a:hover {
+	text-decoration: underline; /* Hiệu ứng gạch chân khi di chuột qua */
+}
+
+#dataTables-example td.address-column {
+	text-align: left;
+}
+</style>
 
 </head>
 
@@ -59,10 +91,208 @@
 			</div>
 		</div>
 	</div>
-hello
-<jsp:useBean id="orderDAO" class="Database.OrderDAO" />
-<c:set var="userId" value="${sessionScope.user.userId}" />
-${userId}
+	<jsp:useBean id="userDAO" class="Database.UserDAO" />
+	<jsp:useBean id="orderDAO" class="Database.OrderDAO" />
+	<jsp:useBean id="orderDetailDao" class="Database.OrderDetailDAO"></jsp:useBean>
+	<h2 style="text-align: center;">
+		<b><fmt:message bundle="${bnd}" key="order.title" /></b>
+	</h2>
+	<c:forEach items="${userDAO.selectCustomer()}" var="customer">
+    <c:set var="acceptOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Accept')}" />
+    <c:set var="pendingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Request cancellation')}" />
+    <c:set var="cancelOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Cancel')}" />
+	
+	<div class="full inner_elements margin_top_30">
+		<div class="tab_style2">
+			<div class="tabbar">
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist">
+						<a class="nav-item nav-link active" id="nav-home-tab"
+							data-toggle="tab" href="#Accept" role="tab"
+							aria-selected="true"><fmt:message bundle="${bnd}" key="order.list.A" /></a> <a
+							class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+							href="#pending" role="tab" aria-selected="false"><fmt:message bundle="${bnd}" key="order.list.P" /></a> <a class="nav-item nav-link" id="nav-contact-tab"
+							data-toggle="tab" href="#Cancel" role="tab"
+							aria-selected="false"><fmt:message bundle="${bnd}" key="order.list.C" /></a>
+						
+					</div>
+				</nav>
+				<div class="tab-content" id="nav-tabContent">
+					<div class="tab-pane fade show active" id="Accept"
+						role="tabpanel" aria-labelledby="nav-home-tab">
+						<div class="msg_list_main">
+							<ul class="msg_list">
+								<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example">
+									<thead>
+										<tr>
+											<th><b><fmt:message bundle="${bnd}" key="order.id" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.inf" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.total" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.Note" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.status" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.detail" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.cancel" /></b></th>
+											<!-- Thêm các cột khác theo nhu cầu -->
+										</tr>
+									</thead>
+									<tbody>
+											<c:set var="orders"
+												value="${acceptOrders}" />
+
+											<c:forEach var="order" items="${orders}">
+												<tr class="odd gradeX">
+													<td>${order.oderId}</td>
+													<td class="address-column"><fmt:message
+															bundle="${bnd}" key="order.name" />:
+														${order.nameConsignee}. <fmt:message bundle="${bnd}"
+															key="order.address" /> ${order.address}. <fmt:message
+															bundle="${bnd}" key="order.phone" />:
+														${order.phoneConsignee}</td>
+
+													<c:set var="subtotal" value="0" />
+													<c:forEach var="item"
+														items="${orderDetailDao.selectByOrderId(order.oderId)}">
+														<c:set var="itemTotal"
+															value="${item.products.price * item.quantity}" />
+														<c:set var="subtotal" value="${subtotal + itemTotal}" />
+													</c:forEach>
+
+													<td><c:out value="${subtotal}" /></td>
+													<td>${order.note}</td>
+													<td>${order.status}</td>
+													<td><a
+														href="${pageContext.request.contextPath}/orderDetail2?orderId=${order.oderId}"><fmt:message
+																bundle="${bnd}" key="order.de" /></a></td>
+<td>
+    <form action="${pageContext.request.contextPath}/CancelOrder" method="post">
+        <input type="hidden" name="orderId" value="${order.oderId}">
+        <input type="submit" name="action" value="Cancel" onclick="cancelOrder('${order.oderId}')">
+    </form>
+</td>
+																
+												</tr>
+											</c:forEach>
+									</tbody>
+								</table>
+							</ul>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="pending" role="tabpanel"
+						aria-labelledby="nav-profile-tab">
+						<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example">
+									<thead>
+										<tr>
+											<th><b><fmt:message bundle="${bnd}" key="order.id" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.inf" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.total" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.Note" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.status" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.detail" /></b></th>
+	
+										</tr>
+									</thead>
+									<tbody>
+											<c:set var="orders"
+												value="${pendingOrders}" />
+
+											<c:forEach var="order" items="${orders}">
+												<tr class="odd gradeX">
+													<td>${order.oderId}</td>
+													<td class="address-column"><fmt:message
+															bundle="${bnd}" key="order.name" />:
+														${order.nameConsignee}. <fmt:message bundle="${bnd}"
+															key="order.address" /> ${order.address}. <fmt:message
+															bundle="${bnd}" key="order.phone" />:
+														${order.phoneConsignee}</td>
+
+													<c:set var="subtotal" value="0" />
+													<c:forEach var="item"
+														items="${orderDetailDao.selectByOrderId(order.oderId)}">
+														<c:set var="itemTotal"
+															value="${item.products.price * item.quantity}" />
+														<c:set var="subtotal" value="${subtotal + itemTotal}" />
+													</c:forEach>
+
+													<td><c:out value="${subtotal}" /></td>
+													<td>${order.note}</td>
+													<td>${order.status}</td>
+													<td><a
+														href="${pageContext.request.contextPath}/orderDetail2?orderId=${order.oderId}"><fmt:message
+																bundle="${bnd}" key="order.de" /></a></td>
+
+																
+													<!-- Thêm các cột khác theo nhu cầu -->
+												</tr>
+											</c:forEach>
+									</tbody>
+								</table>
+					</div>
+					<div class="tab-pane fade" id="Cancel" role="tabpanel"
+						aria-labelledby="nav-contact-tab">
+						<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example">
+									<thead>
+										<tr>
+											<th><b><fmt:message bundle="${bnd}" key="order.id" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.inf" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.total" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.Note" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.status" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.detail" /></b></th>
+											<!-- Thêm các cột khác theo nhu cầu -->
+										</tr>
+									</thead>
+									<tbody>
+											<c:set var="orders"
+												value="${cancelOrders}" />
+
+											<c:forEach var="order" items="${orders}">
+												<tr class="odd gradeX">
+													<td>${order.oderId}</td>
+													<td class="address-column"><fmt:message
+															bundle="${bnd}" key="order.name" />:
+														${order.nameConsignee}. <fmt:message bundle="${bnd}"
+															key="order.address" /> ${order.address}. <fmt:message
+															bundle="${bnd}" key="order.phone" />:
+														${order.phoneConsignee}</td>
+
+													<c:set var="subtotal" value="0" />
+													<c:forEach var="item"
+														items="${orderDetailDao.selectByOrderId(order.oderId)}">
+														<c:set var="itemTotal"
+															value="${item.products.price * item.quantity}" />
+														<c:set var="subtotal" value="${subtotal + itemTotal}" />
+													</c:forEach>
+
+													<td><c:out value="${subtotal}" /></td>
+													<td>${order.note}</td>
+													<td>${order.status}</td>
+													<td><a
+														href="${pageContext.request.contextPath}/orderDetail2?orderId=${order.oderId}"><fmt:message
+																bundle="${bnd}" key="order.de" /></a></td>
+
+																
+													<!-- Thêm các cột khác theo nhu cầu -->
+												</tr>
+											</c:forEach>
+								</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</c:forEach>
 
 </body>
 
@@ -104,39 +334,21 @@ ${userId}
 <script src="js/google-map.js"></script>
 <script src="js/main.js"></script>
 <script>
-    function toggleProducts(orderId) {
-        var productsDiv = document.getElementById('products_' + orderId);
-        var viewMoreButton = productsDiv.querySelector('.view-more');
-
-        if (productsDiv.style.display === 'none' || productsDiv.style.display === '') {
-            productsDiv.style.display = 'block';
-            viewMoreButton.innerHTML = 'Ẩn bớt sản phẩm'; // Đổi nút thành "Ẩn bớt sản phẩm"
-        } else {
-            productsDiv.style.display = 'none';
-            viewMoreButton.innerHTML = 'Xem thêm sản phẩm'; // Đổi nút thành "Xem thêm sản phẩm"
-        }
-
-        // Hide the "Xem thêm sản phẩm" button if all products are shown
-        var orderDetails = productsDiv.getElementsByClassName('sp');
-        var viewMoreButtons = productsDiv.getElementsByClassName('view-more');
-
-        var allProductsVisible = true;
-        for (var i = 0; i < orderDetails.length; i++) {
-            if (orderDetails[i].style.display !== 'none') {
-                allProductsVisible = false;
-                break;
-            }
-        }
-
-        if (allProductsVisible) {
-            for (var i = 0; i < viewMoreButtons.length; i++) {
-                viewMoreButtons[i].style.display = 'none';
-            }
-        } else {
-            for (var i = 0; i < viewMoreButtons.length; i++) {
-                viewMoreButtons[i].style.display = 'block';
-            }
+    function cancelOrder(orderId) {
+        if (confirm("Bạn có chắc chắn muốn hủy đơn hàng?")) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                   
+                    // Cập nhật giao diện nếu cần
+                    location.reload();
+                }
+            };
+            xhr.open("POST", "${pageContext.request.contextPath}/CancelOrder", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("orderId=" + encodeURIComponent(orderId));
         }
     }
 </script>
+
 </html>

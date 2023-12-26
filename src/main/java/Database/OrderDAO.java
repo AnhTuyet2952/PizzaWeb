@@ -135,6 +135,42 @@ public class OrderDAO implements DAOInterface<Order> {
 		}
 		return confirmedOrders;
 	}
+	//list cac don hang ma admin Huy
+		public List<Order> selectCancelOrders(){
+			List<Order> confirmedOrders = new ArrayList<Order>();
+			try {
+				Connection con = JDBCUtil.getConnection();
+				String sql = "SELECT * FROM orders WHERE status=?";
+				PreparedStatement st = con.prepareStatement(sql);
+				 // Thiết lập giá trị tham số cho truy vấn
+		        st.setString(1, "Request cancellation");
+
+				ResultSet rs = st.executeQuery();
+				while (rs.next()) {
+
+					String orderId = rs.getString("order_id");
+					String idCustomer = rs.getString("user_id");
+					String addredd = rs.getString("Address");
+					String note = rs.getString("note");
+					Double total = rs.getDouble("total");
+					Date bookingDate = rs.getDate("booking_date");
+					String status = rs.getString("status");
+					String nameConsignee = rs.getString("nameConsignee");
+					String phoneConsignee = rs.getString("phoneConsignee");
+
+					User user = new UserDAO().selectById(idCustomer);
+					Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
+					
+
+					confirmedOrders.add(order);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return confirmedOrders;
+		}
+		
 	//list danh sach cac don hang ma admin tu choi
 	public List<Order> selectRejectOrders(){
 		List<Order> confirmedOrders = new ArrayList<Order>();
@@ -143,7 +179,7 @@ public class OrderDAO implements DAOInterface<Order> {
 			String sql = "SELECT * FROM orders WHERE status=?";
 			PreparedStatement st = con.prepareStatement(sql);
 			 // Thiết lập giá trị tham số cho truy vấn
-	        st.setString(1, "Reject");
+	        st.setString(1, "Cancel");
 
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -170,7 +206,8 @@ public class OrderDAO implements DAOInterface<Order> {
 		}
 		return confirmedOrders;
 	}
-	//phuong thưc cap nhap trang thai cho don hang thành 'confirmed'
+
+	//phuong thưc cap nhap trang thai cho don hang
 	public void UpdateOrderStatus(String orderId, String status) {
 	    try (Connection con = JDBCUtil.getConnection();
 	         PreparedStatement st = con.prepareStatement("UPDATE orders SET status = ? WHERE order_id = ?")) {
@@ -223,17 +260,18 @@ public class OrderDAO implements DAOInterface<Order> {
     }
 
 		
-		public ArrayList<Order> selectByCustomerId(String customerId) {
+		public ArrayList<Order> selectByCustomerIdAndStatus(String customerId, String statusOrder) {
 			ArrayList<Order>result = new ArrayList<Order>();
 			try {
 				// tao mot connection
 				Connection con = JDBCUtil.getConnection();
 
 				// tao cau lenh sql
-				String sql = "SELECT * FROM orders WHERE user_id=?";
+				String sql = "SELECT * FROM orders WHERE user_id=? AND status=?" ;
 
 				PreparedStatement st = con.prepareStatement(sql);
 	            st.setString(1, customerId);
+	            st.setString(2, statusOrder);
 				// thuc thi
 
 				ResultSet rs = st.executeQuery();
