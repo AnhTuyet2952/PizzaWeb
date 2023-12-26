@@ -2,14 +2,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
+<style></style>
 <nav <fmt:setLocale value="${sessionScope.language}" />
 	<fmt:setBundle basename="lang.messages" var="bnd"/>
 	class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 	id="ftco-navbar">
 	<div class="container">
-		<a class="navbar-brand" href="index.html"><span
-			class="flaticon-pizza-1 mr-1"></span>
-		<fmt:message bundle="${bnd}" key="header.logo_pizza" /><br> <small><fmt:message
+		<a class="navbar-brand" href="index.jsp"><span
+			class="flaticon-pizza-1 mr-1"></span> <fmt:message bundle="${bnd}"
+				key="header.logo_pizza" /><br> <small><fmt:message
 					bundle="${bnd}" key="header.logo_royal" /></small></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#ftco-nav" aria-controls="ftco-nav"
@@ -31,8 +32,7 @@
 				<li class="nav-item"><a href="contact.jsp" class="nav-link"><fmt:message
 							bundle="${bnd}" key="header.contact.title" /></a></li>
 				<c:if test="${not empty admin}">
-					<li class="nav-item"><a
-						href="/pizza_web/admin/index.jsp"
+					<li class="nav-item"><a href="/pizza_web/admin/index.jsp"
 						class="nav-link"> <fmt:message bundle="${bnd}"
 								key="header.admin.title" />
 					</a></li>
@@ -153,11 +153,15 @@
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Assistant</p>
-									</a> </a> <a href="thankyou.jsp"
+									</a> <a href="order.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Đơn đặt hàng</p>
-									</a>
+									</a>		<a href="order.jsp"
+										class="d-flex align-items-center gap-2 dropdown-item"> <i
+										class="ti ti-list-check fs-6"></i>
+										<p class="mb-0 fs-3">Đơn đặt hàng2</p>
+								</a>
 									<c:url var="logoutUrl" value="/logout" />
 									<a href="${logoutUrl}"
 										class="btn btn-outline-primary mx-3 mt-2 d-block"><fmt:message
