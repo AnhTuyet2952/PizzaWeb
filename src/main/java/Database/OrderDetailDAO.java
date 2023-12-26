@@ -59,6 +59,7 @@ public class OrderDetailDAO implements DAOInterface<OrderDetail>{
 		return null;
 	}
 	public ArrayList<OrderDetail> selectByOrderId(String id) {
+		ArrayList<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
 		try {
 			// tao mot connection
 			Connection con = JDBCUtil.getConnection();
@@ -82,16 +83,17 @@ public class OrderDetailDAO implements DAOInterface<OrderDetail>{
 				Order order = new OrderDAO().selectById(orderId);
 				Product product = new ProductDAO().selectById(idProduct);
 				OrderDetail orderDetail = new OrderDetail(order, product, quantity, price);
-				data.add(orderDetail);
+				orderDetails.add(orderDetail);
 				
 			}
-
+			st.close();
+			rs.close();
 			JDBCUtil.closeConnection(con);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return data;
+		return orderDetails;
 	}
 	public OrderDetail selectById(String orderId, String productId) {
 	    OrderDetail result = null;

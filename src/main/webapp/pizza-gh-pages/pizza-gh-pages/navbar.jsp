@@ -153,6 +153,7 @@
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Assistant</p>
+<<<<<<< HEAD
 									</a> <a href="order.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
@@ -162,6 +163,19 @@
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Đơn đặt hàng2</p>
 								</a>
+=======
+									</a>
+									<a href="thankyou.jsp"
+										class="d-flex align-items-center gap-2 dropdown-item"> <i
+										class="ti ti-list-check fs-6"></i>
+										<p class="mb-0 fs-3">Đơn đặt hàng</p>
+									</a>
+									<a href="order.jsp"
+										class="d-flex align-items-center gap-2 dropdown-item"> <i
+										class="ti ti-list-check fs-6"></i>
+										<p class="mb-0 fs-3">Đơn đặt hàng2</p>
+									</a>
+>>>>>>> update/AnhTuyet
 									<c:url var="logoutUrl" value="/logout" />
 									<a href="${logoutUrl}"
 										class="btn btn-outline-primary mx-3 mt-2 d-block"><fmt:message

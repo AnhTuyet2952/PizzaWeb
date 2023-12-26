@@ -69,9 +69,23 @@
 		    <div class="container">
 		      <div class="row mb-5">
 		        <div class="col-md-12">
-		          <div class="border p-4 rounded" role="alert">
-		            <fmt:message bundle="${bnd}" key="checkout.login"/> <a href="login.jsp"><fmt:message bundle="${bnd}" key="checkout.login.click"/></a> <fmt:message bundle="${bnd}" key="checkout.login.to"/>
-		          </div>
+		        <c:choose>
+    <c:when test="${empty sessionScope.customer and empty sessionScope.admin}">
+        <div class="untree_co-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="border p-4 rounded" role="alert">
+                            <fmt:message bundle="${bnd}" key="checkout.login"/> <a href="login.jsp"><fmt:message bundle="${bnd}" key="checkout.login.click"/></a> <fmt:message bundle="${bnd}" key="checkout.login.to"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:when>
+
+</c:choose>
+
 		        </div>
 		      </div>
 		          <form action="${pageContext.request.contextPath}/checkoutController">
