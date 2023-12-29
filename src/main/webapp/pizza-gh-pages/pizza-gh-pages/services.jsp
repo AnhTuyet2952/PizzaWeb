@@ -30,10 +30,7 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
     <style type="text/css">
-.cart-item-count {
-    color: red; /* Màu chữ của số lượng */
-    font-size: 20px;
-}
+
 </style>
   </head>
   <body>

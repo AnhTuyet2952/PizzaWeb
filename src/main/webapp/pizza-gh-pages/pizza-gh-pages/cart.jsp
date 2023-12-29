@@ -9,9 +9,8 @@
     pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <%@ page import="util.FormatCurrency" %>
-
-
 
 
 <html lang="en">
@@ -109,7 +108,7 @@
                            <h2 class="h5 text-black">${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</h2>
   
                           </td>
-                          <td>${FormatCurrency.formatCurrency(item.product.price)}</td>
+                          <td>${item.product.price}</td>
                              <td>
             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                         <div class="input-group-prepend">
@@ -137,8 +136,8 @@
                         </form>
                         </td>
                         </tr>
-        <c:set var="subtotal" value="${FormatCurrency.formatCurrency(subtotal + (item.product.price * item.quantity))}" />
-        <c:set var="total" value="${FormatCurrency.formatCurrency(total + (item.product.price * item.quantity))}" />
+        <c:set var="subtotal" value="${subtotal + (item.product.price * item.quantity)}" />
+        <c:set var="total" value="${total + (item.product.price * item.quantity)}" />
                     </c:forEach>
                       </tbody>
                     </table>
@@ -178,7 +177,7 @@
                           <span class="text-black"><fmt:message bundle="${bnd}" key="cart.subtotal"/></span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">${subtotal}</strong>
+                          <strong class="text-black">${FormatCurrency.formatCurrency(subtotal)}</strong>
                         </div>
                       </div>
                       <div class="row mb-5">
@@ -186,7 +185,7 @@
                           <span class="text-black"><fmt:message bundle="${bnd}" key="cart.total"/></span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">${total}</strong>
+                          <strong class="text-black">${FormatCurrency.formatCurrency(total)}</strong>
                         </div>
                       </div>
         
