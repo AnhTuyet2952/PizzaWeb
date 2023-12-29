@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="true"%>
+<%@ page import="util.FormatCurrency" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -108,28 +109,28 @@
 									value="${item.products.price * item.quantity}" />
 								<tr>
 									<td><img style="width: 60px; height: 45px;"
-										src="<c:out value="${item.products.image}" />" alt="Image"
+										src="<c:out value="${pageContext.request.contextPath}/${item.products.image}" />" alt="Image"
 										class="img-fluid"> <b><c:out
 												value="${(sessionScope.language == 'en') ? item.products.nameProducten : item.products.nameProduct}" /></b>
 										<strong class="mx-2">x</strong> <c:out
 											value="${item.quantity}" /></td>
-									<td><c:out value="${itemTotal}" /></td>
+									<td><c:out value="${FormatCurrency.formatCurrency(itemTotal)}" /></td>
 								</tr>
 								<c:set var="subtotal" value="${subtotal + itemTotal}" />
 								<c:set var="total" value="${total + itemTotal}" />
 							</c:forEach>
 							<tr>
 								<td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.sub"/></strong></td>
-								<td class="text-black"><c:out value="${subtotal}" /></td>
+								<td class="text-black"><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 							</tr>
 							<tr>
 								<td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.ordertotal"/></strong></td>
 								<td class="text-black font-weight-bold"><strong><c:out
-											value="${total}" /></strong></td>
+											value="${FormatCurrency.formatCurrency(total)}" /></strong></td>
 							</tr>
 						</tbody>
 					</table>
-
+ <p><a href="order.jsp" class="btn btn-primary btn-outline-primary"><fmt:message bundle="${bnd}" key="orderDetail.back"/></a></p>
 
 
 				</div>

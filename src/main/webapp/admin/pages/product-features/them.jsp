@@ -61,22 +61,31 @@
 										<h3>Info Product:</h3>
 
 										<form action="${pageContext.request.contextPath}/addProduct"
-											method="post" style="border: ">
+											method="post" style="border: "enctype="multipart/form-data">
 											<div class="form-group">
-												<label>Name:</label> <input class="form-control"
+												<label>Tên sản phẩm tiếng việt:</label> <input class="form-control"
 													placeholder="please enter Product Name" name="name"
-													id="name" />
+													id="name"/>
 											</div>
 											<div class="form-group">
-												<label>Price ($)</label> <input class="form-control"
+												<label>Tên sản phẩm tiếng anh:</label> <input class="form-control"
+													placeholder="please enter Product Name" name="nameen"
+													id="nameen"/>
+											</div>
+											<div class="form-group">
+												<label>Giá sản phẩm: </label> <input class="form-control"
 													placeholder="please enter Price" type="number" name="price"
 													id="price" />
 											</div>
 											<div class="form-group">
-												<label>Description </label> <br>
+												<label>Mô tả tiếng việt:  </label> <br>
 												<textarea rows="4" cols="50" name="description"
 													id="description"></textarea>
-
+											</div>
+											<div class="form-group">
+												<label>Mô tả tiếng anh:</label> <br>
+												<textarea rows="4" cols="50" name="descriptionen"
+													id="descriptionen"></textarea>
 											</div>
 
 											<div class="form-group">
@@ -91,12 +100,7 @@
 
 											</div>
 											<div class="form-group">
-												<label>Image</label> <label for="image"
-													class="custom-file-upload"> <i
-													class="mdi mdi-cloud-upload"></i> Choose File
-												</label> <input type="file" name="image" id="image"
-													style="display: none;" /> <span id="file-chosen">No
-													file chosen</span>
+												<label>Image</label>  <input type="file" name="image" />
 											</div>
 											<button type="submit" class="btn btn-default">Add</button>
 											<button type="reset" class="btn btn-primary">Reset</button>

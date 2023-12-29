@@ -27,6 +27,17 @@ public class User {
 		this.avatar = avatar;
 		this.role_id = role_id;
 	}
+	
+
+
+	public User(String userId, String avatar) {
+		super();
+		this.userId = userId;
+		this.avatar = avatar;
+	}
+
+
+
 	public User() {
 		super();
 	}
@@ -37,12 +48,20 @@ public class User {
 	public void setSexual(String sexual) {
 		this.sexual = sexual;
 	}
+
+
 	public String getAvatar() {
 		return avatar;
 	}
+
+
+
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
+
+
+
 	public String getUserId() {
 		return userId;
 	}

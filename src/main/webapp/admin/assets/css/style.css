@@ -11768,13 +11768,13 @@ input[type="button"].btn-block {
 
 .badge-danger {
   color: #fff;
-  background-color: #fc424a; }
+  background-color: rgb(0, 255, 64); }
   a.badge-danger:hover, a.badge-danger:focus {
     color: #fff;
-    background-color: #fb101a; }
+    background-color: #00FF33; }
   a.badge-danger:focus, a.badge-danger.focus {
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(252, 66, 74, 0.5); }
+    box-shadow: 0 0 0 0.2rem rgb(0, 255, 255); }
 
 .badge-light {
   color: #212529;
@@ -16026,7 +16026,7 @@ code {
   color: #ffffff; }
 
 .badge-danger {
-  background: #fc424a;
+  background: #00FF33;
   color: #ffffff; }
 
 .badge-light {

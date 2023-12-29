@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -62,7 +63,6 @@
 					<div class="col-md-8 col-lg-6 col-xxl-3">
 						<div class="card mb-0">
 							<div class="card-body">
-
 								<p class="text-center">Thay đổi thông tin cá nhân</p>
 								<div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div>
 								<div class="text-center">
@@ -71,7 +71,7 @@
 								<form class="form"
 									action="${pageContext.request.contextPath}/changeInformation"
 									method="post">
-									<input type="hidden" name="customerId" value="${customer.customerId}">
+									<input type="hidden" name="customerId" value="${customer.userId}">
 									<div class="mb-3">
 										<label for="username" class="form-label">Username</label> <input
 											type="text" class="form-control" id="username"

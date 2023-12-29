@@ -55,6 +55,8 @@ public class Login extends HttpServlet {
         	if(user.getRole_id()==1) {
         		 HttpSession session = request.getSession();
                	 session.setAttribute("admin", user);
+               	session.setAttribute("customer", user);
+                session.setMaxInactiveInterval(300*600);
                	url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
                	 response.sendRedirect(request.getContextPath() + url);
                    
@@ -63,7 +65,7 @@ public class Login extends HttpServlet {
                 if(user!=null) {
                	 HttpSession session = request.getSession();
                	 session.setAttribute("customer", user);
-               	 session.setMaxInactiveInterval(30*60);
+               	 session.setMaxInactiveInterval(300*600);
                	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
                	 response.sendRedirect(request.getContextPath() + url);
                    

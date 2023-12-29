@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package Filter;
 
 import java.io.IOException;
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import Beans.ErrorBean;
 import Model.User;
 
+/**
+ * 
+ */
 public class AuthorizationFilter implements Filter{
 
 	private ServletContext context;
@@ -40,19 +46,6 @@ public class AuthorizationFilter implements Filter{
 		
 		String url = request.getRequestURI();
 		
-		if(url.contains("/changeInformation")||url.contains("/changePassword")) {
-			User customer = (User) request.getSession().getAttribute("customer");
-			if(customer!=null) {
-				filterChain.doFilter(servletRequest, servletResponse);
-			}else {
-				
-				 ErrorBean eb = new ErrorBean();
-	          	 eb.setError("Vui long dang nhap vao tai khoan nguoi dung de thuc hien");
-				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
-	               response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
-	               return;
-			}
-		}
 		
 		if(url.contains("/admin")) {
 			User admin = (User) request.getSession().getAttribute("admin");

@@ -73,9 +73,9 @@ public class CategoryDAO implements DAOInterface<Category> {
 				
 				result = new Category(id1, username);
 
-				JDBCUtil.closeConnection(con);
 
 			}
+			JDBCUtil.closeConnection(con);
 
 		} catch (Exception e) {
 			 e.printStackTrace();

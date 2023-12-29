@@ -1,12 +1,15 @@
 package Controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Model.User;
 
 /**
  * Servlet implementation class Logout
@@ -27,12 +30,12 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		session.removeAttribute("customer");
-		session.invalidate();
-		
-		String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
-		response.sendRedirect(url);
+    	  HttpSession session = request.getSession(false);
+
+    	  session.invalidate(); 
+          // Chuyển hướng đến trang đăng nhập
+          String url = request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/index.jsp";
+          response.sendRedirect(url);
 	}
 
 	/**

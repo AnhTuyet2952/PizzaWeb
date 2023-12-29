@@ -87,7 +87,6 @@ public class OrderDAO implements DAOInterface<Order> {
 				String status = rs.getString("status");
 				String nameConsignee = rs.getString("nameConsignee");
 				String phoneConsignee = rs.getString("phoneConsignee");
-
 				User user = new UserDAO().selectById(idCustomer);
 				Order order = new Order(orderId, user, addredd, note, total, bookingDate, status, nameConsignee, phoneConsignee);
 				

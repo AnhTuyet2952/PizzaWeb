@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-
+import Model.Image;
 import Model.User;
 import util.PasswordEncryption;
 
@@ -46,6 +46,7 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
+//				Image image = new ImageDAO().selectById(avatar);
 				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
 
 
@@ -86,8 +87,8 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
-				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar,
-						role_id);
+//				Image image = new ImageDAO().selectById(avatar);
+				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
 
 				data.add(customer);
 
@@ -124,8 +125,10 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
+//				Image image = new ImageDAO().selectById(avatar);
 				result = new User(id1, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
-
+               
+			
 			}
 			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
@@ -157,8 +160,9 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("username");
 				String avatar = rs.getString("avatar");
                 int role_id = rs.getInt("role_id");
-                result = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar,
-						role_id);
+//    			Image image = new ImageDAO().selectById(avatar);
+				result = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
+               
                 System.out.println("nguoi dung: "+ result);
 
 			}
@@ -192,7 +196,9 @@ public class UserDAO implements DAOInterface<User> {
 				String username = rs.getString("username");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
+//				Image image = new ImageDAO().selectById(avatar);
 				result = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
+               
 
 				return result;
 
@@ -272,6 +278,7 @@ public class UserDAO implements DAOInterface<User> {
 			rs.setString(6, user.getGt());
 			rs.setString(7, user.getPhoneNumber());
 			rs.setString(8, user.getEmail());
+//			rs.setString(9, user.getAvatar().getImageId());
 			rs.setString(9, user.getAvatar());
 			rs.setLong(10, user.getRole_id());
 			System.out.println(user);
@@ -354,6 +361,35 @@ public class UserDAO implements DAOInterface<User> {
 				System.out.println("done");
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	public int updateAvatar(User user) {
+		int result = 0;
+		User oldUser = this.selectById(user.getUserId());
+		if (oldUser != null) {
+			try {
+				Connection con = JDBCUtil.getConnection();
+
+				String sql = "UPDATE pizza.users SET  avatar=? " + "WHERE user_id =?";
+
+				PreparedStatement rs = con.prepareStatement(sql);
+
+				
+				rs.setString(1, user.getAvatar());
+				rs.setString(2, user.getUserId());
+
+				result = rs.executeUpdate();
+				System.out.println("done");
+				   System.out.println("Update successful. Rows affected: " + result);
+
+	                // Log thông tin cập nhật avatar
+	                System.out.println("Updating avatar for user: " + user.getUserId());
+	                System.out.println("New avatar path: " + user.getAvatar());
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("error");
 			}
 		}
 		return result;

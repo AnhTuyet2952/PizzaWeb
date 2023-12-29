@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="util.FormatCurrency" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,12 +75,12 @@
 											value="${item.products.price * item.quantity}" />
 										<tr>
 											<td><img 
-												src="<c:out value="${item.products.image}" />" alt="Image"
+												src="<c:out value="${pageContext.request.contextPath}/${item.products.image}" />" alt="Image"
 												class="img-fluid"> <b><c:out
 														value="${item.products.nameProduct}" /></b> <strong
 												class="mx-2">x</strong>
 											<c:out value="${item.quantity}" /></td>
-											<td><c:out value="${itemTotal}" /></td>
+											<td><c:out value="${FormatCurrency.formatCurrency(itemTotal)}" /></td>
 										</tr>
 										<c:set var="subtotal" value="${subtotal + itemTotal}" />
 										<c:set var="total" value="${total + itemTotal}" />
@@ -87,13 +88,13 @@
 									<tr>
 										<td class="text-black font-weight-bold"><strong>Cart
 												Subtotal</strong></td>
-										<td class="text-black"><c:out value="${subtotal}" /></td>
+										<td class="text-black"><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 									</tr>
 									<tr>
 										<td class="text-black font-weight-bold"><strong>Order
 												Total</strong></td>
 										<td class="text-black font-weight-bold"><strong><c:out
-													value="${total}" /></strong></td>
+													value="${FormatCurrency.formatCurrency(total)}" /></strong></td>
 									</tr>
 								</tbody>
 							</table>

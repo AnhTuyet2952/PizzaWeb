@@ -9,6 +9,7 @@
     pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="util.FormatCurrency" %>
 
 
 
@@ -102,13 +103,13 @@
                       <c:forEach var="item" items="${sessionScope.cart.cart_items}">
                         <tr>
                           <td class="product-thumbnail">
-                            <img style="width: 160px; height: 160px;" src="${item.product.image}" alt="Image" class="img-fluid">
+                            <img style="width: 160px; height: 160px;" src="${pageContext.request.contextPath}/${item.product.image}" alt="Image" class="img-fluid">
                           </td>
                           <td class="product-name">
                            <h2 class="h5 text-black">${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</h2>
   
                           </td>
-                          <td>${item.product.price}</td>
+                          <td>${FormatCurrency.formatCurrency(item.product.price)}</td>
                              <td>
             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                         <div class="input-group-prepend">
@@ -128,7 +129,7 @@
                     </div>
             </div>
         </td>
-                          <td>${item.product.price*item.quantity}</td>
+                          <td>${FormatCurrency.formatCurrency(item.product.price*item.quantity)}</td>
                          <td><form action="${pageContext.request.contextPath}/removeItem" method="post">
                          <input type="hidden" name="productId" value="${item.product.idProduct}">
                          
@@ -136,8 +137,8 @@
                         </form>
                         </td>
                         </tr>
-        <c:set var="subtotal" value="${subtotal + (item.product.price * item.quantity)}" />
-        <c:set var="total" value="${total + (item.product.price * item.quantity)}" />
+        <c:set var="subtotal" value="${FormatCurrency.formatCurrency(subtotal + (item.product.price * item.quantity))}" />
+        <c:set var="total" value="${FormatCurrency.formatCurrency(total + (item.product.price * item.quantity))}" />
                     </c:forEach>
                       </tbody>
                     </table>

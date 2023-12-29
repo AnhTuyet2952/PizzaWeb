@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="util.FormatCurrency" %>
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
 <meta charset="utf-8">
@@ -80,11 +81,12 @@
 <div class="container-wrap">
     <div class="row no-gutters d-flex">
         <c:forEach var="productdao" items="${productDAO.selectAllLanguage(sessionScope.language)}">
-            <div class="col-lg-4 d-flex ftco-animate">
+            <div class="col-lg-4 d-flex ftco-animate" style="border: 40px">
                 <div class="services-wrap d-flex">
-                    <a href="#" class="img" style="background-image: url(${productdao.image});"></a>
+                    <a href="#" class="img" style="background-image: url(${pageContext.request.contextPath}/${productdao.image});"></a>
                     <div class="text p-4">
                         <h3>${productdao.nameProduct}</h3>
+                        <h3 style="color: red;font-size: 25px">${FormatCurrency.formatCurrency(productdao.price)}</h3>
                         <p>${productdao.description}</p>
                         <!-- Form to add product to cart -->
                         <form class="add-to-cart-form" action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">

@@ -21,10 +21,10 @@ import Model.Product;
 public class ProductDAO implements DAOInterface<Product> {
 	private ArrayList<Product> data = new ArrayList<>();
 
-	public int createId() {
+	public int creatId() {
+		data = selectAll();
 		return data.size();
 	}
-
     public ArrayList<Product> selectAllLanguage(String lang) {
         try {
             Connection con = JDBCUtil.getConnection();
@@ -35,8 +35,8 @@ public class ProductDAO implements DAOInterface<Product> {
             while (rs.next()) {
                 String idProduct = rs.getString("product_id");
                 String categoryId = rs.getString("category_id");
-                String nameKey = lang.equals("vi") ? "product_name" : "product_name_en";
-                String descriptionKey = lang.equals("vi") ? "description" : "description_en";
+                String nameKey = lang.equals("en") ? "product_name_en" : "product_name";
+                String descriptionKey = lang.equals("en") ? "description_en" : "description";
                 Double price = rs.getDouble("price");
                 String image = rs.getString("image");
 
@@ -55,13 +55,13 @@ public class ProductDAO implements DAOInterface<Product> {
 
 	@Override
 	public ArrayList<Product> selectAll() {
+		ArrayList<Product> products = new ArrayList<>();
 		try {
 			// tao mot connection
 			Connection con = JDBCUtil.getConnection();
 
 			// tao cau lenh sql
-			String sql = "SELECT * FROM products ";
-//			String sql = "SELECT product_id, product_name, description, product_name_en, description_en, category_id, price, image FROM products";
+			String sql = "SELECT * FROM products";
 
 			PreparedStatement st = con.prepareStatement(sql);
 
@@ -81,7 +81,7 @@ public class ProductDAO implements DAOInterface<Product> {
 				Category category = new CategoryDAO().selectById(categoryId);
 				Product product = new Product(idProduct, nameProduct, category, description, price, image);
 
-				data.add(product);
+				products.add(product);
 
 			}
 
@@ -90,7 +90,7 @@ public class ProductDAO implements DAOInterface<Product> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return data;
+		return products;
 	}
 	
 // tim san pham theo ten
@@ -213,7 +213,8 @@ public class ProductDAO implements DAOInterface<Product> {
 
 			PreparedStatement rs = con.prepareStatement(sql);
 
-			rs.setString(1, product.getIdProduct());
+			rs.setString(1, product.getIdProduct().trim());
+
 			rs.setString(2, product.getNameProduct());
 			rs.setString(3, product.getCategory().getCategoryId());
 			rs.setString(4, product.getDescription());
@@ -285,8 +286,14 @@ public class ProductDAO implements DAOInterface<Product> {
 			try {
 				Connection con = JDBCUtil.getConnection();
 
-				String sql = "UPDATE pizza.products SET  product_name=? " + ", category_id=? " + ", description=? "
-						+ ", price=? " + ", image=? "+", product_name_en=?"+", description_en=?" + "WHERE product_id =?";
+				String sql = "UPDATE pizza.products SET  product_name=? " +
+			             ", category_id=? " +
+			             ", description=? " +
+			             ", price=? " +
+			             ", image=? " +
+			             ", product_name_en=?"+
+			             ", description_en=? " +
+			             "WHERE product_id = ?";
 
 				PreparedStatement rs = con.prepareStatement(sql);
 
@@ -297,7 +304,8 @@ public class ProductDAO implements DAOInterface<Product> {
 				rs.setString(5, product.getImage());
 				rs.setString(6, product.getNameProducten());
 				rs.setString(7, product.getDescriptionen());
-				rs.setString(8, product.getIdProduct());
+				rs.setString(8, product.getIdProduct().trim());
+
 
 				result = rs.executeUpdate();
 			} catch (Exception e) {
@@ -307,7 +315,34 @@ public class ProductDAO implements DAOInterface<Product> {
 		}
 
 		return result;
+	}	
+	public int updateImage(Product product) {
+		int result = 0;
+		Product oldProduct = this.selectById(product.getIdProduct() + "");
+
+		if (oldProduct != null) {
+
+			try {
+				Connection con = JDBCUtil.getConnection();
+
+				String sql = "UPDATE pizza.products SET image=? " + "WHERE product_id =?";
+
+				PreparedStatement rs = con.prepareStatement(sql);
+
+				rs.setString(1, product.getImage());
+				rs.setString(2, product.getIdProduct());
+
+				result = rs.executeUpdate();
+				System.out.println("đc");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("khong sua duoc");
+			}
+		}
+
+		return result;
 	}
+
 
 
 	public static void main(String[] args) {

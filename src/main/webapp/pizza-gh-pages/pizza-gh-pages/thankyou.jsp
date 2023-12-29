@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="true" %>
+<%@ page import="util.FormatCurrency" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -70,11 +71,6 @@
 <c:set var="orders" value="${orderDAO.selectById(orderId)}" />
 
 
-<c:if test="${orders.getStatus() eq 'processing'}">
-    <h2 class="display-3 text-black" style="text-align: center;s">Đơn hàng của bạn đang chờ xử lý. Vui lòng đợi xác nhận.</h2>
-</c:if>
-
-<c:if test="${orders.getStatus() eq 'Accept'}">
 
 
 <!-- Trong trang thankyou -->
@@ -90,7 +86,7 @@
             </svg>
           </span>
           <h2 class="display-3 text-black"><fmt:message bundle="${bnd}" key="thank.title"/></h2>
-          <p class="lead mb-5"><fmt:message bundle="${bnd}" key="thank.content"/></p>
+          <h3><p class="lead mb-5"><fmt:message bundle="${bnd}" key="thank.content"/></p></h3>
           <div class="row">
     <div class="col-md-6" style="text-align: left; font-size: 22px">
         <!-- Thông tin khách hàng -->
@@ -120,22 +116,22 @@
             <c:set var="itemTotal" value="${item.products.price * item.quantity}" />
             <tr>
                 <td>
-                    <img style="width: 60px; height: 45px;" src="<c:out value="${item.products.image}" />" alt="Image" class="img-fluid">
+                    <img style="width: 60px; height: 45px;" src="<c:out value="${pageContext.request.contextPath}/${item.products.image}" />" alt="Image" class="img-fluid">
                     <b><c:out value="${(sessionScope.language == 'en') ? item.products.nameProducten : item.products.nameProduct}" /></b>
                     <strong class="mx-2">x</strong><c:out value="${item.quantity}" />
                 </td>
-                <td><c:out value="${itemTotal}" /></td>
+                <td><c:out value="${FormatCurrency.formatCurrency(itemTotal)}" /></td>
             </tr>
             <c:set var="subtotal" value="${subtotal + itemTotal}" />
             <c:set var="total" value="${total + itemTotal}" />
         </c:forEach>
         <tr>
             <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.sub"/></strong></td>
-            <td class="text-black"><c:out value="${subtotal}" /></td>
+            <td class="text-black"><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
         </tr>
         <tr>
             <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.ordertotal"/></strong></td>
-            <td class="text-black font-weight-bold"><strong><c:out value="${total}" /></strong></td>
+            <td class="text-black font-weight-bold"><strong><c:out value="${FormatCurrency.formatCurrency(total)}" /></strong></td>
         </tr>
     </tbody>
 </table>
@@ -154,10 +150,7 @@
       </div>
     </div>
   </div>
-  </c:if>
-<c:if test="${orders.getStatus() eq 'Reject'}">
-    <h2 class="display-3 text-black">Xin lỗi, đơn hàng của bạn đã bị từ chối. Vui lòng liên hệ chăm sóc khách hàng để biết thêm chi tiết.</h2>
-</c:if>
+
 
 		<!-- Start Footer Section -->
 <footer class="ftco-footer ftco-section img">

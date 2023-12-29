@@ -23,6 +23,9 @@
 <link rel="stylesheet" href="../../assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+<style type="text/css">
+
+</style>
 </head>
 
 
@@ -32,6 +35,7 @@
 <body>
 
 	<jsp:useBean id="categoryDAO" class="Database.CategoryDAO"></jsp:useBean>
+	<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
 		<jsp:include page="/admin/nav_bar.jsp" />
@@ -53,52 +57,66 @@
 					<div class="col-md-12">
 						<!-- Form Elements -->
 						<div class="panel panel-default">
-							<div class="panel-heading">Edit Product</div>
+							<div class="panel-heading">SỬA SẢN PHẨM</div>
 							<div class="panel-body">
 								<div class="row">
-									<div class="col-md-6">
-										<h3>Info Product:</h3>
-
+									<div class="col-md-8">
 										<form action="${pageContext.request.contextPath}/editProduct"
-											method="post">
+											method="post" enctype="multipart/form-data">
 											<c:set var="productId" value="${param.id}" />
-                                            <input type="hidden" name="idProduct" id = "idProduct" value="${productId}">
-											<!-- Utilisez la valeur de productId dans une balise label -->
-											<label>${productId}</label>
+										<h3><b>Thông tin sản phẩm mã  <label>${productId}</label>:</b></h3>
+											<c:set var="pro" value="${productDAO.selectById(productId)}"></c:set>
+											<input type="hidden" name="idProduct" id="idProduct"
+												value="${productId}">
+
 											<div class="form-group">
-												<label>Name:</label> <input class="form-control"
+												<label>Tên sản phẩm tiếng việt:</label> <input class="form-control"
 													placeholder="please enter Product Name" name="name"
-													id="name" />
+													id="name" value="${pro.nameProduct}" />
 											</div>
 											<div class="form-group">
-												<label>Price ($)</label> <input class="form-control"
+												<label>Tên sản phẩm tiếng anh:</label> <input class="form-control"
+													placeholder="please enter Product Name" name="nameen"
+													id="nameen" value="${pro.nameProducten}" />
+											</div>
+											<div class="form-group">
+												<label>Giá sản phẩm: </label> <input class="form-control"
 													placeholder="please enter Price" type="number" name="price"
-													id="price" />
+													id="price" value="${pro.price}" />
 											</div>
 											<div class="form-group">
-												<label>Description </label> <br>
+												<label>Mô tả tiếng việt:  </label> <br>
 												<textarea rows="4" cols="50" name="description"
-													id="description"></textarea>
-
+													id="description">${pro.description}</textarea>
+											</div>
+											<div class="form-group">
+												<label>Mô tả tiếng anh:</label> <br>
+												<textarea rows="4" cols="50" name="descriptionen"
+													id="descriptionen">${pro.descriptionen}</textarea>
 											</div>
 
 											<div class="form-group">
-												<label>Category</label>
+												<label>Loại Pizza</label>
 												<div class="checkbox" style="color: white">
 													<select name="category">
 														<c:forEach items="${categoryDAO.selectAll()}" var="c">
-															<option value="${c.categoryId}">${c.categoryName}</option>
+															<option value="${c.categoryId}"
+																${c.categoryId eq pro.category.categoryId ? 'selected' : ''}>${c.categoryName}</option>
 														</c:forEach>
 													</select>
 												</div>
 
 											</div>
+
 											<div class="form-group">
-												<label>image</label> <input type="file" name="image" />
+												<label for="image">Chọn hình mới</label> <input type="file"
+													name="image" id="image" />
 											</div>
-											<button type="submit" class="btn btn-default">Edit</button>
-											<button type="reset" class="btn btn-primary">Reset</button>
+
+
+											<button type="submit" class="btn btn-primary">Sửa</button>
 										</form>
+						
 
 
 									</div>
@@ -118,6 +136,7 @@
 		</div>
 		<!-- /. PAGE WRAPPER  -->
 	</div>
+
 	<!-- container-scroller -->
 	<!-- plugins:js -->
 	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>

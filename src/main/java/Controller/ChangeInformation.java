@@ -112,6 +112,7 @@ public class ChangeInformation extends HttpServlet {
 		if(customer!=null) {
 			customerDAO.update(customer);
 			 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
+			 request.setAttribute("customer", customer);
 			 System.out.println(customer);
         	 response.sendRedirect(request.getContextPath() + url);
 		}else {

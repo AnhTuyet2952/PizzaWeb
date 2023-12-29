@@ -2,7 +2,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
-<style></style>
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+</style>
 <nav <fmt:setLocale value="${sessionScope.language}" />
 	<fmt:setBundle basename="lang.messages" var="bnd"/>
 	class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
@@ -75,19 +80,25 @@
 				</ul>
 			</form>
 
-
-
+<jsp:useBean id="userDAO" class="Database.UserDAO" />
+<c:set var="userId" value="${customer.getUserId()}" />
+<c:set var="user" value="${userDAO.selectById(userId)}" />
 			<ul>
-				<li style="padding-left: 5px; padding-top: 10px; margin: 0px;"
-					class="nav-item dropdown"><a class="nav-icon-hover"
-					href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-					aria-expanded="false"> <img
-						style="margin-left: 40px; margin-top: 20px" src="images/cool.png"
-						alt="" width="35" height="35" class="rounded-circle">
-
-
-				</a> <c:choose>
-						<c:when test="${empty customer && empty admin}">
+    <li style="padding-left: 5px; padding-top: 10px; margin: 0px;" class="nav-item dropdown dropdown">
+        <c:choose>
+            <c:when test="${not empty user and not empty user.avatar}">
+                <a class="nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img style="margin-left: 40px; margin-top: 20px" src="${pageContext.request.contextPath}/${user.avatar}" alt="" width="45" height="45" class="rounded-circle">
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a class="nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img style="margin-left: 40px; margin-top: 20px" src="images/cool.png" alt="Default Avatar" width="45" height="45" class="rounded-circle">
+                </a>
+            </c:otherwise>
+        </c:choose>
+<c:choose>
+      <c:when test="${empty customer && empty admin}">
 							<div
 								class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
 								aria-labelledby="drop2">
@@ -116,10 +127,10 @@
 						</c:when>
 
 						<c:otherwise>
-							<c:set var="customer" value="${customer}" scope="application"></c:set>
-							<p>
-								<fmt:message bundle="${bnd}" key="header.hello" />
-								${customer.username}${admin.username}
+							<c:set var="customer" value="${customer}" scope="session"></c:set>
+							<p style="text-align: right: ;">
+								<fmt:message bundle="${bnd}" key="header.hello" /> 
+								${customer.username}
 							</p>
 							<div
 								class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
@@ -131,13 +142,8 @@
 										<p class="mb-0 fs-3">
 											<fmt:message bundle="${bnd}" key="header.profile" />
 										</p>
-									</a> <a href="javascript:void(0)"
-										class="d-flex align-items-center gap-2 dropdown-item"> <i
-										class="ti ti-list-check fs-6"></i>
-										<p class="mb-0 fs-3">
-											<fmt:message bundle="${bnd}" key="header.task" />
-										</p>
-									</a> <a href="changePassword.jsp"
+									</a> 
+									 <a href="changePassword.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">
@@ -157,12 +163,12 @@
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Trạng thái đơn hàng</p>
-									</a>		<a href="order.jsp"
+									</a><a href="order.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Đơn đặt hàng</p>
-								</a>
-		<c:url var="logoutUrl" value="/logout" />
+									</a>
+									<c:url var="logoutUrl" value="/logout" />
 									<a href="${logoutUrl}"
 										class="btn btn-outline-primary mx-3 mt-2 d-block"><fmt:message
 											bundle="${bnd}" key="header.logout" /></a>
@@ -170,7 +176,9 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
-			</ul>
+	
+    </li>
+</ul>
 
 		</div>
 	</div>

@@ -32,11 +32,6 @@ public class CancelAdmin extends HttpServlet {
 			// Cập nhật thành công
 			message = "Order canceled successfully.";
 			request.setAttribute("message", message);
-		}else if("Not accepted".equals(action)) {
-			orderDAO.UpdateOrderStatus(orderId, "Accept");
-			 order.setStatus("Accept");
-			message = "Order Accepted successfully.";
-			System.out.println(order.getStatus());
 		}else if("Cancelled".equals(action)) {
 			orderDAO.UpdateOrderStatus(orderId, "Cancel");
 			 order.setStatus("Cancel");

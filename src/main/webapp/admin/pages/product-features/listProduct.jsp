@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ page import="util.FormatCurrency" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,20 +77,19 @@
 												<c:forEach items="${productDAO.selectAll()}" var="pro">
 													<tr class="odd gradeX">
 														<td>${pro.idProduct}</td>
-														<c:url value="/image?fname=${pro.image }" var="imgUrl"></c:url>
-														<td><img height="150" width="200" src="${imgUrl}" /></td>
+														<td><img height="150" width="200" src="${pageContext.request.contextPath}/${pro.image }" /></td>
 
 														<td>${pro.nameProduct }</td>
-														<td>${pro.price }</td>
+														<td>${FormatCurrency.formatCurrency(pro.price)}</td>
 														<td style="width:50%">${pro.category.categoryName }</td>
 														
 														<td><a
 															href="<c:url value='/product/detail?id=${pro.idProduct }'/>"
 															class="center">Detail</a> | <a
 															href="<c:url value='/admin/pages/product-features/sua.jsp?id=${pro.idProduct }'/>"
-															class="center">Edit</a> |<a
+															class="center">Sửa</a> |<a
 															href="<c:url value='/deleteProduct?id=${pro.idProduct }'/>"
-															class="center">Delete</a></td>
+															class="center">Xóa</a>|<a href="<c:url value='/admin/pages/product-features/suaAnh.jsp?id=${pro.idProduct }'/>" class="center">Sửa ảnh</a></td>
 
 													</tr>
 												</c:forEach>

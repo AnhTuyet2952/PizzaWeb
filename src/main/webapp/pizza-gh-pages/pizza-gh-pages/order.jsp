@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="true"%>
+<%@ page import="util.FormatCurrency" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -92,24 +93,30 @@
 		</div>
 	</div>
 	<jsp:useBean id="userDAO" class="Database.UserDAO" />
+	<c:set var="userId" value="${customer.getUserId()}" />
+	<c:set var="user" value="${userDAO.selectById(userId)}" />
 	<jsp:useBean id="orderDAO" class="Database.OrderDAO" />
 	<jsp:useBean id="orderDetailDao" class="Database.OrderDetailDAO"></jsp:useBean>
 	<h2 style="text-align: center;">
 		<b><fmt:message bundle="${bnd}" key="order.title" /></b>
 	</h2>
 	<c:forEach items="${userDAO.selectCustomer()}" var="customer">
+	 <c:if test="${customer.userId eq user.userId}">
     <c:set var="acceptOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Accept')}" />
+    <c:set var="processingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'processing')}" />
     <c:set var="pendingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Request cancellation')}" />
     <c:set var="cancelOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Cancel')}" />
 	
 	<div class="full inner_elements margin_top_30">
-		<div class="tab_style2">
+		<div class ="tab_style2">
 			<div class="tabbar">
 				<nav>
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
 						<a class="nav-item nav-link active" id="nav-home-tab"
 							data-toggle="tab" href="#Accept" role="tab"
-							aria-selected="true"><fmt:message bundle="${bnd}" key="order.list.A" /></a> <a
+							aria-selected="true"><fmt:message bundle="${bnd}" key="order.list.A" /></a><a
+							class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+							href="#processing" role="tab" aria-selected="false"><fmt:message bundle="${bnd}" key="order.list.processing" /></a> <a
 							class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
 							href="#pending" role="tab" aria-selected="false"><fmt:message bundle="${bnd}" key="order.list.P" /></a> <a class="nav-item nav-link" id="nav-contact-tab"
 							data-toggle="tab" href="#Cancel" role="tab"
@@ -135,7 +142,7 @@
 														key="order.status" /></b></th>
 											<th><b><fmt:message bundle="${bnd}"
 														key="order.detail" /></b></th>
-											<th><b><fmt:message bundle="${bnd}" key="order.cancel" /></b></th>
+										
 											<!-- Thêm các cột khác theo nhu cầu -->
 										</tr>
 									</thead>
@@ -161,18 +168,13 @@
 														<c:set var="subtotal" value="${subtotal + itemTotal}" />
 													</c:forEach>
 
-													<td><c:out value="${subtotal}" /></td>
+													<td><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 													<td>${order.note}</td>
 													<td>${order.status}</td>
 													<td><a
 														href="${pageContext.request.contextPath}/orderDetail2?orderId=${order.oderId}"><fmt:message
 																bundle="${bnd}" key="order.de" /></a></td>
-<td>
-    <form action="${pageContext.request.contextPath}/CancelOrder" method="post">
-        <input type="hidden" name="orderId" value="${order.oderId}">
-        <input type="submit" name="action" value="Cancel" onclick="cancelOrder('${order.oderId}')">
-    </form>
-</td>
+
 																
 												</tr>
 											</c:forEach>
@@ -180,6 +182,66 @@
 								</table>
 							</ul>
 						</div>
+					</div>
+					<div class="tab-pane fade" id="processing" role="tabpanel"
+						aria-labelledby="nav-profile-tab">
+						<table class="table table-striped table-bordered table-hover"
+									id="dataTables-example">
+									<thead>
+										<tr>
+											<th><b><fmt:message bundle="${bnd}" key="order.id" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.inf" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.total" /></b></th>
+											<th><b><fmt:message bundle="${bnd}" key="order.Note" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.status" /></b></th>
+											<th><b><fmt:message bundle="${bnd}"
+														key="order.detail" /></b></th>
+														<th><b><fmt:message bundle="${bnd}" key="order.cancel" /></b></th>
+	
+										</tr>
+									</thead>
+									<tbody>
+											<c:set var="orders"
+												value="${processingOrders}" />
+
+											<c:forEach var="order" items="${orders}">
+												<tr class="odd gradeX">
+													<td>${order.oderId}</td>
+													<td class="address-column"><fmt:message
+															bundle="${bnd}" key="order.name" />:
+														${order.nameConsignee}. <fmt:message bundle="${bnd}"
+															key="order.address" /> ${order.address}. <fmt:message
+															bundle="${bnd}" key="order.phone" />:
+														${order.phoneConsignee}</td>
+
+													<c:set var="subtotal" value="0" />
+													<c:forEach var="item"
+														items="${orderDetailDao.selectByOrderId(order.oderId)}">
+														<c:set var="itemTotal"
+															value="${item.products.price * item.quantity}" />
+														<c:set var="subtotal" value="${subtotal + itemTotal}" />
+													</c:forEach>
+
+													<td><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
+													<td>${order.note}</td>
+													<td>${order.status}</td>
+													<td><a
+														href="${pageContext.request.contextPath}/orderDetail2?orderId=${order.oderId}"><fmt:message
+																bundle="${bnd}" key="order.de" /></a></td>
+													<td>
+    <form action="${pageContext.request.contextPath}/CancelOrder" method="post">
+        <input type="hidden" name="orderId" value="${order.oderId}">
+        <input type="submit" name="action" value="Cancel" onclick="cancelOrder('${order.oderId}')">
+    </form>
+</td>
+																
+													<!-- Thêm các cột khác theo nhu cầu -->
+												</tr>
+											</c:forEach>
+									</tbody>
+								</table>
 					</div>
 					<div class="tab-pane fade" id="pending" role="tabpanel"
 						aria-labelledby="nav-profile-tab">
@@ -221,7 +283,7 @@
 														<c:set var="subtotal" value="${subtotal + itemTotal}" />
 													</c:forEach>
 
-													<td><c:out value="${subtotal}" /></td>
+													<td><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 													<td>${order.note}</td>
 													<td>${order.status}</td>
 													<td><a
@@ -275,7 +337,7 @@
 														<c:set var="subtotal" value="${subtotal + itemTotal}" />
 													</c:forEach>
 
-													<td><c:out value="${subtotal}" /></td>
+													<td><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 													<td>${order.note}</td>
 													<td>${order.status}</td>
 													<td><a
@@ -292,6 +354,7 @@
 			</div>
 		</div>
 	</div>
+	</c:if>
 </c:forEach>
 
 </body>

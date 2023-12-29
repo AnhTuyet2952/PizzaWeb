@@ -13,8 +13,10 @@
 		<li class="nav-item profile">
 			<div class="profile-desc">
 				<div class="profile-pic">
-				
-				<img class="img-xs rounded-circle" src="${admin.avatar}" alt="">
+				<jsp:useBean id="userDAO" class="Database.UserDAO" />
+<c:set var="userId" value="${customer.getUserId()}" />
+<c:set var="user" value="${userDAO.selectById(userId)}" />
+				<img class="img-xs rounded-circle" src="${pageContext.request.contextPath}/${user.avatar}" alt="">
 				
 					<div class="profile-name">
 						<h5 class="mb-0 font-weight-normal">Admin</h5>
