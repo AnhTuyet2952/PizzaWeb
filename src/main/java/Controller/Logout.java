@@ -29,12 +29,7 @@ public class Logout extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		if (session != null) {
-	        // Xóa đối tượng "customer" khỏi phiên làm việc
-//			session.setAttribute("customer", null);
-//			session.setAttribute("admin", null);
-//	        session.removeAttribute("customer");
-//	        
-	        // Hủy phiên làm việc
+   // Hủy phiên làm việc
 	        session.invalidate();
 	    }
 		

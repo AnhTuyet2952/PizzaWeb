@@ -25,6 +25,8 @@ public class Register extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
 		String username = request.getParameter("username");
 		System.out.println(username);
 		String name = request.getParameter("name");
@@ -45,6 +47,17 @@ public class Register extends HttpServlet {
 		
 		UserDAO cd= new UserDAO();
 		ErrorBean eb = new ErrorBean();
+		
+		if(username.length()>25) {
+			eb.setError("ten dang nhap khong duoc qua 25 ky tu");
+			request.setAttribute("name", "");
+			request.setAttribute("errorBean", eb);
+			baoLoi+=eb.getError();
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+            return;
+		}
+		
 		if(cd.selectByUsername(username)) {
 			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
 			request.setAttribute("name", "");

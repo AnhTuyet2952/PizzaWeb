@@ -14,7 +14,8 @@ import Model.Product;
 public class cartDAO implements DAOInterface<Cart> {
 	private ArrayList<Cart> data = new ArrayList<>();
 
-	public int createId() {
+	public int creatId() {
+		data = selectAll();
 		return data.size();
 	}
 
@@ -82,7 +83,7 @@ public class cartDAO implements DAOInterface<Cart> {
 		try {
 			Connection con = JDBCUtil.getConnection();
 
-			String sql = "INSERT INTO carts(cart_id, user_id, buyDate)" + "VALUE(?, ?, ?)";
+			String sql = "INSERT INTO carts(cart_id, user_id, buyDate)" + "VALUES(?, ?, ?)";
 
 			PreparedStatement rs = con.prepareStatement(sql);
 			rs.setString(1, t.getCartId());

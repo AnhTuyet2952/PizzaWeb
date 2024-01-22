@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,115 +24,87 @@
 <!-- End layout styles -->
 <link rel="shortcut icon" href="../../assets/images/favicon.png" />
 </head>
+
+
+<!-- Tháº» nÃºt trong báº£ng -->
+
+
 <body>
-
-  <jsp:useBean id="customer" class="Database.UserDAO"></jsp:useBean>
-
+	<jsp:useBean id="customer" class="Database.UserDAO"></jsp:useBean>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
-		
 		<jsp:include page="/admin/nav_bar.jsp" />
 		<!-- partial -->
-		<div class="content-wrapper full-page-wrad-flexpper  align-items-center auth login-bg" style="margin-top: 100px">
 		<div class="container-fluid page-body-wrapper">
 			<!-- partial:../../partials/_navbar.html -->
-			
+
 			<jsp:include page="/admin/fixed-top.jsp" />
 			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
 
-			<div id="page-wrapper">
-				<div id="page-inner">
-					<div class="row">
-						<div class="col-md-12">
-							<h2>All Product</h2>
-							<h5>You can management product in here</h5>
-
-						</div>
 					</div>
-					<!-- /. ROW  -->
-					<hr />
-
 					<div class="row">
-						<div class="col-md-12">
-							<!-- Advanced Tables -->
-							<div class="panel panel-default">
-								<div class="panel-heading">Advanced Tables</div>
-								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped table-bordered table-hover"
-											id="dataTables-example">
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Image</th>
-													<th>Username</th>
-													<th>Name</th>
-													<th>Birthday</th>
-													<th>Sexual</th>
-													<th>Email</th>
-													<th>Phone number</th>
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach items="${customer.selectCustomer()}" var="customer">
-													<tr class="odd gradeX">
-														<td>${customer.userId}</td>
-														<c:url value="/image?fname=${customer.avatar }" var="imgUrl"></c:url>
-														<td><img height="150" width="200" src="${imgUrl}" /></td>
-
-														<td>${customer.username }</td>
-														<td>${customer.name }</td>
-														<td>${customer.birthday.toString()}</td>
-														<td>${customer.sexual }</td>
-														<td>${customer.email}</td>
-														<td>${customer.phoneNumber }</td>
-														<td><a href="${pageContext.request.contextPath}/userDetail?id=${customer.userId }">${customer.userId }</a></td>
-														
-
-													</tr>
-												</c:forEach>
-
-
-											</tbody>
-										</table>
+						<div class="col-lg-12 grid-margin">
+							<div class="card">
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Danh sách người dùng</h4>
+											<p class="card-description"></p>
+											<div class="table-responsive">
+												<table class="table table-striped">
+													<thead>
+														<tr>
+															<th>Id</th>
+															<th>User</th>
+															<th>Username</th>
+															<th>name</th>
+															<th>Birthday</th>
+															<th>Sexual</th>
+															<th>Email</th>
+															<th>Phone number</th>
+															<th>Detail</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${customer.selectCustomer()}"
+															var="customer">
+															<tr>
+																<td class="py-1">${customer.userId}</td>
+																<td class="py-1"><img height="150" width="200"
+																	src="${pageContext.request.contextPath}/${customer.avatar}" />
+																</td>
+																<td>${customer.username }</td>
+																<td>${customer.name }</td>
+																<td>${customer.birthday.toString()}</td>
+																<td>${customer.sexual }</td>
+																<td>${customer.email}</td>
+																<td>${customer.phoneNumber }</td>
+																<td><a
+																	href="${pageContext.request.contextPath}/userDetail?id=${customer.userId }">Chi
+																		tiết</a></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
 									</div>
-
 								</div>
 							</div>
-							<!--End Advanced Tables -->
 						</div>
 					</div>
-
 				</div>
 
+				<!-- partial -->
 			</div>
-			<!-- /. PAGE INNER  -->
+			<!-- main-panel ends -->
 		</div>
+		<!-- page-body-wrapper ends -->
 	</div>
-	</div>
-	<!-- content-wrapper ends -->
-	<!-- partial:../../partials/_footer.html -->
-	<footer class="footer">
-		<div
-			class="d-sm-flex justify-content-center justify-content-sm-between">
-			<span
-				class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
-				Â© bootstrapdash.com 2020</span> <span
-				class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-				Free <a
-				href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-				target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com
-			</span>
-		</div>
-	</footer>
-	<!-- partial -->
-	</div>
-	<!-- main-panel ends -->
-	</div>
-	</div>
-	<!-- page-body-wrapper ends -->
-	
 	<!-- container-scroller -->
 	<!-- plugins:js -->
 	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>

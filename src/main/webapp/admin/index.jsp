@@ -38,7 +38,7 @@
 	
 		<!-- partial:partials/_sidebar.html -->
 		<jsp:include page="/admin/nav_bar.jsp" />
-<div class="content-wrapper full-page-wrad-flexpper  align-items-center auth login-bg" style="padding-left: 0px">
+<div class="content-wrapper" style="padding-left: 0px">
 		<!-- partial -->
 		<div class="container-fluid page-body-wrapper" style="margin-left: 50px">
 		<jsp:include page="/admin/fixed-top.jsp" />

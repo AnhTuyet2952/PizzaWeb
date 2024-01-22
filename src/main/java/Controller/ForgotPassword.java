@@ -61,6 +61,7 @@ public class ForgotPassword extends HttpServlet {
 		
 		UserDAO customerDAO = new UserDAO();
 		User customer = customerDAO.selectByEmail2(email);
+		System.out.println(customerDAO.selectByEmail(email));
 		if(customer!=null) {
 			HttpSession mySession = request.getSession();
 			mySession.setAttribute("customerId", customer.getUserId());
@@ -89,8 +90,9 @@ public class ForgotPassword extends HttpServlet {
 				
 				//request.setAttribute("status", "success");
 			}
-		}else {
-			 request.setAttribute("Error", "Username không tồn tại, vui lòng nhập lại username khác!");
+		}
+		else {
+			 request.setAttribute("Error", "Email đăng ký không tồn tại, vui lòng nhập lại email khác!");
         	 ErrorBean eb = new ErrorBean();
         	 eb.setError((String)request.getAttribute("Error"));
         	 request.setAttribute("errorBean", eb);

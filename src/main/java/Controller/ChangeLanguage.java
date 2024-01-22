@@ -25,6 +25,8 @@ public class ChangeLanguage extends HttpServlet {
 
         String language = request.getParameter("lang");
         request.getSession().setAttribute("language", language);
+        request.setCharacterEncoding("utf-8");
+		  response.setCharacterEncoding("utf-8");
         response.sendRedirect(request.getHeader("Referer"));
 //        System.out.println("Language parameter: " + request.getParameter("lang"));
 

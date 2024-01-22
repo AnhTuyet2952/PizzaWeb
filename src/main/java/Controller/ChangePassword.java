@@ -27,26 +27,36 @@ public class ChangePassword extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
-		System.out.println(username);
+		String user_id = request.getParameter("user_id");
+		
 		String password = request.getParameter("password");
 		System.out.println("pw"+password);
 		String newPassword = request.getParameter("newPassword");
 	
 		password = PasswordEncryption.toSHA1(password);
 		newPassword = PasswordEncryption.toSHA1(newPassword);
+		
+		
 		UserDAO customerDAO = new UserDAO();
-		User customer = customerDAO.selectByUsernamePassword(username, password);
-		System.out.println(customer);
+		User customer = customerDAO.selectById(user_id);
 		String url="";
-		if(customer!=null) {
+		ErrorBean eb = new ErrorBean();
+		
+		if(customer==null) {
+			eb.setError("Vui long dang nhap de sua thong tin ca nhan");
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+            return;
+		}else
+		System.out.println(customer);
+				if(customer!=null) {
 			customer.setPassword(newPassword);
 			customerDAO.update(customer);
 			 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
         	 response.sendRedirect(request.getContextPath() + url);
 		}else {
 			 request.setAttribute("Error", "mat khau chua chinh xac!");
-			 ErrorBean eb = new ErrorBean();
+			 
         	 eb.setError((String)request.getAttribute("Error"));
         	 request.setAttribute("errorBean", eb);
         	 url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changePassword.jsp";

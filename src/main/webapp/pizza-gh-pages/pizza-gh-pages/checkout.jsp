@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="util.FormatCurrency" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -69,9 +70,23 @@
 		    <div class="container">
 		      <div class="row mb-5">
 		        <div class="col-md-12">
-		          <div class="border p-4 rounded" role="alert">
-		            <fmt:message bundle="${bnd}" key="checkout.login"/> <a href="login.jsp"><fmt:message bundle="${bnd}" key="checkout.login.click"/></a> <fmt:message bundle="${bnd}" key="checkout.login.to"/>
-		          </div>
+		        <c:choose>
+    <c:when test="${empty sessionScope.customer and empty sessionScope.admin}">
+        <div class="untree_co-section">
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        <div class="border p-4 rounded" role="alert">
+                            <fmt:message bundle="${bnd}" key="checkout.login"/> <a href="login.jsp"><fmt:message bundle="${bnd}" key="checkout.login.click"/></a> <fmt:message bundle="${bnd}" key="checkout.login.to"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:when>
+
+</c:choose>
+
 		        </div>
 		      </div>
 		          <form action="${pageContext.request.contextPath}/checkoutController">
@@ -112,22 +127,6 @@
 		        </div>
 		        <div class="col-md-6">
 
-		          <div class="row mb-5">
-		            <div class="col-md-12">
-		              <h2 class="h3 mb-3 text-black"><fmt:message bundle="${bnd}" key="checkout.coupon"/></h2>
-		              <div class="p-3 p-lg-5 border bg-white">
-
-		                <div class="input-group w-75 couponcode-wrap">
-		                  <input type="text" class="form-control me-2" id="c_code" placeholder="<fmt:message bundle="${bnd}" key="checkout.couponcode"/>" aria-label="Coupon Code" aria-describedby="button-addon2">
-		                  <div class="input-group-append">
-		                    <button class="btn btn-black btn-sm" type="button" id="button-addon2"><fmt:message bundle="${bnd}" key="checkout.coupon.apply"/></button>
-		                  </div>
-		                </div>
-
-		              </div>
-		            </div>
-		          </div>
-		          <!-- Trong trang thanh toán -->
 
 
 		          <div class="row mb-5">
@@ -142,19 +141,19 @@
 		                  <tbody>
 		                  <c:forEach var="item" items="${sessionScope.cart.cart_items}">
 		                    <tr>
-		                      <td> <img style="width: 60px; height: 45px;" src="${item.product.image}" alt="Image" class="img-fluid"> <b>${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</b><strong class="mx-2">x</strong> ${item.quantity}</td>
-		                      <td>${item.product.price* item.quantity}</td>
+		                      <td> <img style="width: 60px; height: 45px;" src="${pageContext.request.contextPath}/${item.product.image}" alt="Image" class="img-fluid"> <b>${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</b><strong class="mx-2">x</strong> ${item.quantity}</td>
+		                      <td>${FormatCurrency.formatCurrency(item.product.price* item.quantity)}</td>
 		                    </tr>
 							<c:set var="subtotal" value="${subtotal + (item.product.price * item.quantity)}" />
        						<c:set var="total" value="${total + (item.product.price * item.quantity)}" />
 		                    </c:forEach>
 		                    <tr>
 		                      <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.sub"/></strong></td>
-		                      <td class="text-black">${subtotal}</td>
+		                      <td class="text-black">${FormatCurrency.formatCurrency(subtotal)}</td>
 		                    </tr>
 		                    <tr>
 		                      <td class="text-black font-weight-bold"><strong><fmt:message bundle="${bnd}" key="checkout.ordertotal"/></strong></td>
-		                      <td class="text-black font-weight-bold"><strong>${total}</strong></td>
+		                      <td class="text-black font-weight-bold"><strong>${FormatCurrency.formatCurrency(total)}</strong></td>
 		                    </tr>
 		                  </tbody>
 		                </table>

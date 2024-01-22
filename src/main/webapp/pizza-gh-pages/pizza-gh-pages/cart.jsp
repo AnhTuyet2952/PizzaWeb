@@ -10,7 +10,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-
+<%@ page import="util.FormatCurrency" %>
 
 
 <html lang="en">
@@ -102,13 +102,13 @@
                       <c:forEach var="item" items="${sessionScope.cart.cart_items}">
                         <tr>
                           <td class="product-thumbnail">
-                            <img style="width: 160px; height: 160px;" src="${item.product.image}" alt="Image" class="img-fluid">
+                            <img style="width: 160px; height: 160px;" src="${pageContext.request.contextPath}/${item.product.image}" alt="Image" class="img-fluid">
                           </td>
                           <td class="product-name">
                            <h2 class="h5 text-black">${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</h2>
   
                           </td>
-                          <td>${item.product.price}</td>
+                          <td>${FormatCurrency.formatCurrency(item.product.price)}</td>
                              <td>
             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                         <div class="input-group-prepend">
@@ -128,7 +128,7 @@
                     </div>
             </div>
         </td>
-                          <td>${item.product.price*item.quantity}</td>
+                          <td>${FormatCurrency.formatCurrency(item.product.price*item.quantity)}</td>
                          <td><form action="${pageContext.request.contextPath}/removeItem" method="post">
                          <input type="hidden" name="productId" value="${item.product.idProduct}">
                          
@@ -152,17 +152,7 @@
                      <a class="btn btn-outline-black btn-sm btn-block" href="menu.jsp"><fmt:message bundle="${bnd}" key="cart.continue"/></a>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label class="text-black h4" for="coupon"><fmt:message bundle="${bnd}" key="cart.coupon.title"/></label>
-                    </div>
-                    <div class="col-md-8 mb-3 mb-md-0">
-                      <input type="text" class="form-control py-3" id="coupon" placeholder="<fmt:message bundle="${bnd}" key="cart.coupon.enter"/>">
-                    </div>
-                    <div class="col-md-4">
-                      <button class="btn btn-black"><fmt:message bundle="${bnd}" key="cart.coupon.apply"/></button>
-                    </div>
-                  </div>
+                
                 </div>
                 <div class="col-md-6 pl-5">
                   <div class="row justify-content-end">
@@ -177,7 +167,7 @@
                           <span class="text-black"><fmt:message bundle="${bnd}" key="cart.subtotal"/></span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">${subtotal}</strong>
+                          <strong class="text-black">${FormatCurrency.formatCurrency(subtotal)}</strong>
                         </div>
                       </div>
                       <div class="row mb-5">
@@ -185,7 +175,7 @@
                           <span class="text-black"><fmt:message bundle="${bnd}" key="cart.total"/></span>
                         </div>
                         <div class="col-md-6 text-right">
-                          <strong class="text-black">${total}</strong>
+                          <strong class="text-black">${FormatCurrency.formatCurrency(total)}</strong>
                         </div>
                       </div>
         

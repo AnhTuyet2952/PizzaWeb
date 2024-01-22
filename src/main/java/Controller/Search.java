@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
 import Database.ProductDAO;
 import Model.Product;
 
@@ -34,20 +36,36 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
-		try {
-			String productName = request.getParameter("productName");
-			ProductDAO productDAO = new ProductDAO();
-			int count = productDAO.countProductByName(productName);
-			ArrayList<Product>listProductSearchByName = productDAO.selectByProductName(productName);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("listProductSearchByName", listProductSearchByName);
-			
-			String url = "/pizza-gh-pages/pizza-gh-pages/searchResultPage.jsp";
-       	    response.sendRedirect(request.getContextPath() + url);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		 try {
+			    HttpSession session = request.getSession();
+	            String productName = request.getParameter("productName");
+	            ProductDAO productDAO = new ProductDAO();
+	            String lang = (String) session.getAttribute("language");
+	            
+	            if(lang==null||lang.isEmpty()) {
+	            	lang="vi";
+	            	session.setAttribute("language", lang);
+	            }
+	            
+	            int count = productDAO.countProductByName(productName);
+	            ArrayList<Product> listProductSearchByName = productDAO.selectByProductName(productName, lang);
+
+	            
+	            session.setAttribute("listProductSearchByName", listProductSearchByName);
+
+	            // Truyền thông tin ngôn ngữ vào request
+	            request.setAttribute("language", lang);
+
+	            System.out.println("productName: " + productName);
+	            System.out.println("Count: " + count);
+	            System.out.println("List size: " + listProductSearchByName.size());
+
+	            String url = "/pizza-gh-pages/pizza-gh-pages/searchResultPage.jsp";
+	            response.sendRedirect(request.getContextPath() + url);
+	        } catch (Exception e) {
+	            // Xử lý ngoại lệ
+	            e.printStackTrace();
+	        }
 	}
 
 	/**

@@ -23,101 +23,141 @@
 <link rel="stylesheet" href="../../assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+<style>
+  .equal-width,
+    .description-textarea,
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+        width: 50%;
+        color: black;
+        background-color: white;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        transition: all 0.3s; /* Add transition for a smoother effect */
+        padding: 10px; /* Add padding for better visual appearance */
+    }
+
+    .equal-width:focus,
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    .description-textarea:focus,
+    textarea:focus,
+    select:focus {
+        color: black;
+        background-color: white;
+    }
+
+</style>
 </head>
 
 
-<!-- Tháº» nÃºt trong báº£ng -->
 
 
 <body>
 
 	<jsp:useBean id="categoryDAO" class="Database.CategoryDAO"></jsp:useBean>
+	<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
 		<jsp:include page="/admin/nav_bar.jsp" />
 
 		<!-- partial -->
-		<div id="page-wrapper">
+	<div class="container-fluid page-body-wrapper">
+			<!-- partial:../../partials/_navbar.html -->
 
 			<jsp:include page="/admin/fixed-top.jsp" />
-			<div id="page-inner">
-				<div class="row">
-					<div class="col-md-12">
-						<h2>Add Product</h2>
-						<h5>Add product you can sell</h5>
+			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
+
 					</div>
-				</div>
-				<!-- /. ROW  -->
-				<hr />
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Form Elements -->
-						<div class="panel panel-default">
-							<div class="panel-heading">Edit Product</div>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-6">
-										<h3>Info Product:</h3>
+					<div class="row">
+						<div class="col-lg-12 grid-margin">
+							<div class="card">
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h1 class="card-title" >Sửa sản phẩm</h1>
+											<p class="card-description"></p>
+											<div class="table-responsive">
 
 										<form action="${pageContext.request.contextPath}/editProduct"
-											method="post">
+											method="post" enctype="multipart/form-data">
 											<c:set var="productId" value="${param.id}" />
-                                            <input type="hidden" name="idProduct" id = "idProduct" value="${productId}">
-											<!-- Utilisez la valeur de productId dans une balise label -->
-											<label>${productId}</label>
+										<h3><b>Thông tin sản phẩm mã  <label>${productId}</label>:</b></h3>
+											<c:set var="pro" value="${productDAO.selectById(productId)}"></c:set>
+											<input type="hidden" name="idProduct" id="idProduct"
+												value="${productId}">
+
 											<div class="form-group">
-												<label>Name:</label> <input class="form-control"
+												<label style="font-size: 22px">Tên sản phẩm tiếng việt:</label> <input class="form-control equal-width"
 													placeholder="please enter Product Name" name="name"
-													id="name" />
+													id="name" value="${pro.nameProduct}" />
 											</div>
 											<div class="form-group">
-												<label>Price ($)</label> <input class="form-control"
+												<label style="font-size: 22px">Tên sản phẩm tiếng anh:</label> <input class="form-control equal-width"
+													placeholder="please enter Product Name" name="nameen"
+													id="nameen" value="${pro.nameProducten}" />
+											</div>
+											<div class="form-group">
+												<label style="font-size: 22px">Giá sản phẩm: </label> <input class="form-control equal-width"
 													placeholder="please enter Price" type="number" name="price"
-													id="price" />
+													id="price" value="${pro.price}" />
 											</div>
 											<div class="form-group">
-												<label>Description </label> <br>
+												<label style="font-size: 22px">Mô tả tiếng việt:  </label> <br>
 												<textarea rows="4" cols="50" name="description"
-													id="description"></textarea>
-
+													id="description">${pro.description}</textarea>
+											</div>
+											<div class="form-group">
+												<label style="font-size: 22px">Mô tả tiếng anh:</label> <br>
+												<textarea rows="4" cols="50" name="descriptionen"
+													id="descriptionen">${pro.descriptionen}</textarea>
 											</div>
 
 											<div class="form-group">
-												<label>Category</label>
+												<label style="font-size: 22px">Loại Pizza</label>
 												<div class="checkbox" style="color: white">
 													<select name="category">
 														<c:forEach items="${categoryDAO.selectAll()}" var="c">
-															<option value="${c.categoryId}">${c.categoryName}</option>
+															<option value="${c.categoryId}"
+																${c.categoryId eq pro.category.categoryId ? 'selected' : ''}>${c.categoryName}</option>
 														</c:forEach>
 													</select>
 												</div>
 
 											</div>
+
 											<div class="form-group">
-												<label>image</label> <input type="file" name="image" />
+												<label for="image" style="font-size: 22px">Chọn hình mới</label> <input type="file"
+													name="image" id="image" />
 											</div>
-											<button type="submit" class="btn btn-default">Edit</button>
-											<button type="reset" class="btn btn-primary">Reset</button>
+
+
+											<button type="submit" class="btn btn-primary">Sửa</button>
 										</form>
+						
 
 
+		</div>
+										</div>
+			</div>
+										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
-						<!-- End Form Elements -->
 					</div>
 				</div>
-				<!-- /. ROW  -->
-				<div class="row">
-					<div class="col-md-12"></div>
-				</div>
-				<!-- /. ROW  -->
+
+				<!-- partial -->
 			</div>
-			<!-- /. PAGE INNER  -->
-		</div>
-		<!-- /. PAGE WRAPPER  -->
-	</div>
+
 	<!-- container-scroller -->
 	<!-- plugins:js -->
 	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	
 <nav class="navbar p-0 fixed-top d-flex flex-row">
           <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
@@ -151,10 +152,13 @@
                   <p class="p-3 mb-0 text-center">See all notifications</p>
                 </div>
               </li>
+              <jsp:useBean id="userDAO" class="Database.UserDAO" />
+                  <c:set var="userId" value="${customer.getUserId()}" />
+<c:set var="user" value="${userDAO.selectById(userId)}" />
               <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                   <div class="navbar-profile">
-                    <img class="img-xs rounded-circle" src="${admin.avatar}" alt="">
+                    <img class="img-xs rounded-circle" src="${pageContext.request.contextPath}/${user.avatar}" alt="">
                     <p class="mb-0 d-none d-sm-block navbar-profile-name">${admin.username}</p>
                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                   </div>

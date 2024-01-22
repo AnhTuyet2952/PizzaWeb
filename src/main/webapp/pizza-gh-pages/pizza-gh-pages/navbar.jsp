@@ -2,14 +2,20 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
+<style>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+</style>
 <nav <fmt:setLocale value="${sessionScope.language}" />
 	<fmt:setBundle basename="lang.messages" var="bnd"/>
 	class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
 	id="ftco-navbar">
 	<div class="container">
-		<a class="navbar-brand" href="index.html"><span
-			class="flaticon-pizza-1 mr-1"></span>
-		<fmt:message bundle="${bnd}" key="header.logo_pizza" /><br> <small><fmt:message
+		<a class="navbar-brand" href="index.jsp"><span
+			class="flaticon-pizza-1 mr-1"></span> <fmt:message bundle="${bnd}"
+				key="header.logo_pizza" /><br> <small><fmt:message
 					bundle="${bnd}" key="header.logo_royal" /></small></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#ftco-nav" aria-controls="ftco-nav"
@@ -31,8 +37,7 @@
 				<li class="nav-item"><a href="contact.jsp" class="nav-link"><fmt:message
 							bundle="${bnd}" key="header.contact.title" /></a></li>
 				<c:if test="${not empty admin}">
-					<li class="nav-item"><a
-						href="/pizza_web/admin/index.jsp"
+					<li class="nav-item"><a href="/pizza_web/admin/index.jsp"
 						class="nav-link"> <fmt:message bundle="${bnd}"
 								key="header.admin.title" />
 					</a></li>
@@ -75,20 +80,25 @@
 				</ul>
 			</form>
 
-
-
+<jsp:useBean id="userDAO" class="Database.UserDAO" />
+<c:set var="userId" value="${customer.getUserId()}" />
+<c:set var="user" value="${userDAO.selectById(userId)}" />
 			<ul>
-				<li style="padding-left: 5px; padding-top: 10px; margin: 0px;"
-					class="nav-item dropdown"><a class="nav-icon-hover"
-					href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
-					aria-expanded="false"> <img
-						style="margin-left: 40px; margin-top: 20px" src="images/cool.png"
-						alt="" width="35" height="35" class="rounded-circle">
-
-
-				</a> <c:choose>
-				
-						<c:when test="${empty customer && empty admin}">
+    <li style="padding-left: 5px; padding-top: 10px; margin: 0px;" class="nav-item dropdown dropdown">
+        <c:choose>
+            <c:when test="${not empty user and not empty user.avatar}">
+                <a class="nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img style="margin-left: 40px; margin-top: 20px" src="${pageContext.request.contextPath}/${user.avatar}" alt="" width="45" height="45" class="rounded-circle">
+                </a>
+            </c:when>
+            <c:otherwise>
+                <a class="nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img style="margin-left: 40px; margin-top: 20px" src="images/cool.png" alt="Default Avatar" width="45" height="45" class="rounded-circle">
+                </a>
+            </c:otherwise>
+        </c:choose>
+<c:choose>
+      <c:when test="${empty customer && empty admin}">
 							<div
 								class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
 								aria-labelledby="drop2">
@@ -118,9 +128,8 @@
 
 						<c:otherwise>
 							<c:set var="customer" value="${customer}" scope="session"></c:set>
-							<p>
-								<fmt:message bundle="${bnd}" key="header.hello" />
-								
+							<p style="text-align: right: ;">
+								<fmt:message bundle="${bnd}" key="header.hello" /> 
 								${customer.username}
 							</p>
 							<div
@@ -150,7 +159,11 @@
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Assistant</p>
-									</a> </a> <a href="thankyou.jsp"
+									</a> <a href="thankyou.jsp"
+										class="d-flex align-items-center gap-2 dropdown-item"> <i
+										class="ti ti-list-check fs-6"></i>
+										<p class="mb-0 fs-3">Trạng thái đơn hàng</p>
+									</a><a href="order.jsp"
 										class="d-flex align-items-center gap-2 dropdown-item"> <i
 										class="ti ti-list-check fs-6"></i>
 										<p class="mb-0 fs-3">Đơn đặt hàng</p>
@@ -163,7 +176,9 @@
 							</div>
 						</c:otherwise>
 					</c:choose>
-			</ul>
+	
+    </li>
+</ul>
 
 		</div>
 	</div>
@@ -173,9 +188,9 @@
 				<form action="${pageContext.request.contextPath}/search"
 					class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
 					<input type="text" id="productName" name="productName"
-						class="form-control"
+						class="form-control-search"
 						placeholder="<fmt:message bundle="${bnd}" key="header.search"/>">
-					<button type="submit">
+					<button type="submit" class="button-search">
 						<img src="images/icons8-find-30.png" alt="Search">
 					</button>
 				</form>
@@ -185,3 +200,32 @@
 		</ul>
 	</div>
 </nav>
+<style>
+/* CSS cho phần tìm kiếm */
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.form-control-search {
+    border: 2px solid #ddd; /* Màu viền */
+    border-radius: 15px; /* Đường cong góc */
+    padding: 8px; /* Khoảng cách bên trong input */
+}
+
+.button-search {
+    background-color: #FFD700	; /* Màu nền của nút */
+    color: white; /* Màu chữ của nút */
+    border: none; /* Loại bỏ viền nút */
+    padding: 5px 6px; /* Kích thước nút */
+    border-radius: 40px; /* Đường cong góc */
+    cursor: pointer; /* Biến con trỏ thành dấu nhấp chuột khi di chuột qua nút */
+}
+
+/* Khi di chuột qua nút, thay đổi màu nền */
+.button-search:hover {
+    background-color: #0056b3;
+}
+
+
+</style>

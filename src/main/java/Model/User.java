@@ -33,6 +33,12 @@ public class User {
 		this.avatar = avatar;
 		this.role_id = role_id;
 	}
+	
+	public User(String userId, String avatar) {
+		super();
+		this.userId = userId;
+		this.avatar = avatar;
+	}
 	public User() {
 		super();
 	}

@@ -29,6 +29,8 @@ public class DeleteProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		  response.setCharacterEncoding("utf-8");
 	    String idProduct = request.getParameter("id");
 	    ProductDAO productDAO = new ProductDAO();
 	    Product product = productDAO.selectById(idProduct);

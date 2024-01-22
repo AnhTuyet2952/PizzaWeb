@@ -47,7 +47,9 @@ public class confirmOrder extends HttpServlet {
 		request.setAttribute("order", order);
 		request.setAttribute("action", action);
 		 request.setAttribute("message", message);
-		url = "/admin/pages/tables/basic-table.jsp";	
+		url = "/admin/pages/tables/basic-table.jsp";
+		request.setCharacterEncoding("utf-8");
+		  response.setCharacterEncoding("utf-8");
    	    response.sendRedirect(request.getContextPath() + url);
 	}
 

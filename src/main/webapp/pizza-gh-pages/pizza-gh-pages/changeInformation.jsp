@@ -71,7 +71,7 @@
 								<form class="form"
 									action="${pageContext.request.contextPath}/changeInformation"
 									method="post">
-									<input type="hidden" name="customerId" value="${customer.userId}">
+									<input type="hidden" name="user_id" value="${customer.userId}">
 									<div class="mb-3">
 										<label for="username" class="form-label">Username</label> <input
 											type="text" class="form-control" id="username"

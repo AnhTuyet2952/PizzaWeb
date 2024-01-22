@@ -68,10 +68,8 @@
                 <div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div> 
                 <div class="text-center" ><span class="rq"> ${Error}</span></div>
                 <form class="form" action="${pageContext.request.contextPath}/changePassword" method="post">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp" required="required" value=${username}>
-                  </div>
+                <input type="hidden" name="user_id" value="${customer.userId}">
+                
                  <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="" name="password" aria-describedby="textHelp" required="required" value="  ">
