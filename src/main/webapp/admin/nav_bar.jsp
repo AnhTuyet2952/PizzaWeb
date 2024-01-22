@@ -6,8 +6,7 @@
 		class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
 		<a class="navbar-brand" href="/pizza_web/pizza-gh-pages/pizza-gh-pages/index.jsp"><span
 			class="flaticon-pizza-1 mr-1"></span>Pizza<br> <small>Delicous</small></a>
-		<a class="sidebar-brand brand-logo-mini" href="/pizza_web/pizza-gh-pages/pizza-gh-pages/index.jsp"><img
-			src="assets/images/logo-mini.svg" alt="logo" /></a>
+		
 	</div>
 	<ul class="nav">
 		<li class="nav-item profile">
@@ -84,8 +83,7 @@
 				    <li class="nav-item"><a class="nav-link"
 						href="/pizza_web/admin/pages/ui-features/listUser.jsp">Danh sách người dùng</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/pizza_web/admin/pages/ui-features/datlaimatkhau.jsp">Đặt
-							lại mật khẩu</a></li>
+						href="/pizza_web/admin/pages/ui-features/capquyenadmin.jsp">Cấp quyền admin</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="/pizza_web/admin/pages/ui-features/khoamotaikhoan.jsp">Khóa
 							hoặc mở tài khoản</a></li>
@@ -112,7 +110,7 @@
 		<li class="nav-item menu-items"><a class="nav-link"
 			href="/pizza_web/admin/pages/tables/basic-table.jsp"> <span
 				class="menu-icon"> <i class="mdi mdi-table-large"></i>
-			</span> <span class="menu-title">Đơn đã mua</span>
+			</span> <span class="menu-title">Quản lý đơn hàng</span>
 		</a></li>
 		<li class="nav-item menu-items"><a class="nav-link"
 			href="/pizza_web/admin/pages/charts/chartjs.jsp"> <span

@@ -8,8 +8,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
-import Model.Image;
 import Model.User;
 import util.PasswordEncryption;
 
@@ -46,7 +44,6 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
-//				Image image = new ImageDAO().selectById(avatar);
 				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
 
 
@@ -63,6 +60,7 @@ public class UserDAO implements DAOInterface<User> {
 		return data;
 	}
 	public ArrayList<User> selectCustomer() {
+		ArrayList<User> re = new ArrayList<>();
 		try {
 			// tao mot connection
 			Connection con = JDBCUtil.getConnection();
@@ -87,10 +85,9 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
-//				Image image = new ImageDAO().selectById(avatar);
 				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
 
-				data.add(customer);
+				re.add(customer);
 
 			}
 
@@ -100,7 +97,87 @@ public class UserDAO implements DAOInterface<User> {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return data;
+		return re;
+	}
+	public ArrayList<User> selectAdmin() {
+		ArrayList<User> re = new ArrayList<>();
+		try {
+			// tao mot connection
+			Connection con = JDBCUtil.getConnection();
+
+			// tao cau lenh sql
+			String sql = "SELECT * FROM pizza.users WHERE role_id =1";
+
+			PreparedStatement st = con.prepareStatement(sql);
+
+			// thuc thi
+			
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("user_id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				Date birthday = rs.getDate("birthday");
+				String gt = rs.getString("sexual");
+				String phoneNumber = rs.getString("phoneNumber");
+				String email = rs.getString("email");
+				String avatar = rs.getString("avatar");
+				int role_id = rs.getInt("role_id");
+				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
+
+				re.add(customer);
+
+			}
+
+			JDBCUtil.closeConnection(con);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return re;
+	}
+	public ArrayList<User> selectAccountlockout() {
+		ArrayList<User> re = new ArrayList<>();
+		try {
+			// tao mot connection
+			Connection con = JDBCUtil.getConnection();
+
+			// tao cau lenh sql
+			String sql = "SELECT * FROM pizza.users WHERE role_id =3";
+
+			PreparedStatement st = con.prepareStatement(sql);
+
+			// thuc thi
+			
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("user_id");
+				String username = rs.getString("username");
+				String password = rs.getString("password");
+				String name = rs.getString("name");
+				Date birthday = rs.getDate("birthday");
+				String gt = rs.getString("sexual");
+				String phoneNumber = rs.getString("phoneNumber");
+				String email = rs.getString("email");
+				String avatar = rs.getString("avatar");
+				int role_id = rs.getInt("role_id");
+				User customer = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
+
+				re.add(customer);
+
+			}
+
+			JDBCUtil.closeConnection(con);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return re;
 	}
 	public User selectById(String id) {
 		User result = null;
@@ -125,7 +202,6 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("email");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
-//				Image image = new ImageDAO().selectById(avatar);
 				result = new User(id1, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
                
 			
@@ -160,7 +236,6 @@ public class UserDAO implements DAOInterface<User> {
 				String email = rs.getString("username");
 				String avatar = rs.getString("avatar");
                 int role_id = rs.getInt("role_id");
-//    			Image image = new ImageDAO().selectById(avatar);
 				result = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
                
                 System.out.println("nguoi dung: "+ result);
@@ -196,7 +271,6 @@ public class UserDAO implements DAOInterface<User> {
 				String username = rs.getString("username");
 				String avatar = rs.getString("avatar");
 				int role_id = rs.getInt("role_id");
-//				Image image = new ImageDAO().selectById(avatar);
 				result = new User(id, username, password, name, birthday, gt, phoneNumber, email, avatar, role_id);
                
 
@@ -278,7 +352,6 @@ public class UserDAO implements DAOInterface<User> {
 			rs.setString(6, user.getGt());
 			rs.setString(7, user.getPhoneNumber());
 			rs.setString(8, user.getEmail());
-//			rs.setString(9, user.getAvatar().getImageId());
 			rs.setString(9, user.getAvatar());
 			rs.setLong(10, user.getRole_id());
 			System.out.println(user);
@@ -394,6 +467,31 @@ public class UserDAO implements DAOInterface<User> {
 		}
 		return result;
 	}
+	public int updateRole(User user) {
+		int result = 0;
+		User oldUser = this.selectById(user.getUserId());
+		if (oldUser != null) {
+			try {
+				Connection con = JDBCUtil.getConnection();
+
+				String sql = "UPDATE pizza.users SET  role_id=? " + "WHERE user_id =?";
+
+				PreparedStatement rs = con.prepareStatement(sql);
+
+				
+				rs.setInt(1, user.getRole_id());
+				rs.setString(2, user.getUserId());
+
+				result = rs.executeUpdate();
+				System.out.println("done");
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("error");
+			}
+		}
+		return result;
+	}
+
 
 	public static void main(String[] args) {
 		UserDAO ad = new UserDAO();

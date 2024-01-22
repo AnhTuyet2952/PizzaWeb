@@ -24,6 +24,9 @@
 <link rel="stylesheet" href="../../assets/css/style.css">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="../../assets/images/favicon.png" />
+<style type="text/css">
+
+</style>
 </head>
 <body>
 	<div class="container-scroller">
@@ -54,12 +57,12 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th style="color: #CC0000; font-size: 15px; text-align: left;">User</th>
-													<th style="color: #CC0000; font-size: 15px">Mã</th>
-													<th style="color: #CC0000; font-size: 15px">Tổng</th>
-													<th style="color: #CC0000; font-size: 15px">Date</th>
-													<th style="color: #CC0000; font-size: 15px">Status</th>
-													<th style="color: #CC0000; font-size: 15px">Duyệt</th>
+													<th style="color: #CC0000; font-size: 13px; text-align: left;">User</th>
+													<th style="color: #CC0000; font-size: 13px">Mã</th>
+													<th style="color: #CC0000; font-size: 13px">Tổng</th>
+													<th style="color: #CC0000; font-size: 13px">Date</th>
+													<th style="color: #CC0000; font-size: 13px">Status</th>
+													<th style="color: #CC0000; font-size: 13px">Duyệt</th>
 
 												</tr>
 											</thead>
@@ -68,12 +71,12 @@
 												<c:forEach var="order"
 													items="${orderDAO1.selectConfirmedOrders()}">
 													<tr>
-														<td style="color: white; font-size: 18px; text-align: left">${order.user.username}</td>
-														<td style="color: #0000FF; font-size: 20px"><a
+														<td style="color: white; font-size: 13px; text-align: left">${order.user.username}</td>
+														<td style="color: #0000FF; font-size: 13px"><a
 															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
-														<td style="color: white; font-size: 15px">${FormatCurrency.formatCurrency(order.total)}</td>
-															<td style="font-size: 15px">${order.bookingDate}</td>
-														<td><label class="badge badge-danger" style="background-color: #3300FF">${order.status}</label></td>
+														<td style="color: white; font-size: 13px">${FormatCurrency.formatCurrency(order.total)}</td>
+															<td style="font-size: 13px">${order.bookingDate}</td>
+														<td style="color: red">${order.status}</td>
 														<td>
 															<form
 																action="${pageContext.request.contextPath}/confirmOrder"
@@ -102,23 +105,23 @@
 										<table style="border: 1px" class="table table-hover">
 											<thead>
 												<tr>
-													<th style="color: #CC0000; font-size: 15px; text-align: left;">User</th>
-													<th style="color: #CC0000; font-size: 15px">Mã</th>
-													<th style="color: #CC0000; font-size: 15px">Tổng</th>
-													<th style="color: #CC0000; font-size: 15px">Date</th>
-													<th style="color: #CC0000; font-size: 15px">Status</th>
-													<th style="color: #CC0000; font-size: 15px">Xóa</th>
+													<th style="color: #CC0000; font-size: 13px; text-align: left;">User</th>
+													<th style="color: #CC0000; font-size: 13px">Mã</th>
+													<th style="color: #CC0000; font-size: 13px">Tổng</th>
+													<th style="color: #CC0000; font-size: 13px">Date</th>
+													<th style="color: #CC0000; font-size: 13px">Status</th>
+													<th style="color: #CC0000; font-size: 13px">Xóa</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="order" items="${orderDAO.selectRejectOrders()}">
 													<tr>
-															<td style="color: white; font-size: 18px; text-align: left">${order.user.username}</td>
-														<td style="color: #0000FF; font-size: 20px"><a
+															<td style="color: white; font-size: 13px; text-align: left">${order.user.username}</td>
+														<td style="color: #0000FF; font-size: 13px"><a
 															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
-														<td style="color: white; font-size: 15px">${FormatCurrency.formatCurrency(order.total)}</td>
-															<td style="font-size: 15px">${order.bookingDate}</td>
-														<td><label class="badge badge-danger" style="background-color: #990000">${order.status}</label></td>
+														<td style="color: white; font-size: 13px">${FormatCurrency.formatCurrency(order.total)}</td>
+															<td style="font-size: 13px">${order.bookingDate}</td>
+														<td style="color: red">${order.status}</td>
 														<td><form
 																action="${pageContext.request.contextPath}/confirmOrder"
 																method="post">
@@ -146,22 +149,22 @@
 										<table style="border: 1px; text-align: center;" class="table table-hover">
 											<thead>
 												<tr>
-													<th style="color: #CC0000; font-size: 15px; text-align: left;">User</th>
-													<th style="color: #CC0000; font-size: 15px">Mã</th>
-													<th style="color: #CC0000; font-size: 15px">Tổng</th>
-													<th style="color: #CC0000; font-size: 15px">Date</th>
-													<th style="color: #CC0000; font-size: 15px">Status</th>
+													<th style="color: #CC0000; font-size: 13px; text-align: left;">User</th>
+													<th style="color: #CC0000; font-size: 13px">Mã</th>
+													<th style="color: #CC0000; font-size: 13px">Tổng</th>
+													<th style="color: #CC0000; font-size: 13px">Date</th>
+													<th style="color: #CC0000; font-size: 13px">Status</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="order" items="${orderDAO2.selectAcceptOrders()}">
 													<tr>
-														<td style="color: white; font-size: 18px; text-align: left">${order.user.username}</td>
-														<td style="color: #0000FF; font-size: 20px"><a
+														<td style="color: white; font-size: 13px; text-align: left">${order.user.username}</td>
+														<td style="color: #0000FF; font-size: 13px"><a
 															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
-														<td style="color: white; font-size: 15px">${FormatCurrency.formatCurrency(order.total)}</td>
-															<td style="font-size: 15px">${order.bookingDate}</td>
-														<td><label class="badge badge-danger" style="background-color: #00DD00">${order.status}</label></td>
+														<td style="color: white; font-size: 13px">${FormatCurrency.formatCurrency(order.total)}</td>
+															<td style="font-size: 13px">${order.bookingDate}</td>
+														<td style="color: #00FF00">${order.status}</td>
 													</tr>
 												</c:forEach>
 
@@ -181,23 +184,23 @@
 										<table style="border: 1px" class="table table-hover">
 											<thead>
 												<tr>
-													<th style="color: #CC0000; font-size: 15px; text-align: left;">User</th>
-													<th style="color: #CC0000; font-size: 15px">Mã</th>
-													<th style="color: #CC0000; font-size: 15px">Tổng</th>
-													<th style="color: #CC0000; font-size: 15px">Date</th>
-													<th style="color: #CC0000; font-size: 15px">Status</th>
-													<th style="color: #CC0000; font-size: 15px">Hủy</th>
+													<th style="color: #CC0000; font-size: 13px; text-align: left;">User</th>
+													<th style="color: #CC0000; font-size: 13px">Mã</th>
+													<th style="color: #CC0000; font-size: 13px">Tổng</th>
+													<th style="color: #CC0000; font-size: 13px">Date</th>
+													<th style="color: #CC0000; font-size: 13px">Status</th>
+													<th style="color: #CC0000; font-size: 13px">Hủy</th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach var="order" items="${orderDAO3.selectCancelOrders()}">
 													<tr>
-														<td style="color: white; font-size: 18px; text-align: left">${order.user.username}</td>
-														<td style="color: #0000FF; font-size: 20px"><a
+														<td style="color: white; font-size: 13px; text-align: left">${order.user.username}</td>
+														<td style="color: #0000FF; font-size: 13px"><a
 															href="${pageContext.request.contextPath}/orderDetail?orderId=${order.oderId}">${order.oderId}</a></td>
-														<td style="color: white; font-size: 15px">${FormatCurrency.formatCurrency(order.total)}</td>
-															<td style="font-size: 15px">${order.bookingDate}</td>
-														<td><label class="badge badge-danger" style="background-color: #990000">${order.status}</label></td>
+														<td style="color: white; font-size: 13px">${FormatCurrency.formatCurrency(order.total)}</td>
+															<td style="font-size: 13px">${order.bookingDate}</td>
+														<td style="color: red">${order.status}</td>
 														<td>
 															<form
 																action="${pageContext.request.contextPath}/CancelAdmin"

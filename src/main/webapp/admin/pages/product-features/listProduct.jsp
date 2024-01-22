@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ page import="util.FormatCurrency" %>
+<%@ page import="util.FormatCurrency"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +17,7 @@
 	href="../../assets/vendors/css/vendor.bundle.base.css">
 <!-- endinject -->
 <!-- Plugin css for this page -->
-<!-- End Plugin css for this page -->
+<!-- End plugin css for this page -->
 <!-- inject:css -->
 <!-- endinject -->
 <!-- Layout styles -->
@@ -26,114 +26,92 @@
 <link rel="shortcut icon" href="../../assets/images/favicon.png" />
 </head>
 <body>
-
-  <jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
-
+<c:set var="userId" value="${customer.getUserId()}" />
+	<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
+	<jsp:useBean id="customerdao" class="Database.UserDAO"></jsp:useBean>
+	<c:set var="cus" value="${customerdao.selectById(userId)}"></c:set>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
-		
 		<jsp:include page="/admin/nav_bar.jsp" />
 		<!-- partial -->
-		<div class="content-wrapper full-page-wrad-flexpper  align-items-center auth login-bg" style="margin-top: 100px">
 		<div class="container-fluid page-body-wrapper">
 			<!-- partial:../../partials/_navbar.html -->
-			
+
 			<jsp:include page="/admin/fixed-top.jsp" />
 			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
 
-			<div id="page-wrapper">
-				<div id="page-inner">
-					<div class="row">
-						<div class="col-md-12">
-							<h2>All Product</h2>
-							<h5>You can management product in here</h5>
-
-						</div>
 					</div>
-					<!-- /. ROW  -->
-					<hr />
-
 					<div class="row">
-						<div class="col-md-12">
-							<!-- Advanced Tables -->
-							<div class="panel panel-default">
-								<div class="panel-heading">Advanced Tables</div>
-								<div class="panel-body">
-									<div class="table-responsive">
-										<table class="table table-striped table-bordered table-hover"
-											id="dataTables-example"  >
-											<thead>
-												<tr>
-													<th>ID</th>
-													<th>Image</th>
-													<th>Name</th>
-													<th>Price($)</th>
-													<th>Category</th>
-												
-													<th>Action</th>
-												</tr>
-											</thead>
-											<tbody>
-												<c:forEach items="${productDAO.selectAll()}" var="pro">
-													<tr class="odd gradeX">
-														<td>${pro.idProduct}</td>
-														<td><img height="150" width="200" src="${pageContext.request.contextPath}/${pro.image }" /></td>
+						<div class="col-lg-12 grid-margin">
+							<div class="card">
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title">Danh sách sản phẩm</h4>
+											<p class="card-description"></p>
+											<div class="table-responsive">
+												<table class="table table-striped">
+													<thead>
+														<tr>
+															<th  style="color: white;">ID</th>
+															<th  style="color: white;">Hình ảnh</th>
+															<th  style="color: white;">Tên sản phẩm</th>
+															<th  style="color: white;">Giá (đ)</th>
+															<th  style="color: white;">Loại bánh</th>
+															<th  style="color: white;">Action</th>
+														</tr>
+													</thead>
+													<tbody>
+															<c:forEach items="${productDAO.selectAll()}" var="pro">
+														<tr class="odd gradeX">
+															<td  style="color: #F0F0F0;">${pro.idProduct}</td>
+															<td><img height="150" width="200"
+																src="${pageContext.request.contextPath}/${pro.image }" /></td>
 
-														<td>${pro.nameProduct }</td>
-														<td>${FormatCurrency.formatCurrency(pro.price)}</td>
-														<td style="width:50%">${pro.category.categoryName }</td>
-														
-														<td><a
-															href="<c:url value='/product/detail?id=${pro.idProduct }'/>"
-															class="center">Detail</a> | <a
-															href="<c:url value='/admin/pages/product-features/sua.jsp?id=${pro.idProduct }'/>"
-															class="center">Sửa</a> |<a
-															href="<c:url value='/deleteProduct?id=${pro.idProduct }'/>"
-															class="center">Xóa</a>|<a href="<c:url value='/admin/pages/product-features/suaAnh.jsp?id=${pro.idProduct }'/>" class="center">Sửa ảnh</a></td>
+															<td  style="color: #F0F0F0;">${pro.nameProduct }</td>
+															<td style="color: #F0F0F0;">${FormatCurrency.formatCurrency(pro.price)}</td>
+															<td style="width: 50%; color: #F0F0F0;">${pro.category.categoryName }</td>
+															<td><a
+																href="<c:url value='/admin/pages/product-features/sua.jsp?id=${pro.idProduct }'/>"
+																class="center">Sửa</a> |<a
+																href="<c:url value='/deleteProduct?id=${pro.idProduct }'/>"
+																class="center">Xóa</a>|<a
+																href="<c:url value='/admin/pages/product-features/suaAnh.jsp?id=${pro.idProduct }'/>"
+																class="center">Sửa ảnh</a></td>
 
-													</tr>
-												</c:forEach>
-
-
-											</tbody>
-										</table>
+														</tr>
+													</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
 									</div>
-
 								</div>
 							</div>
-							<!--End Advanced Tables -->
 						</div>
 					</div>
-
 				</div>
 
+				<!-- partial -->
 			</div>
-			<!-- /. PAGE INNER  -->
+			<!-- main-panel ends -->
 		</div>
-	</div>
+		<!-- page-body-wrapper ends -->
 	</div>
 	<!-- content-wrapper ends -->
 	<!-- partial:../../partials/_footer.html -->
-	<footer class="footer">
-		<div
-			class="d-sm-flex justify-content-center justify-content-sm-between">
-			<span
-				class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright
-				Â© bootstrapdash.com 2020</span> <span
-				class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-				Free <a
-				href="https://www.bootstrapdash.com/bootstrap-admin-template/"
-				target="_blank">Bootstrap admin templates</a> from Bootstrapdash.com
-			</span>
-		</div>
-	</footer>
+
 	<!-- partial -->
 	</div>
 	<!-- main-panel ends -->
 	</div>
 	</div>
 	<!-- page-body-wrapper ends -->
-	
+
 	<!-- container-scroller -->
 	<!-- plugins:js -->
 	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>

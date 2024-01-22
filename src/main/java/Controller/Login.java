@@ -60,17 +60,25 @@ public class Login extends HttpServlet {
                	url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
                	 response.sendRedirect(request.getContextPath() + url);
                    
-        	}else {
-            	
-                if(user!=null) {
-               	 HttpSession session = request.getSession();
-               	 session.setAttribute("customer", user);
-               	 session.setMaxInactiveInterval(300*600);
-               	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
-               	 response.sendRedirect(request.getContextPath() + url);
-                   
-               	 
-                }
+        	}else if(user.getRole_id()==3){
+        		 request.setAttribute("Error", "Tài khoản của bạn đã bị khóa. Liên hệ với quản trị viên để biết thêm thông tin.");
+        		 ErrorBean eb = new ErrorBean();
+              	 eb.setError((String)request.getAttribute("Error"));
+              	 request.setAttribute("errorBean", eb);
+              	url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+                response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+        	        return;
+                
+           }else {
+        	   if(user!=null) {
+                 	 HttpSession session = request.getSession();
+                 	 session.setAttribute("customer", user);
+                 	 session.setMaxInactiveInterval(300*600);
+                 	 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
+                 	 response.sendRedirect(request.getContextPath() + url);
+                     
+                 	 
+                  }
            }
        	
        	 

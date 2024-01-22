@@ -142,7 +142,7 @@ public class OrderDAO implements DAOInterface<Order> {
 				String sql = "SELECT * FROM orders WHERE status=?";
 				PreparedStatement st = con.prepareStatement(sql);
 				 // Thiết lập giá trị tham số cho truy vấn
-		        st.setString(1, "Request cancellation");
+		        st.setString(1, "Request");
 
 				ResultSet rs = st.executeQuery();
 				while (rs.next()) {

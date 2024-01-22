@@ -188,9 +188,9 @@
 				<form action="${pageContext.request.contextPath}/search"
 					class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
 					<input type="text" id="productName" name="productName"
-						class="form-control"
+						class="form-control-search"
 						placeholder="<fmt:message bundle="${bnd}" key="header.search"/>">
-					<button type="submit">
+					<button type="submit" class="button-search">
 						<img src="images/icons8-find-30.png" alt="Search">
 					</button>
 				</form>
@@ -200,3 +200,32 @@
 		</ul>
 	</div>
 </nav>
+<style>
+/* CSS cho phần tìm kiếm */
+.search {
+    display: flex;
+    align-items: center;
+}
+
+.form-control-search {
+    border: 2px solid #ddd; /* Màu viền */
+    border-radius: 15px; /* Đường cong góc */
+    padding: 8px; /* Khoảng cách bên trong input */
+}
+
+.button-search {
+    background-color: #FFD700	; /* Màu nền của nút */
+    color: white; /* Màu chữ của nút */
+    border: none; /* Loại bỏ viền nút */
+    padding: 5px 6px; /* Kích thước nút */
+    border-radius: 40px; /* Đường cong góc */
+    cursor: pointer; /* Biến con trỏ thành dấu nhấp chuột khi di chuột qua nút */
+}
+
+/* Khi di chuột qua nút, thay đổi màu nền */
+.button-search:hover {
+    background-color: #0056b3;
+}
+
+
+</style>

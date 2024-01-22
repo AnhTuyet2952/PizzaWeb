@@ -26,9 +26,10 @@ public class ProductDAO implements DAOInterface<Product> {
 		return data.size();
 	}
     public ArrayList<Product> selectAllLanguage(String lang) {
+    	ArrayList<Product> products = new ArrayList<>();
         try {
             Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT product_id, product_name, category_id, description, price, image, product_name_en, description_en FROM products";
+            String sql = "SELECT product_id, product_name, category_id, description, price, image, product_name_en, description_en FROM products ORDER BY CAST(product_id AS SIGNED)";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
 
@@ -42,15 +43,16 @@ public class ProductDAO implements DAOInterface<Product> {
 
                 Category category = new CategoryDAO().selectById(categoryId);
                 Product product = new Product(idProduct, rs.getString(nameKey), category, rs.getString(descriptionKey), price, image);
-                data.add(product);
+                products.add(product);
             }
 
             JDBCUtil.closeConnection(con);
 
         } catch (Exception e) {
             e.printStackTrace();
+            
         }
-        return data;
+        return products;
     }
 
 	@Override
@@ -61,7 +63,7 @@ public class ProductDAO implements DAOInterface<Product> {
 			Connection con = JDBCUtil.getConnection();
 
 			// tao cau lenh sql
-			String sql = "SELECT * FROM products";
+			String sql = "SELECT * FROM products ORDER BY CAST(product_id AS SIGNED)";
 
 			PreparedStatement st = con.prepareStatement(sql);
 
@@ -101,7 +103,7 @@ public class ProductDAO implements DAOInterface<Product> {
 			Connection con = JDBCUtil.getConnection();
 
 			// tao cau lenh sql
-			String sql = "SELECT * FROM products WHERE product_name LIKE ?";
+			String sql = "SELECT * FROM products WHERE product_name LIKE ? OR product_name_en";
 
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, "%" + productName + "%");
@@ -135,6 +137,47 @@ public class ProductDAO implements DAOInterface<Product> {
 		}
 		return listProduct;
 	}
+	public ArrayList<Product> selectByProductName2(String productName, String lang) {
+	    ArrayList<Product> listProduct = new ArrayList<>();
+	    try {
+	        // tao mot connection
+	        Connection con = JDBCUtil.getConnection();
+
+	        // tao cau lenh sql
+	        String sql = "SELECT * FROM products WHERE " +
+	                     "((product_name LIKE ? AND ? = 'vi') OR " +
+	                     "(product_name_en LIKE ? AND ? = 'en'))";
+
+	        PreparedStatement st = con.prepareStatement(sql);
+	        st.setString(1, "%" + productName + "%");
+	        st.setString(2, lang);
+	        st.setString(3, "%" + productName + "%");
+	        st.setString(4, lang);
+
+	        // thuc thi
+	        ResultSet rs = st.executeQuery();
+
+	        while (rs.next()) {
+	            String idProduct = rs.getString("product_id");
+	            String categoryId = rs.getString("category_id");
+	            String nameKey = lang.equals("en") ? "product_name_en" : "product_name";
+	            String descriptionKey = lang.equals("en") ? "description_en" : "description";
+	            Double price = rs.getDouble("price");
+	            String image = rs.getString("image");
+
+	            Category category = new CategoryDAO().selectById(categoryId);
+	            Product product = new Product(idProduct, rs.getString(nameKey), category, rs.getString(descriptionKey), price, image);
+	            listProduct.add(product);
+	        }
+
+	        JDBCUtil.closeConnection(con);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return listProduct;
+	}
+
 //dem so trang can hien thi sau khi tim ket qua
 	
 	public int countProductByName(String productName) {

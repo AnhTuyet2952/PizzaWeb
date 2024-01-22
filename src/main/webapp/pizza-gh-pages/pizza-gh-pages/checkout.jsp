@@ -127,21 +127,6 @@
 		        </div>
 		        <div class="col-md-6">
 
-		          <div class="row mb-5">
-		            <div class="col-md-12">
-		              <h2 class="h3 mb-3 text-black"><fmt:message bundle="${bnd}" key="checkout.coupon"/></h2>
-		              <div class="p-3 p-lg-5 border bg-white">
-
-		                <div class="input-group w-75 couponcode-wrap">
-		                  <input type="text" class="form-control me-2" id="c_code" placeholder="<fmt:message bundle="${bnd}" key="checkout.couponcode"/>" aria-label="Coupon Code" aria-describedby="button-addon2">
-		                  <div class="input-group-append">
-		                    <button class="btn btn-black btn-sm" type="button" id="button-addon2"><fmt:message bundle="${bnd}" key="checkout.coupon.apply"/></button>
-		                  </div>
-		                </div>
-
-		              </div>
-		            </div>
-		          </div>
 
 
 		          <div class="row mb-5">

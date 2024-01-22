@@ -26,6 +26,8 @@
 </head>
 
 
+<!-- Tháº» nÃºt trong báº£ng -->
+
 
 <body>
 	<jsp:useBean id="customerDAO" class="Database.UserDAO"></jsp:useBean>
@@ -82,10 +84,15 @@
 																<td>${customer.email}</td>
 																<td>${customer.phoneNumber }</td>
 																<td>
-																	 <form action="${pageContext.request.contextPath}/KhoaTaiKhoanUser" method="post">
-                            <input type="hidden" name="userId" value="${customer.userId}" />
-                            <button type="submit" class="btn btn-outline-warning btn-fw">Khóa tài khoản</button>
-                        </form>
+																	<form
+																		action="${pageContext.request.contextPath}/CapQuyenAdmin"
+																		method="post">
+																		<input type="hidden" name="userId"
+																			value="${customer.userId}" />
+																		<button type="submit"
+																			class="btn btn-outline-warning btn-fw">Cấp
+																			quyền</button>
+																	</form>
 																</td>
 															</tr>
 														</c:forEach>
@@ -93,8 +100,8 @@
 												</table>
 											</div>
 										</div>
-												<div class="card-body">
-											<h4 class="card-title">Danh Sách Tài Khoản Đã Bị Khóa</h4>
+										<div class="card-body">
+											<h4 class="card-title">Danh Sách Admin</h4>
 
 											<p class="card-description"></p>
 											<div class="table-responsive">
@@ -113,25 +120,33 @@
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach items="${customerDAO.selectAccountlockout()}"
+														<c:set var="fixedAdminUserId" value="2" />
+														<!-- Đặt userId của admin cố định -->
+
+														<c:forEach items="${customerDAO.selectAdmin()}"
 															var="customer">
 															<tr>
 																<td class="py-1">${customer.userId}</td>
 																<td class="py-1"><img height="150" width="200"
-																	src="${pageContext.request.contextPath}/${customer.avatar}" />
-																</td>
+																	src="${pageContext.request.contextPath}/${customer.avatar}" /></td>
 																<td>${customer.username }</td>
 																<td>${customer.name }</td>
 																<td>${customer.birthday.toString()}</td>
 																<td>${customer.sexual }</td>
 																<td>${customer.email}</td>
 																<td>${customer.phoneNumber }</td>
-																<td>
-																	 <form action="${pageContext.request.contextPath}/MoKhoaTaiKhoan" method="post">
-                            <input type="hidden" name="userId" value="${customer.userId}" />
-                            <button type="submit" class="btn btn-outline-warning btn-fw">Mở khóa tài khoản</button>
-                        </form>
-																</td>
+																<td><c:if
+																		test="${customer.userId ne fixedAdminUserId}">
+																		<form
+																			action="${pageContext.request.contextPath}/XoaQuyenAdmin"
+																			method="post">
+																			<input type="hidden" name="userId"
+																				value="${customer.userId}" />
+																			<button type="submit"
+																				class="btn btn-outline-warning btn-fw">Xóa
+																				quyền</button>
+																		</form>
+																	</c:if></td>
 															</tr>
 														</c:forEach>
 													</tbody>
@@ -141,11 +156,10 @@
 									</div>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</div>
-
 
 				<!-- partial -->
 			</div>

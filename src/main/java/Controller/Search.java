@@ -34,20 +34,29 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
-		try {
-			String productName = request.getParameter("productName");
-			ProductDAO productDAO = new ProductDAO();
-			int count = productDAO.countProductByName(productName);
-			ArrayList<Product>listProductSearchByName = productDAO.selectByProductName(productName);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("listProductSearchByName", listProductSearchByName);
-			
-			String url = "/pizza-gh-pages/pizza-gh-pages/searchResultPage.jsp";
-       	    response.sendRedirect(request.getContextPath() + url);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		 try {
+	            String productName = request.getParameter("productName");
+	            ProductDAO productDAO = new ProductDAO();
+	            String lang = (String) request.getSession().getAttribute("language");
+	            int count = productDAO.countProductByName(productName);
+	            ArrayList<Product> listProductSearchByName = productDAO.selectByProductName2(productName, lang);
+
+	            HttpSession session = request.getSession();
+	            session.setAttribute("listProductSearchByName", listProductSearchByName);
+
+	            // Truyền thông tin ngôn ngữ vào request
+	            request.setAttribute("language", lang);
+
+	            System.out.println("productName: " + productName);
+	            System.out.println("Count: " + count);
+	            System.out.println("List size: " + listProductSearchByName.size());
+
+	            String url = "/pizza-gh-pages/pizza-gh-pages/searchResultPage.jsp";
+	            response.sendRedirect(request.getContextPath() + url);
+	        } catch (Exception e) {
+	            // Xử lý ngoại lệ
+	            e.printStackTrace();
+	        }
 	}
 
 	/**

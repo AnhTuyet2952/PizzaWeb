@@ -26,8 +26,8 @@ public class CancelAdmin extends HttpServlet {
 		Order order = new Order();
 		if ("Cancel".equals(action)) {
 			// Xử lý hủy đơn hàng (cập nhật trạng thái)
-			orderDAO.UpdateOrderStatus(orderId, "Request cancellation");
-			order.setStatus("Request cancellation");
+			orderDAO.UpdateOrderStatus(orderId, "Request");
+			order.setStatus("Request");
 
 			// Cập nhật thành công
 			message = "Order canceled successfully.";

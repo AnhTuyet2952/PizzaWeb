@@ -108,7 +108,7 @@
                            <h2 class="h5 text-black">${(sessionScope.language == 'en') ? item.product.nameProducten : item.product.nameProduct}</h2>
   
                           </td>
-                          <td>${item.product.price}</td>
+                          <td>${FormatCurrency.formatCurrency(item.product.price)}</td>
                              <td>
             <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 120px;">
                         <div class="input-group-prepend">
@@ -152,17 +152,7 @@
                      <a class="btn btn-outline-black btn-sm btn-block" href="menu.jsp"><fmt:message bundle="${bnd}" key="cart.continue"/></a>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <label class="text-black h4" for="coupon"><fmt:message bundle="${bnd}" key="cart.coupon.title"/></label>
-                    </div>
-                    <div class="col-md-8 mb-3 mb-md-0">
-                      <input type="text" class="form-control py-3" id="coupon" placeholder="<fmt:message bundle="${bnd}" key="cart.coupon.enter"/>">
-                    </div>
-                    <div class="col-md-4">
-                      <button class="btn btn-black"><fmt:message bundle="${bnd}" key="cart.coupon.apply"/></button>
-                    </div>
-                  </div>
+                
                 </div>
                 <div class="col-md-6 pl-5">
                   <div class="row justify-content-end">

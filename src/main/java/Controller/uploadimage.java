@@ -38,11 +38,6 @@ public class uploadimage extends HttpServlet {
 		    String userId = request.getParameter("userId");
 		    String url = "";
 
-		    if (userId == null || userId.isEmpty()) {
-		        response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp");
-		        return;
-		    }
-
 		    HttpSession session = request.getSession();
 		    User customer = (User) session.getAttribute("customer");
 		    // Kiểm tra đăng nhập

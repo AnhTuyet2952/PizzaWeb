@@ -100,11 +100,11 @@
 	<h2 style="text-align: center;">
 		<b><fmt:message bundle="${bnd}" key="order.title" /></b>
 	</h2>
-	<c:forEach items="${userDAO.selectCustomer()}" var="customer">
+	<c:forEach items="${userDAO.selectAll()}" var="customer">
 	 <c:if test="${customer.userId eq user.userId}">
     <c:set var="acceptOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Accept')}" />
     <c:set var="processingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'processing')}" />
-    <c:set var="pendingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Request cancellation')}" />
+    <c:set var="pendingOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Request')}" />
     <c:set var="cancelOrders" value="${orderDAO.selectByCustomerIdAndStatus(customer.userId, 'Cancel')}" />
 	
 	<div class="full inner_elements margin_top_30">
@@ -143,7 +143,6 @@
 											<th><b><fmt:message bundle="${bnd}"
 														key="order.detail" /></b></th>
 										
-											<!-- Thêm các cột khác theo nhu cầu -->
 										</tr>
 									</thead>
 									<tbody>
@@ -237,7 +236,6 @@
     </form>
 </td>
 																
-													<!-- Thêm các cột khác theo nhu cầu -->
 												</tr>
 											</c:forEach>
 									</tbody>
@@ -396,26 +394,6 @@
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="js/google-map.js"></script>
 <script src="js/main.js"></script>
-<script>
-function cancelOrder(orderId) {
-    var confirmed = confirm("Bạn có chắc chắn muốn hủy đơn hàng?");
-    if (confirmed) {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    // Update the interface if necessary
-                    location.reload();
-                } else {
-                    alert("Failed to cancel order. Please try again.");
-                }
-            }
-        };
-        xhr.open("POST", "${pageContext.request.contextPath}/CancelOrder", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("orderId=" + encodeURIComponent(orderId) + "&action=Cancel");
-    }
-}
-</script>
+
 
 </html>
