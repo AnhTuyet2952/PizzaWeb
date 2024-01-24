@@ -38,6 +38,7 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/pizza.png" type="image/png">
 <style type="text/css">
 /* CSS để làm đẹp bảng */
 #dataTables-example {

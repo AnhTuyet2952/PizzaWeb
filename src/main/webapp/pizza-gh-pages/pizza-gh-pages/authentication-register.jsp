@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+		<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +37,7 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/pizza.png" type="image/png">
 <style>
 .red {
 	color: red;
@@ -47,7 +50,8 @@
 </head>
 
 <body>
-  
+  <fmt:setLocale value="${sessionScope.language}" />
+	<fmt:setBundle basename="lang.messages" var="bnd"/>
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <div
@@ -58,47 +62,64 @@
             <div class="card mb-0">
               <div class="card-body">
                 
-                <p class="text-center">Your Social Campaigns</p>
+                <p style="font-size: 28px; color: black" class="text-center"><b><fmt:message bundle="${bnd}" key="register.title" /></b></p>
                 <div style="text-align: center;" class="red" id="baoLoi">${param.error}</div> 
                 <div class="red" id="baoLoi">${errorBean.getError()} </div>
                 <form class="form" action="${pageContext.request.contextPath}/register" method="post">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label"><fmt:message bundle="${bnd}" key="login.name" /></label>
                     <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp" required="required" value=${username}>
                   </div>
                   <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label"><fmt:message bundle="${bnd}" key="register.name" /></label>
                     <input type="text" class="form-control" id="name" name="name" aria-describedby="textHelp"required="required"  value=${name}>
                   </div>
                   <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label"><fmt:message bundle="${bnd}" key="register.mail" /></label>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp"required="required"value=${email}>
                   </div>
                   <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label"><fmt:message bundle="${bnd}" key="login.pas" /></label>
                     <input type="password" class="form-control" id="password" name="password"required="required" onkeyup="kiemTraMatKhau()">
                   </div>
                   <div class="mb-4">
-                    <label for="enterThePassword" class="form-label">Enter The Password
+                    <label for="enterThePassword" class="form-label"><fmt:message bundle="${bnd}" key="register.pass" />
                     <span  id="msg" class="red" ></span></label>
                     <input type="password" class="form-control" id="enterThePassword" name="enterThePassword"required="required" onkeyup="kiemTraMatKhau()">
                   </div>
                   <div class="form-check">
                   <input type="checkbox" class="form-check-input" id="agree" name="agree" required="required" onchange="xuLyChonDongY()">
-                    <label for="agree" class="form-label">Agree to <a>the company's terms</a></label>
+                    <label for="agree" class="form-label"><fmt:message bundle="${bnd}" key="register.agree" /></label>
                     
 
                   </div>
-                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="Sign Up" style="display : hidden;">
+                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="<fmt:message bundle="${bnd}" key="register.up" />" style="display : hidden;">
                   
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
-                    <a class="text-primary fw-bold ms-2" href="login.jsp">Sign In</a>
+                    <p class="fs-4 mb-0 fw-bold"><fmt:message bundle="${bnd}" key="register.have" /></p>
+                    <a class="text-primary fw-bold ms-2" href="login.jsp"><fmt:message bundle="${bnd}" key="login.log" /></a>
                   </div>
                 </form>
               </div>
             </div>
           </div>
+          <form action="${pageContext.request.contextPath}/changeLanguage"
+				method="post">
+					<fmt:setLocale value="${sessionScope.language}" />
+					<!-- Các hình ảnh chuyển ngôn ngữ -->
+						<button type="submit" name="lang" value="en"
+							style="border: none; padding: 0; background: none; cursor: pointer;">
+							<img style="height: 30px; width: 30px;" src="images/england.jpg"
+								alt="English" ${sessionScope.language == 'en' ? 'checked' : ''}>
+						</button>
+						<button type="submit" name="lang" value="vi"
+							style="border: none; padding: 0; background: none; cursor: pointer;">
+							<img style="height: 30px; width: 30px;"
+								src="images/vietnamese.jpg" alt="Tiếng Việt"
+								${sessionScope.language == 'vi' ? 'checked' : ''}>
+						</button>
+						<input type="hidden" name="submitType" value="image">
+			</form>
         </div>
       </div>
     </div>

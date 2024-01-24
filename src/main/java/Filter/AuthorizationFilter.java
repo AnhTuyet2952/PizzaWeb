@@ -22,21 +22,23 @@ import Model.User;
 /**
  * 
  */
+//Nó chủ yếu được sử dụng để thực hiện các tác vụ lọc như chuyển đổi, ghi nhật ký, nén, mã hóa và giải mã, xác thực đầu vào, v.v.
 public class AuthorizationFilter implements Filter{
 
 	private ServletContext context;
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-//		Filter.super.destroy();
 	}
 
+	// Được bộ chứa web gọi để cho bộ lọc biết rằng nó đang được đưa vào sử dụng.
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
 		this.context = filterConfig.getServletContext();
 	}
 
+	//thực hiện logic kiểm tra quyền truy cập.
 	@Override
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
 			throws IOException, ServletException {
@@ -46,6 +48,7 @@ public class AuthorizationFilter implements Filter{
 		
 		String url = request.getRequestURI();
 		
+	
 		
 		if(url.contains("/admin")) {
 			User admin = (User) request.getSession().getAttribute("admin");
@@ -59,7 +62,21 @@ public class AuthorizationFilter implements Filter{
 	               response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
 	               return;
 			}
-		}else {
+		}else
+		
+		if(url.contains("/changeInformation")||url.contains("/changePassword")||url.contains("/profile")) {
+			User customer = (User) request.getSession().getAttribute("customer");
+			if(customer!=null) {
+				filterChain.doFilter(servletRequest, servletResponse);
+			}else {
+				 ErrorBean eb = new ErrorBean();
+	          	 eb.setError("Vui long dang nhap vao tai khoan nguoi dung de thuc hien");
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
+	               response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+	               return;
+			}
+		}
+		else {
 			filterChain.doFilter(servletRequest, servletResponse);
 		}
 		

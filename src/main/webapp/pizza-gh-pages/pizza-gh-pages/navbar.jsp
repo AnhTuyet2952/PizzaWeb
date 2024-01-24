@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
+	
 <style>
 .dropdown {
   position: relative;
@@ -26,7 +27,7 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a href="index.jsp" class="nav-link"><fmt:message
 							bundle="${bnd}" key="header.home.title" /></a></li>
-				<li class="nav-item"><a href="menu.jsp" class="nav-link"><fmt:message
+				<li class="nav-item"><a href="${pageContext.request.contextPath}/PhanTrang" class="nav-link"><fmt:message
 							bundle="${bnd}" key="header.menu.title" /></a></li>
 				<li class="nav-item"><a href="services.jsp" class="nav-link"><fmt:message
 							bundle="${bnd}" key="header.service.title" /></a></li>
@@ -58,27 +59,25 @@
 					</span>
 				</a></li>
 			</ul>
-			<form action="${pageContext.request.contextPath}/changeLanguage"
-				method="post">
-				<ul style="margin-top: 20px;">
-					<fmt:setLocale value="${sessionScope.language}" />
-					<!-- Các hình ảnh chuyển ngôn ngữ -->
-					<div>
-						<button type="submit" name="lang" value="en"
-							style="border: none; padding: 0; background: none; cursor: pointer;">
-							<img style="height: 30px; width: 30px;" src="images/england.jpg"
-								alt="English" ${sessionScope.language == 'en' ? 'checked' : ''}>
-						</button>
-						<button type="submit" name="lang" value="vi"
-							style="border: none; padding: 0; background: none; cursor: pointer;">
-							<img style="height: 30px; width: 30px;"
-								src="images/vietnamese.jpg" alt="Tiếng Việt"
-								${sessionScope.language == 'vi' ? 'checked' : ''}>
-						</button>
-						<input type="hidden" name="submitType" value="image">
-					</div>
-				</ul>
-			</form>
+			<form action="${pageContext.request.contextPath}/changeLanguage" method="post">
+    <ul style="margin-top: 20px;">
+        <fmt:setLocale value="${sessionScope.language}" />
+        <!-- Các hình ảnh chuyển ngôn ngữ -->
+        <div>
+            <button type="submit" name="lang" value="en"
+                    style="border: none; padding: 0; background: none; cursor: pointer;">
+                <img style="height: 30px; width: 30px;" src="images/england.jpg"
+                     alt="English" ${sessionScope.language == 'en' ? 'checked' : ''}>
+            </button>
+            <button type="submit" name="lang" value="vi"
+                    style="border: none; padding: 0; background: none; cursor: pointer;">
+                <img style="height: 30px; width: 30px;"
+                     src="images/vietnamese.jpg" alt="Tiếng Việt"
+                     ${sessionScope.language == 'vi' ? 'checked' : ''}>
+            </button>
+        </div>
+    </ul>
+</form>
 
 <jsp:useBean id="userDAO" class="Database.UserDAO" />
 <c:set var="userId" value="${customer.getUserId()}" />
@@ -128,10 +127,7 @@
 
 						<c:otherwise>
 							<c:set var="customer" value="${customer}" scope="session"></c:set>
-							<p style="text-align: right: ;">
-								<fmt:message bundle="${bnd}" key="header.hello" /> 
-								${customer.username}
-							</p>
+							
 							<div
 								class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
 								aria-labelledby="drop2">

@@ -22,11 +22,13 @@ public class ChangeLanguage extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+    	
         String language = request.getParameter("lang");
+        if(language!=null) {
+        	//lưu language vào session
         request.getSession().setAttribute("language", language);
+        }
         response.sendRedirect(request.getHeader("Referer"));
-//        System.out.println("Language parameter: " + request.getParameter("lang"));
 
     }
     

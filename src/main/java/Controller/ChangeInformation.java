@@ -53,31 +53,39 @@ public class ChangeInformation extends HttpServlet {
 		
 		UserDAO customerDAO = new UserDAO();
 		User customer = customerDAO.selectById(id);
-		
 		if(customer==null) {
-			eb.setError("Vui long dang nhap de sua thong tin ca nhan");
+			eb.setError("Vui long dang nhap de sua thong tin ca nhan!");
 			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp";
             response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
-		}
+            return;
+		}else
 		
 		
 		 if(customerDAO.selectByUsername(username)&&!customer.getUsername().equals(username)) {
-			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
+			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac!");
 			request.setAttribute("name", "");
 			request.setAttribute("errorBean", eb);
 			error+=eb.getError();
-			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";
             response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
             return;
 
-		 }
-		 
-		 if(customerDAO.selectByEmail(email)) {
-				eb.setError("ten email da ton tai, vui long chon email khac");
+		 }else
+		 if(username.length()>25) {
+			 eb.setError("ten dang nhap khong duoc qua 25 ky tu!");
 				request.setAttribute("name", "");
 				request.setAttribute("errorBean", eb);
 				error+=eb.getError();
-				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";
+	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+	            return;
+		 }else
+		 if(customerDAO.selectByEmail(email)&&!customer.getEmail().equals(email)) {
+				eb.setError("ten email da ton tai, vui long chon email khac!");
+				request.setAttribute("name", "");
+				request.setAttribute("errorBean", eb);
+				error+=eb.getError();
+				url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/changeInformation.jsp";
 	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
 	            return;
 
@@ -112,9 +120,9 @@ public class ChangeInformation extends HttpServlet {
 		if(customer!=null) {
 			customerDAO.update(customer);
 			 url = "/pizza-gh-pages/pizza-gh-pages/index.jsp";
-			 request.setAttribute("customer", customer);
 			 System.out.println(customer);
         	 response.sendRedirect(request.getContextPath() + url);
+        	 return;
 		}else {
 			request.setAttribute("Error", error);
 		   

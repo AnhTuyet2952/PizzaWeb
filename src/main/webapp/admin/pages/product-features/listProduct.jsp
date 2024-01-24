@@ -51,35 +51,35 @@
 								<div class="col-lg-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<h4 class="card-title">Danh sách sản phẩm</h4>
+											<h4 class="card-title"style="color: #FFA500;font-size: 25px">Danh sách sản phẩm</h4>
 											<p class="card-description"></p>
 											<div class="table-responsive">
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th  style="color: white;">ID</th>
-															<th  style="color: white;">Hình ảnh</th>
-															<th  style="color: white;">Tên sản phẩm</th>
-															<th  style="color: white;">Giá (đ)</th>
-															<th  style="color: white;">Loại bánh</th>
-															<th  style="color: white;">Action</th>
+															<th  style="color: white;font-size: 22px">ID</th>
+															<th  style="color: white;font-size: 22px">Hình ảnh</th>
+															<th  style="color: white;font-size: 22px">Tên sản phẩm</th>
+															<th  style="color: white;font-size: 22px">Giá (đ)</th>
+															<th  style="color: white;font-size: 22px">Loại bánh</th>
+															<th  style="color: white;font-size: 22px">Action</th>
 														</tr>
 													</thead>
 													<tbody>
 															<c:forEach items="${productDAO.selectAll()}" var="pro">
 														<tr class="odd gradeX">
-															<td  style="color: #F0F0F0;">${pro.idProduct}</td>
+															<td  style="color: #F0F0F0;font-size: 17px">${pro.idProduct}</td>
 															<td><img height="150" width="200"
 																src="${pageContext.request.contextPath}/${pro.image }" /></td>
 
-															<td  style="color: #F0F0F0;">${pro.nameProduct }</td>
-															<td style="color: #F0F0F0;">${FormatCurrency.formatCurrency(pro.price)}</td>
-															<td style="width: 50%; color: #F0F0F0;">${pro.category.categoryName }</td>
-															<td><a
+															<td  style="color: #F0F0F0;font-size: 17px">${pro.nameProduct }</td>
+															<td style="color: #F0F0F0;font-size: 17px">${FormatCurrency.formatCurrency(pro.price)}</td>
+															<td style="color: #F0F0F0;font-size: 17px">${pro.category.categoryName }</td>
+															<td style="color: #FFff;font-size: 17px"><a style="color: #FFA500;font-size: 17px"
 																href="<c:url value='/admin/pages/product-features/sua.jsp?id=${pro.idProduct }'/>"
-																class="center">Sửa</a> |<a
+																class="center">Sửa</a> |<a style="color: #FFA500;font-size: 17px"
 																href="<c:url value='/deleteProduct?id=${pro.idProduct }'/>"
-																class="center">Xóa</a>|<a
+																class="center">Xóa</a>|<a style="color: #FFA500;font-size: 17px"
 																href="<c:url value='/admin/pages/product-features/suaAnh.jsp?id=${pro.idProduct }'/>"
 																class="center">Sửa ảnh</a></td>
 

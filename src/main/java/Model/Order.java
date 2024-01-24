@@ -4,6 +4,7 @@
 package Model;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * 
@@ -18,6 +19,7 @@ public class Order {
 	private String status ; //processing: dang xu ly, accept: chap nhan, reject:tu choi
 	private String nameConsignee; //ten nguoi nhan hang
 	private String phoneConsignee; //so dien thoai cua nguoi nhan
+	private List<OrderDetail> orderDetails;
 	  public Order(String i, User user, String address, String note, double total, Date bookingDate, String nameConsignee, String phoneConsignee) {
 	        this.oderId = i;
 	        this.user = user;
@@ -40,6 +42,14 @@ public class Order {
 		super();
 	}
 	
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
 	public String getNameConsignee() {
 		return nameConsignee;
 	}

@@ -29,77 +29,88 @@
 		<!-- partial:../../partials/_sidebar.html -->
 		
 		<jsp:include page="/admin/nav_bar.jsp" />
-		<!-- partial -->
-		<div class="content-wrapper full-page-wrad-flexpper  align-items-center auth login-bg" style="margin-top: 100px">
-		<div class="container-fluid page-body-wrapper">
-			<!-- partial:../../partials/_navbar.html -->
-			
 			<jsp:include page="/admin/fixed-top.jsp" />
-			<!-- partial -->
+		<!-- partial -->
+					<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
+
+					</div>
+					<div class="row">
+						<div class="col-lg-12 grid-margin" >
+							<div class="card" >
+								<div class="col-lg-12 grid-margin stretch-card" >
+									<div class="card" >
+										<div class="card-body">
+											<div class="col-md-6"
+												style="text-align: left; font-size: 22px">
             <jsp:useBean id="orderDao" class="Database.OrderDAO"></jsp:useBean>
             
              <jsp:useBean id="orderDetailDao" class="Database.OrderDetailDAO"></jsp:useBean>
             
              <c:set var="orderId" value="${param.orderId}" />
             <c:set var="order" value="${orderDao.selectById(orderId)}"></c:set>
+            <c:set var="userId" value="${param.id}" />
+	<c:set var="user" value="${userDAO.selectById(userId)}" />
 			<div id="page-wrapper">
 				<div id="page-inner">
 					<div class="row">
-					<h1>${orderId}</h1>
-						<div class="col-md-6" style="text-align: left; font-size: 22px">
+						<div class="col-md-22" style="text-align: left; font-size: 22px">
 							<!-- Thông tin khách hàng -->
-							<h2>Thông tin khách hàng</h2>
-							<label for="name"> Họ & tên: ${order.user.name}</label><br>
+							<h2 style="color: #FFA500;">Thông tin đơn hàng có mã ${orderId}</h2>
+							<h4>Tên user là: <a href="${pageContext.request.contextPath}/userDetail?id=${order.user.userId }">${order.user.username}</a></h4>
+							<label for="name"> Họ và tên người nhận: ${order.user.name}</label><br>
 							<label for="email"> Email: ${order.user.email}</label><br>
 							<label for="phone"> Số điện thoại:
 								${order.user.phoneNumber}</label><br>
 						</div>
 
-						<div class="col-md-6" style="text-align: left; font-size: 22px">
+						<div class="col-md-22" style="text-align: left; font-size: 22px">
 							<!-- Thông tin đặt hàng -->
-							<h2>Thông tin đặt hàng</h2>
+							<h2 style="color: #FFA500;">Thông tin đặt hàng</h2>
 							<label for="Address"> Địa chỉ: ${order.getAddress()}</label><br>
-							<label for="status"> Ghi chú: ${order.getStatus()}</label><br>
+							<label for="status"> Ghi chú: ${order.getNote()}</label><br>
 							<c:set var="subtotal" value="0" />
 							<c:set var="total" value="0" />
 
 							<table class="table site-block-order-table mb-5"
-								style="text-align: left;">
-								<thead>
-									<th>Product</th>
-									<th>Total</th>
-								</thead>
-								<tbody>
+								style="text-align: left;border: 2px solid;">
+								<tr style="border: 2px solid;">
+									<th style="color: #FFA500; font-size: 18px">Product</th>
+									<th style="color: #FFA500; font-size: 18px">Total</th>
+									</tr>
+								<tbody style="border: none">
 									<c:forEach var="item" items="${orderDetailDao.selectByOrderId(orderId)}">
 										<c:set var="itemTotal"
 											value="${item.products.price * item.quantity}" />
-										<tr>
-											<td><img 
+										<tr style="border: 2px solid;">
+											<td style="color: white; font-size: 18px;"><img 
 												src="<c:out value="${pageContext.request.contextPath}/${item.products.image}" />" alt="Image"
 												class="img-fluid"> <b><c:out
 														value="${item.products.nameProduct}" /></b> <strong
 												class="mx-2">x</strong>
 											<c:out value="${item.quantity}" /></td>
-											<td><c:out value="${FormatCurrency.formatCurrency(itemTotal)}" /></td>
+											<td style="color: red; font-size: 15px"><c:out value="${FormatCurrency.formatCurrency(itemTotal)}" /></td>
 										</tr>
 										<c:set var="subtotal" value="${subtotal + itemTotal}" />
 										<c:set var="total" value="${total + itemTotal}" />
 									</c:forEach>
 									<tr>
-										<td class="text-black font-weight-bold"><strong>Cart
+										<td class="text-black font-weight-bold" style="color: #fff; font-size: 15px"><strong>Cart
 												Subtotal</strong></td>
-										<td class="text-black"><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
+										<td class="text-black" style="color: red; font-size: #8B0000"><c:out value="${FormatCurrency.formatCurrency(subtotal)}" /></td>
 									</tr>
-									<tr>
-										<td class="text-black font-weight-bold"><strong>Order
+									<tr style="border: 2px solid;">
+										<td class="text-black font-weight-bold" style="color: #fff; font-size: 15px"><strong>Order
 												Total</strong></td>
-										<td class="text-black font-weight-bold"><strong><c:out
+										<td class="text-black font-weight-bold" style="color: red; font-size: 15px"><strong><c:out
 													value="${FormatCurrency.formatCurrency(total)}" /></strong></td>
 									</tr>
 								</tbody>
 							</table>
 
-
+</div></div></div></div></div></div></div></div></div></div>
 
 						</div>
 					</div>

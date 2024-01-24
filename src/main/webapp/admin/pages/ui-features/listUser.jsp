@@ -30,7 +30,7 @@
 
 
 <body>
-	<jsp:useBean id="customer" class="Database.UserDAO"></jsp:useBean>
+	<jsp:useBean id="customerdao" class="Database.UserDAO"></jsp:useBean>
 	<div class="container-scroller">
 		<!-- partial:../../partials/_sidebar.html -->
 		<jsp:include page="/admin/nav_bar.jsp" />
@@ -52,38 +52,80 @@
 								<div class="col-lg-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<h4 class="card-title">Danh sách người dùng</h4>
+											<h4 class="card-title" style="color: #FFA500">Danh sách người dùng</h4>
 											<p class="card-description"></p>
 											<div class="table-responsive">
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Id</th>
-															<th>User</th>
-															<th>Username</th>
-															<th>name</th>
-															<th>Birthday</th>
-															<th>Sexual</th>
-															<th>Email</th>
-															<th>Phone number</th>
-															<th>Detail</th>
+															<th style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone number</th>
+															<th style="color: white">Detail</th>
 														</tr>
 													</thead>
 													<tbody>
-														<c:forEach items="${customer.selectCustomer()}"
+														<c:forEach items="${customerdao.selectCustomer()}"
 															var="customer">
 															<tr>
-																<td class="py-1">${customer.userId}</td>
-																<td class="py-1"><img height="150" width="200"
+																<td class="py-1" style="color: white">${customer.userId}</td>
+																<td class="py-1" style="color: white"><img height="150" width="200"
 																	src="${pageContext.request.contextPath}/${customer.avatar}" />
 																</td>
-																<td>${customer.username }</td>
-																<td>${customer.name }</td>
-																<td>${customer.birthday.toString()}</td>
-																<td>${customer.sexual }</td>
-																<td>${customer.email}</td>
-																<td>${customer.phoneNumber }</td>
-																<td><a
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td style="color: white">${customer.phoneNumber }</td>
+																<td><a style="color: #FFA500;font-size: 17px"
+																	href="${pageContext.request.contextPath}/userDetail?id=${customer.userId }">Chi
+																		tiết</a></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="card">
+										<div class="card-body">
+											<h4 class="card-title" style="color: #FFA500">Danh sách Admin</h4>
+											<p class="card-description"></p>
+											<div class="table-responsive">
+												<table class="table table-striped">
+													<thead>
+														<tr>
+															<th style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone number</th>
+															<th style="color: white">Detail</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${customerdao.selectAdmin()}"
+															var="customer">
+															<tr>
+																<td class="py-1"  style="color: white">${customer.userId}</td>
+																<td class="py-1" style="color: white"><img height="150" width="200"
+																	src="${pageContext.request.contextPath}/${customer.avatar}" />
+																</td>
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td style="color: white">${customer.phoneNumber }</td>
+																<td><a style="color: #FFA500;font-size: 17px"
 																	href="${pageContext.request.contextPath}/userDetail?id=${customer.userId }">Chi
 																		tiết</a></td>
 															</tr>
@@ -93,6 +135,8 @@
 											</div>
 										</div>
 									</div>
+									</div>
+									
 								</div>
 							</div>
 						</div>

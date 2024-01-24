@@ -49,9 +49,9 @@
 				<form class="form" action="${myaccount}" method="post"
 					id="registrationForm" enctype="multipart/form-data">
 					<input name="role" value="${sessionScope.account.roleId }" hidden="" >
-					<input name="id" value="${customer.customerId }" hidden="">
+					<input name="id" value="${customer.userId }" hidden="">
 					<div class="text-center">
-						<c:url value="/image?fname=${sessionScope.customer.avatar }"
+						<c:url value="/${sessionScope.customer.avatar }"
 							var="imgUrl"></c:url>
 						<img src="${imgUrl }" class="avatar img-circle img-thumbnail"
 							alt="avatar">

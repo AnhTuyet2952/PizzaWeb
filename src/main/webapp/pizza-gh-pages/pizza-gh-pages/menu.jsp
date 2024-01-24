@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%><!DOCTYPE html>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page import="util.FormatCurrency" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ page import="util.FormatCurrency"%>
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
 <meta charset="utf-8">
@@ -36,29 +36,81 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+
+
 <style>
-    .container-wrap {
+.container-wrap {
+	
+}
+
+.services-wrap {
+	margin: 10px;
+	padding: 5px;
+}
+
+.services-wrap img {
+	max-width: 100%;
+	height: auto;
+	border-bottom: 1px solid #ddd;
+}
+
+.text {
+	padding-top: 20px;
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.pagination li {
+	margin: 0 5px;
+	list-style: none;
+	display: inline-block;
+}
+
+.pagination a {
+	padding: 8px 16px;
+	text-decoration: none;
+	color: #333;
+	background-color: #f8f9fa;
+	border: 1px solid #dee2e6;
+	border-radius: 5px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+    .sort-links {
+        display: flex;
+        margin-left: 10px;
     }
 
-    .services-wrap {
-        margin: 10px;
-        padding: 5px; 
+    .sort-link {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        background-color: #ffff;
+        color: black;
+        border: 1px solid #ffff;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 15px;
+        margin-right: 10px;
     }
-    .services-wrap img {
-        max-width: 100%; 
-        height: auto; 
-        border-bottom: 1px solid #ddd; 
+
+    .sort-link.active {
+        background-color: #FFA500;
+        color: black;
+        border-color: #FFA500;
+        font-size: 15px;
     }
-    .text {
-        padding-top: 20px; 
-    }
+
+}
 </style>
-
-
 </head>
 <body>
-<fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="lang.messages" var="bnd"/>
+	<fmt:setLocale value="${sessionScope.language}" />
+	<fmt:setBundle basename="lang.messages" var="bnd" />
 	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
 	<!-- END nav -->
 
@@ -73,9 +125,13 @@
 					class="row slider-text justify-content-center align-items-center">
 
 					<div class="col-md-7 col-sm-12 text-center ftco-animate">
-						<h1 class="mb-3 mt-5 bread"><fmt:message bundle="${bnd}" key="menu.title"/></h1>
+						<h1 class="mb-3 mt-5 bread">
+							<fmt:message bundle="${bnd}" key="menu.title" />
+						</h1>
 						<p class="breadcrumbs">
-							<span class="mr-2"><a href="index.jsp"><fmt:message bundle="${bnd}" key="menu.home"/></a></span> <span><fmt:message bundle="${bnd}" key="menu.menu"/></span>
+							<span class="mr-2"><a href="index.jsp"><fmt:message
+										bundle="${bnd}" key="menu.home" /></a></span> <span><fmt:message
+									bundle="${bnd}" key="menu.menu" /></span>
 						</p>
 					</div>
 
@@ -88,38 +144,92 @@
 		<div class="container">
 			<div class="row justify-content-center mb-5 pb-3">
 				<div class="col-md-7 heading-section ftco-animate text-center">
-					<h2 class="mb-4"><fmt:message bundle="${bnd}" key="menu.title"/></h2>
-					<p><fmt:message bundle="${bnd}" key="menu.content"/></p>
+					<h2 class="mb-4">
+						<fmt:message bundle="${bnd}" key="menu.title" />
+					</h2>
+					<p>
+						<fmt:message bundle="${bnd}" key="menu.content" />
+					</p>
+
+
+
+					<c:set var="orderBy" value="${sessionScope.orderBy}" />
+					<c:set var="page" value="${sessionScope.page}" />
+					<c:set var="num" value="${sessionScope.num}" />
+					<div class="row justify-content-center mt-5">
+						<div class="col-md-7 heading-section text-center">
+							<div class="pagination">
+								<c:forEach begin="1" end="${num}" var="i">
+									<li class="page-item <c:if test='${i == page}'>active</c:if>">
+										<a class="page-link"
+										href="${pageContext.request.contextPath}/PhanTrang?page=${i}&orderBy=${orderBy}">${i}</a>
+									</li>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		
-<fmt:setLocale value="${sessionScope.language}" />
-<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
 
-<div class="container-wrap">
-    <div class="row no-gutters d-flex">
-        <c:forEach var="productdao" items="${productDAO.selectAllLanguage(sessionScope.language)}">
-            <div class="col-lg-4 d-flex ftco-animate">
-                <div class="services-wrap d-flex" style="background-color: black">
-                    <img class="img alt=" src="${pageContext.request.contextPath}/${productdao.image}">
-                    <div class="text p-4" style="background-color: black; color: white">
-                        <h3 >${productdao.nameProduct}</h3>
-                        <h3 style="color: red;font-size: 25px">${FormatCurrency.formatCurrency(productdao.price)}</h3>
-                        <p>${productdao.description}</p>
-                        <!-- Form to add product to cart -->
-                        <form class="add-to-cart-form" action="${pageContext.request.contextPath}/addtocart" method="post" id="addToCartForm">
-                            <!-- Your form content -->
-                            <input type="hidden" name="productId" value="${productdao.idProduct}">
-                            <input class="ml-2 btn btn-white btn-outline-white" type="submit" value="<fmt:message bundle="${bnd}" key="menu.addcart"/>">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
+		<div class="sort-links">
+    <a href="${pageContext.request.contextPath}/PhanTrang?orderBy=price-asc&page=${page}" class="sort-link"><b>Sắp xếp theo giá tăng dần</b></a>
+    <a href="${pageContext.request.contextPath}/PhanTrang?orderBy=price-desc&page=${page}" class="sort-link"><b>Sắp xếp theo giá giảm dần</b></a>
 </div>
-		
+		<fmt:setLocale value="${sessionScope.language}" />
+		<jsp:useBean id="productDAO" class="Database.ProductDAO"></jsp:useBean>
+
+		<div class="container-wrap">
+			<div class="row no-gutters d-flex">
+				<c:forEach var="productdao" items="${listProduct}">
+					<div class="col-lg-4 d-flex ftco-animate">
+						<div class="services-wrap d-flex" style="background-color: black">
+							<img class="img alt="
+								src="${pageContext.request.contextPath}/${productdao.image}">
+							<div class="text p-4"
+								style="background-color: black; color: white">
+								<h3>
+									<c:choose>
+										<c:when test="${sessionScope.language eq 'en'}">${productdao.nameProducten}</c:when>
+										<c:otherwise>${productdao.nameProduct}</c:otherwise>
+									</c:choose>
+								</h3>
+								<h3 style="color: red; font-size: 25px">${FormatCurrency.formatCurrency(productdao.price)}</h3>
+								<p>
+									<c:choose>
+										<c:when test="${sessionScope.language eq 'en'}">${productdao.descriptionen}</c:when>
+										<c:otherwise>${productdao.description}</c:otherwise>
+									</c:choose>
+								</p>
+								<!-- Form to add product to cart -->
+								<form class="add-to-cart-form"
+									action="${pageContext.request.contextPath}/addtocart"
+									method="post" id="addToCartForm">
+									<!-- Your form content -->
+									<input type="hidden" name="productId"
+										value="${productdao.idProduct}"> <input
+										class="ml-2 btn btn-white btn-outline-white" type="submit"
+										value="<fmt:message bundle="${bnd}" key="menu.addcart"/>">
+								</form>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+<div class="row justify-content-center mt-5">
+						<div class="col-md-7 heading-section text-center">
+							<div class="pagination">
+								<c:forEach begin="1" end="${num}" var="i">
+									<li class="page-item <c:if test='${i == page}'>active</c:if>">
+										<a class="page-link"
+										href="${pageContext.request.contextPath}/PhanTrang?page=${i}&orderBy=${orderBy}">${i}</a>
+									</li>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+
 	</section>
 
 
@@ -139,7 +249,38 @@
 				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
 	</div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var sortLinks = document.querySelectorAll(".sort-link");
 
+        sortLinks.forEach(function(link) {
+            link.addEventListener("click", function() {
+                // Xóa class "active" từ tất cả các liên kết
+                sortLinks.forEach(function(item) {
+                    item.classList.remove("active");
+                });
+
+                // Thêm class "active" cho liên kết được nhấp
+                this.classList.add("active");
+
+                // Lưu trạng thái đã chọn vào Local Storage
+                localStorage.setItem("selectedSort", this.innerText);
+            });
+        });
+
+        // Kiểm tra Local Storage khi trang tải lại
+        var selectedSort = localStorage.getItem("selectedSort");
+        if (selectedSort) {
+            var matchingLink = Array.from(sortLinks).find(function(link) {
+                return link.innerText === selectedSort;
+            });
+
+            if (matchingLink) {
+                matchingLink.classList.add("active");
+            }
+        }
+    });
+</script>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-migrate-3.0.1.min.js"></script>
@@ -160,28 +301,48 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
-<script>
-         $(document).ready(function () {
-                $(".add-to-cart-form").on("submit", function (event) {
-                    event.preventDefault();
-                    var form = $(this);
-                    $.ajax({
-                        type: "POST",
-                        url: form.attr("action"),
-                        data: form.serialize(),
-                        success: function (data) {
-                           alert("Đã đặt hàng thành công!");
-                           var currentQuantity = parseInt($(".cart-item-count").text(), 10);
-                           var newQuantity = currentQuantity + 1;
-                           $(".cart-item-count").text(newQuantity);
-                        },
-                        error: function (error) {
-                            console.log("Error:", error);
-                            alert("Đã đặt lỗi");
-                        }
-                    });
-                });
-            });
-     </script> 
+	<script>
+		$(document)
+				.ready(
+						function() {
+							$(".add-to-cart-form")
+									.on(
+											"submit",
+											function(event) {
+												event.preventDefault();
+												var form = $(this);
+												$
+														.ajax({
+															type : "POST",
+															url : form
+																	.attr("action"),
+															data : form
+																	.serialize(),
+															success : function(
+																	data) {
+																alert("Đã đặt hàng thành công!");
+																var currentQuantity = parseInt(
+																		$(
+																				".cart-item-count")
+																				.text(),
+																		10);
+																var newQuantity = currentQuantity + 1;
+																$(
+																		".cart-item-count")
+																		.text(
+																				newQuantity);
+															},
+															error : function(
+																	error) {
+																console
+																		.log(
+																				"Error:",
+																				error);
+																alert("Đã đặt lỗi");
+															}
+														});
+											});
+						});
+	</script>
 </body>
 </html>

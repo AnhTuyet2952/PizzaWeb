@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +26,9 @@ public class Register extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("utf-8"); 
 		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=UTF-8");
 		String username = request.getParameter("username");
 		System.out.println(username);
 		String name = request.getParameter("name");
@@ -47,6 +49,28 @@ public class Register extends HttpServlet {
 		
 		UserDAO cd= new UserDAO();
 		ErrorBean eb = new ErrorBean();
+		
+		//kiem tra email
+				Pattern emailPattern = Pattern.compile("\\w+@\\w+(\\.\\w+)*");
+				java.util.regex.Matcher emailMatcher = emailPattern.matcher(email);
+
+				if(!emailMatcher.matches()) {
+					
+					baoLoi+="cau truc cua email chua dung";
+				
+				}
+			
+		
+		if(username.length()>25) {
+			eb.setError("ten dang nhap khong duoc qua 25 ky tu");
+			request.setAttribute("name", "");
+			request.setAttribute("errorBean", eb);
+			baoLoi+=eb.getError();
+			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
+            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+            return;
+		}else
+		
 		if(cd.selectByUsername(username)) {
 			eb.setError("ten dang nhap da ton tai, vui long chon ten dang nhap khac");
 			request.setAttribute("name", "");
@@ -73,7 +97,7 @@ public class Register extends HttpServlet {
 		    url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
             response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
             return;
-		}
+		}else
 
 		if(baoLoi.length()==0) {
 			User customer = new User((cd.creatId()+1)+"", username, password, name,null, null, null, email, null,  2);
@@ -81,15 +105,17 @@ public class Register extends HttpServlet {
 			cd.insert(customer);
 			Email.sendEmail(email, "Chuc mung ban da tro thanh khach hang than thiet cua cua hang chung toi!", "Thong bao dang ky tai khoan thanh cong");
 			url=request.getContextPath()+"/pizza-gh-pages/pizza-gh-pages/index.jsp";
+			response.sendRedirect(url);
+			return;
 		}else {
 			url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/authentication-register.jsp";
             response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
             return;
 			
 		}
-		response.sendRedirect(url);
-//		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-//		rd.forward(request, response);
+//		response.sendRedirect(url);
+////		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+////		rd.forward(request, response);
 		
 	}
 

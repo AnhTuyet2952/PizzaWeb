@@ -21,13 +21,16 @@ public class CancelOrder extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//lấy id order từ request
 		String orderId = request.getParameter("orderId");
 		String action = request.getParameter("action");
 		String url = "";
 		String message = "";
 		Order order = new Order();
+		//nếu bấm vào nút cancel
 		if ("Cancel".equals(action)) {
 			// Xử lý hủy đơn hàng (cập nhật trạng thái)
+			//request là trạng thái yêu cầu hủy gửi về admin
 			orderDAO.UpdateOrderStatus(orderId, "Request");
 			order.setStatus("Request");
 

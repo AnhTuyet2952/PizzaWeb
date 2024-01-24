@@ -25,35 +25,7 @@ public class ProductDAO implements DAOInterface<Product> {
 		data = selectAll();
 		return data.size();
 	}
-    public ArrayList<Product> selectAllLanguage(String lang) {
-    	ArrayList<Product> products = new ArrayList<>();
-        try {
-            Connection con = JDBCUtil.getConnection();
-            String sql = "SELECT product_id, product_name, category_id, description, price, image, product_name_en, description_en FROM products ORDER BY CAST(product_id AS SIGNED)";
-            PreparedStatement st = con.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
 
-            while (rs.next()) {
-                String idProduct = rs.getString("product_id");
-                String categoryId = rs.getString("category_id");
-                String nameKey = lang.equals("en") ? "product_name_en" : "product_name";
-                String descriptionKey = lang.equals("en") ? "description_en" : "description";
-                Double price = rs.getDouble("price");
-                String image = rs.getString("image");
-
-                Category category = new CategoryDAO().selectById(categoryId);
-                Product product = new Product(idProduct, rs.getString(nameKey), category, rs.getString(descriptionKey), price, image);
-                products.add(product);
-            }
-
-            JDBCUtil.closeConnection(con);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            
-        }
-        return products;
-    }
 
 	@Override
 	public ArrayList<Product> selectAll() {
@@ -77,11 +49,13 @@ public class ProductDAO implements DAOInterface<Product> {
 				String nameProduct = rs.getString("product_name");
 				String categoryId = rs.getString("category_id");
 				String description = rs.getString("description");
+				String nameen = rs.getString("product_name_en");
+				String descriptionen = rs.getString("description_en");
 				Double price = rs.getDouble("price");
 				String image = rs.getString("image");
 
 				Category category = new CategoryDAO().selectById(categoryId);
-				Product product = new Product(idProduct, nameProduct, category, description, price, image);
+				Product product = new Product(idProduct, nameProduct, category, description, price, image,nameen,descriptionen);
 
 				products.add(product);
 
@@ -94,50 +68,60 @@ public class ProductDAO implements DAOInterface<Product> {
 		}
 		return products;
 	}
-	
-// tim san pham theo ten
-	public ArrayList<Product> selectByProductName(String productName) {
-		ArrayList<Product>listProduct = new ArrayList<Product>();
+	public ArrayList<Product> selectAll2(String orderBy) {
+		ArrayList<Product> products = new ArrayList<>();
 		try {
 			// tao mot connection
 			Connection con = JDBCUtil.getConnection();
-
+			
 			// tao cau lenh sql
-			String sql = "SELECT * FROM products WHERE product_name LIKE ? OR product_name_en";
-
+			  // tạo câu lệnh SQL
+	        String sql = "SELECT * FROM products";
+	    
+	        // thêm điều kiện ORDER BY dựa trên tham số truyền vào
+	        if ("price-asc".equals(orderBy)) {
+	            sql += " ORDER BY price";
+	        } else if ("price-desc".equals(orderBy)) {
+	            sql += " ORDER BY price DESC";
+	        } else {
+	            // mặc định sắp xếp theo ID sản phẩm
+	            sql += " ORDER BY CAST(product_id AS SIGNED)";
+	        }
+			
 			PreparedStatement st = con.prepareStatement(sql);
-			st.setString(1, "%" + productName + "%");
 
 			// thuc thi
-
+			
 			ResultSet rs = st.executeQuery();
-
+			
 			while (rs.next()) {
-
+				
 				String idProduct = rs.getString("product_id");
 				String nameProduct = rs.getString("product_name");
 				String categoryId = rs.getString("category_id");
 				String description = rs.getString("description");
+				String nameen = rs.getString("product_name_en");
+				String descriptionen = rs.getString("description_en");
 				Double price = rs.getDouble("price");
 				String image = rs.getString("image");
-				String nameProducten = rs.getString("product_name_en");
-				String descriptionen = rs.getString("description_en");
-
+				
 				Category category = new CategoryDAO().selectById(categoryId);
-				Product product = new Product(idProduct, nameProduct, category, description, price, image,nameProducten,descriptionen);
-
-				listProduct.add(product);
-
+				Product product = new Product(idProduct, nameProduct, category, description, price, image,nameen,descriptionen);
+				
+				products.add(product);
+				
 			}
-
+			
 			JDBCUtil.closeConnection(con);
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return listProduct;
+		return products;
 	}
-	public ArrayList<Product> selectByProductName2(String productName, String lang) {
+	
+// tim san pham theo ten	
+	public ArrayList<Product> selectByProductName(String productName, String lang) {
 	    ArrayList<Product> listProduct = new ArrayList<>();
 	    try {
 	        // tao mot connection
@@ -177,6 +161,14 @@ public class ProductDAO implements DAOInterface<Product> {
 	    }
 	    return listProduct;
 	}
+	//dem trang
+	public List<Product> getListByPage(List<Product> list, int start, int end){
+		List<Product> arr = new ArrayList<Product>();
+		for (int i = start; i < end; i++) {
+			arr.add(list.get(i));
+		}
+		return arr;
+	}
 
 //dem so trang can hien thi sau khi tim ket qua
 	
@@ -210,6 +202,7 @@ public class ProductDAO implements DAOInterface<Product> {
 		return count;
 	}
 	
+
 	@Override
 	public Product selectById(String id) {
 		Product result = null;
@@ -386,6 +379,7 @@ public class ProductDAO implements DAOInterface<Product> {
 		return result;
 	}
 
+	
 
 
 	public static void main(String[] args) {

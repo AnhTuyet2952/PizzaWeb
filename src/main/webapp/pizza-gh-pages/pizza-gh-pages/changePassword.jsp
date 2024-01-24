@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +36,7 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/pizza.png" type="image/png">
 <style>
 .rq {
 	color: red;
@@ -48,7 +50,8 @@
 
 <body>
 <jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
-
+  <fmt:setLocale value="${sessionScope.language}" />
+	<fmt:setBundle basename="lang.messages" var="bnd"/>
 
 
     <!-- END nav -->
@@ -64,31 +67,31 @@
             <div class="card mb-0">
               <div class="card-body">
                 
-                <p class="text-center">Your Social Campaigns</p>
+                <p style="font-size: 18px; color: black" class="text-center"><b><fmt:message bundle="${bnd}" key="change.title" /></b></p>
                 <div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div> 
                 <div class="text-center" ><span class="rq"> ${Error}</span></div>
                 <form class="form" action="${pageContext.request.contextPath}/changePassword" method="post">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="username" class="form-label"><fmt:message bundle="${bnd}" key="login.name" /></label>
                     <input type="text" class="form-control" id="username" name="username" aria-describedby="textHelp" required="required" value=${username}>
                   </div>
                  <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label"><fmt:message bundle="${bnd}" key="login.pas" /></label>
                     <input type="password" class="form-control" id="" name="password" aria-describedby="textHelp" required="required" value="  ">
                    
 										
                   </div>
                   <div class="mb-4">
-                    <label for="password" class="form-label">New Password</label>
+                    <label for="password" class="form-label"><fmt:message bundle="${bnd}" key="change.newpass" /></label>
                     <input type="password" class="form-control" id="newPassword" name="newPassword"required="required" onkeyup="kiemTraMatKhau()">
                   </div>
                   <div class="mb-4">
-                    <label for="enterTheNewPassword" class="form-label">Enter The New Password
+                    <label for="enterTheNewPassword" class="form-label"><fmt:message bundle="${bnd}" key="register.pass" />
                     <span  id="msg" class="red" ></span></label>
                     <input type="password" class="form-control" id="enterTheNewPassword" name="enterTheNewPassword"required="required" onkeyup="kiemTraMatKhau()">
                   </div>
                  
-                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="Change Password" style="display : hidden;">
+                  <input type="submit" name="submit"  class="btn btn-primary form-control" value="<fmt:message bundle="${bnd}" key="change.change" />" style="display : hidden;">
 
                 </form>
               </div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html lang="en">
 <head>
 <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
@@ -36,6 +36,7 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/pizza.png" type="image/png">
 <style>
 .rq {
 	color: red;
@@ -49,7 +50,8 @@
 
 <body>
 	<jsp:include page="/pizza-gh-pages/pizza-gh-pages/navbar.jsp" />
-
+  <fmt:setLocale value="${sessionScope.language}" />
+	<fmt:setBundle basename="lang.messages" var="bnd"/>
 	<!-- END nav -->
 	<!--  Body Wrapper -->
 
@@ -63,7 +65,8 @@
 					<div class="col-md-8 col-lg-6 col-xxl-3">
 						<div class="card mb-0">
 							<div class="card-body">
-								<p class="text-center">Thay đổi thông tin cá nhân</p>
+
+								<p style="font-size: 28px; color: black" class="text-center"><b><fmt:message bundle="${bnd}" key="inf.title" /></b></p>
 								<div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div>
 								<div class="text-center">
 									<span class="rq"> ${Error}</span>
@@ -71,52 +74,52 @@
 								<form class="form"
 									action="${pageContext.request.contextPath}/changeInformation"
 									method="post">
-									<input type="hidden" name="customerId" value="${customer.userId}">
+									<input type="hidden" name="user_id" value="${customer.userId}">
 									<div class="mb-3">
-										<label for="username" class="form-label">Username</label> <input
+										<label for="username" class="form-label"><fmt:message bundle="${bnd}" key="login.name" /></label> <input
 											type="text" class="form-control" id="username"
 											name="username" aria-describedby="textHelp"
 											required="required">
 									</div>
 									<div class="mb-3">
-										<label class="form-label">Giới tính</label>
+										<label class="form-label"><fmt:message bundle="${bnd}" key="inf.sex" /></label>
 										<div class="form-check">
 											<input type="radio" class="form-check-input" id="nam"
 												name="gender" value="Nam" required="required"> <label
-												class="form-check-label" for="nam">Nam</label>
+												class="form-check-label" for="nam"><fmt:message bundle="${bnd}" key="inf.boy" /></label>
 										</div>
 										<div class="form-check">
 											<input type="radio" class="form-check-input" id="nu"
 												name="gender" value="Nữ" required="required"> <label
-												class="form-check-label" for="nu">Nữ</label>
+												class="form-check-label" for="nu"><fmt:message bundle="${bnd}" key="inf.girl" /></label>
 										</div>
 										<div class="form-check">
 											<input type="radio" class="form-check-input" id="nu"
 												name="gender" value="Khác" required="required"> <label
-												class="form-check-label" for="khac">Khác</label>
+												class="form-check-label" for="khac"><fmt:message bundle="${bnd}" key="inf.3" /></label>
 										</div>
 									</div>
 									<div class="mb-3">
-										<label for="birthday" class="form-label">Ngày sinh</label> <input
+										<label for="birthday" class="form-label"><fmt:message bundle="${bnd}" key="inf.day" /></label> <input
 											type="date" class="form-control" id="birthday"
 											name="birthday" aria-describedby="textHelp"
 											required="required">
 									</div>
 									<div class="mb-3">
-										<label for="phoneNumber" class="form-label">Số điện thoại</label> <input
+										<label for="phoneNumber" class="form-label"><fmt:message bundle="${bnd}" key="inf.sdt" /></label> <input
 											type="number" class="form-control" id="phoneNumber"
 											name="phoneNumber" aria-describedby="textHelp"
 											required="required">
 									</div>
 									<div class="mb-3">
-										<label for="email" class="form-label">Email</label> <input
+										<label for="email" class="form-label"><fmt:message bundle="${bnd}" key="inf.mail" /></label> <input
 											type="email" class="form-control" id="email"
 											name="email" aria-describedby="textHelp"
 											required="required">
 									</div>
 
 									<input type="submit" name="submit"
-										class="btn btn-primary form-control" value="Cập nhật thông tin"
+										class="btn btn-primary form-control" value="<fmt:message bundle="${bnd}" key="inf.up" />"
 										style="display: hidden;">
 
 								</form>

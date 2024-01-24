@@ -130,9 +130,9 @@
 						href="/pizza_web/admin/pages/samples/blank-page.jsp"> Blank
 							Page </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/pizza_web/admin/pages/samples/error-404.html"> 404 </a></li>
+						href="/pizza_web/error/error-404.html"> 404 </a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="/pizza_web/admin/pages/samples/error-500.html"> 500 </a></li>
+						href="/pizza_web/error/error_500.html"> 500 </a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="/pizza_web/admin/pages/samples/login.jsp"> Login </a></li>
 					<li class="nav-item"><a class="nav-link"

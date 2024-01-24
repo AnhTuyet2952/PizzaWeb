@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="css/flaticon.css">
 <link rel="stylesheet" href="css/icomoon.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="images/pizza.png" type="image/png">
 </head>
 
 	<body>
@@ -118,10 +119,13 @@
 		                <input type="text" class="form-control" id="phoneConsignee" name="phoneConsignee" required="required">
 		              </div>
 		            </div>	      
-		            <div class="form-group">
-		              <label for="note" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.note"/></label>
-		              <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="checkout.bill.note.write"/>"></textarea>
-		            </div>
+		<div class="form-group">
+    <label for="note" class="text-black"><fmt:message bundle="${bnd}" key="checkout.bill.note"/></label>
+    <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="<fmt:message bundle="${bnd}" key="checkout.bill.note.write"/>"
+        oninput="limitTextArea(this, 45);"></textarea>
+    <div id="charCount" style="text-align: right;"></div>
+</div>
+
 
 		          </div>
 		        </div>
@@ -210,6 +214,15 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+function limitTextArea(textArea, maxLength) {
+    if (textArea.value.length > maxLength) {
+        textArea.value = textArea.value.substring(0, maxLength);
+    }
+    var charCount = maxLength - textArea.value.length;
+    document.getElementById('charCount').innerHTML = 'Số ký tự còn lại: ' + charCount;
+}
+</script>
 </html>		<!-- End Footer Section -->	
 
 

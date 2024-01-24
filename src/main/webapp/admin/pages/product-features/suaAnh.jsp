@@ -37,58 +37,56 @@
 		<jsp:include page="/admin/nav_bar.jsp" />
 
 		<!-- partial -->
-		<div id="page-wrapper">
+		<div class="container-fluid page-body-wrapper">
+			<!-- partial:../../partials/_navbar.html -->
 
 			<jsp:include page="/admin/fixed-top.jsp" />
-			<div id="page-inner">
-				<div class="row">
-					<div class="col-md-12">
-						<h2>Add Product</h2>
-						<h5>Add product you can sell</h5>
+			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+					<div class="page-header">
+						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
+
 					</div>
-				</div>
-				<!-- /. ROW  -->
-				<hr />
-				<div class="row">
-					<div class="col-md-12">
-						<!-- Form Elements -->
-						<div class="panel panel-default">
-							<div class="panel-heading">Edit Product</div>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-6">
-										<h3>Info Product:</h3>
+					<div class="row">
+						<div class="col-lg-12 grid-margin">
+							<div class="card">
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h1 class="card-title" >Sửa ảnh sản phẩm</h1>
+											<p class="card-description"></p>
+											<div class="table-responsive">
 
-									<form action="${pageContext.request.contextPath}/UploadImageProduct" method="post" enctype="multipart/form-data">
-    <c:set var="productId" value="${param.id}" />
-    <input type="hidden" name="idProduct" id="idProduct" value="${productId}">
-    
-    <div class="form-group">
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image" />
-    </div>
-    
-    <button type="submit" class="btn btn-default">Edit</button>
-    <button type="reset" class="btn btn-primary">Reset</button>
-</form>
+										<form
+											action="${pageContext.request.contextPath}/UploadImageProduct"
+											method="post" enctype="multipart/form-data">
+											<c:set var="productId" value="${param.id}" />
+											<input type="hidden" name="idProduct" id="idProduct"
+												value="${productId}">
 
+											<div class="form-group">
+												<label for="image">Hình ảnh</label> <input type="file"
+													name="image" id="image" />
+											</div>
+
+											<button type="submit" class="btn btn-default">Sửa</button>
+											<button type="reset" class="btn btn-primary">Reset</button>
+										</form>
+</div>
+										</div>
+			</div>
+										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
-						<!-- End Form Elements -->
 					</div>
 				</div>
-				<!-- /. ROW  -->
-				<div class="row">
-					<div class="col-md-12"></div>
-				</div>
-				<!-- /. ROW  -->
+
+				<!-- partial -->
 			</div>
-			<!-- /. PAGE INNER  -->
-		</div>
-		<!-- /. PAGE WRAPPER  -->
-	</div>
 	<!-- container-scroller -->
 	<!-- plugins:js -->
 	<script src="../../assets/vendors/js/vendor.bundle.base.js"></script>

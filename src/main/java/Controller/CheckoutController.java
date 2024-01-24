@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Beans.ErrorBean;
 import Database.UserDAO;
 import Database.OrderDAO;
 import Database.OrderDetailDAO;
@@ -35,14 +36,12 @@ public class CheckoutController extends HttpServlet {
 	 protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	            throws ServletException, IOException {
 	        String address = request.getParameter("Address");
-	        String status = request.getParameter("status");
 	        String note = request.getParameter("note");
 	        String phoneConsignee = request.getParameter("phoneConsignee");
 	        String nameConsignee = request.getParameter("nameConsignee");
-//	        String email = request.getParameter("email");
 
 	        String url = "";
-	     // Lấy customer_id từ session
+	     // Lấy id user từ session
 	        HttpSession session = request.getSession();
 	        User customer = (User) session.getAttribute("customer");
 	     //kt dang nhap
@@ -50,22 +49,9 @@ public class CheckoutController extends HttpServlet {
 	        	response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/login.jsp");
 	        	return;
 	        }
-	        UserDAO customerDAO = new UserDAO();
-	     // Cập nhật thông tin khách hàng
-//	        if (name != null && !name.isEmpty() && phone != null && !phone.isEmpty() && email != null && !email.isEmpty()) {
-//	            customer.setName(name);
-//	            customer.setPhoneNumber(phone);
-//	            customer.setEmail(email);
-//	            customerDAO.update(customer);
-//	        }
-	        // Kiểm tra giỏ hàng
+	        
 	        Cart cart = (Cart) session.getAttribute("cart");
 
-	        if (cart == null || cart.isEmpty()) {
-	            // Nếu giỏ hàng trống, chuyển hướng đến trang menu
-	            response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/menu.jsp");
-	            return;
-	        }
 
 	        // Tạo đối tượng Order từ thông tin trong session
 	        OrderDAO orderDAO = new OrderDAO();
@@ -79,19 +65,18 @@ public class CheckoutController extends HttpServlet {
 	        order.setAddress(address);
 	        //luu thong tin vao session
 	        session.setAttribute("order", order);
-	        
 	        int result = orderDAO.insert(order);
-
+	        //insert thành công
 	        if (result > 0) {
 	        	 OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-	        	 int overallResult=1;
+	        	 int overallResult=1;//kiểm tra kết quả chung
 	        	for (Cart_item cart_item : cart.getCart_items()) {
 	        		Product product = cart_item.getProduct();
 					int quantity = cart_item.getQuantity();
 					double price = cart_item.getPrice();
 					double total = quantity*price;
 					OrderDetail orderDetail = new OrderDetail(order, product, quantity, total);
-					result = orderDetailDAO.insert(orderDetail);
+					int resultorderdetail = orderDetailDAO.insert(orderDetail);
 					
 					List<OrderDetail> orderDetails = (List<OrderDetail>) session.getAttribute("orderDetails");
 				        if (orderDetails == null) {
@@ -101,30 +86,23 @@ public class CheckoutController extends HttpServlet {
 					session.setAttribute("orderDetails", orderDetails);
 					System.out.println(quantity);
 					System.out.println(price);
-					if (result <= 0) {
+					if (resultorderdetail <= 0) {
 			            // Nếu chèn OrderDetail thất bại, cập nhật kết quả chung và thoát khỏi vòng lặp
 			            overallResult = result;
 			            break;
 			        }
 	        	}
 	        	if (overallResult > 0) {
-	                // Nếu kết quả chung là thành công, thực hiện các bước khác
-	        		 orderDAO.UpdateOrderStatus(order.getOderId(), "processing");
+	                // Nếu kết quả chung là thành công, đơn hàng được tạo
+	        		//cập nhập status của đơn hàng vào trạng thái chờ xác nhận
+	        		orderDAO.UpdateOrderStatus(order.getOderId(), "processing");
 	        		// Nếu insert thành công, xóa giỏ hàng và chuyển hướng đến trang thankyou
 	        		cart.clearCart();
-	        		System.out.println("Order Status: " + order.getStatus());
-//	        		order.setStatus("Accept");
+//	        		System.out.println("Order Status: " + order.getStatus());
 	        		request.setAttribute("order", order);
 	        		url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/thankyou.jsp";
 	        		response.sendRedirect(url);
-	            }else {
-	                // Nếu kết quả chung là lỗi, chuyển hướng đến trang error
-	                response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/error.jsp");
-	                return;
 	            }
-	        }else {
-	            // Nếu có lỗi, chuyển hướng đến trang error
-	            response.sendRedirect(request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/error.jsp");
 	        }
 	    }
 

@@ -31,21 +31,13 @@ public class orderDetail extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String id = request.getParameter("orderId");
 		OrderDetailDAO od = new OrderDetailDAO();
 		OrderDAO ods = new OrderDAO();
 		Order order = ods.selectById(id);
-		System.out.println("orderId: "+ order.getOderId());
-		System.out.println("username: "+order.getUser().getName());
-		ArrayList<OrderDetail> listOrderDetail = od.selectByOrderId(id);
-		
-		for (OrderDetail orderDetail : listOrderDetail) {
-			System.out.println(orderDetail.getProducts().getNameProduct());
-		}
+
         // Chuyển hướng request tới trang JSP
     	String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/orderDetail.jsp";
         response.sendRedirect(url + "?orderId=" + URLEncoder.encode(id, "UTF-8"));

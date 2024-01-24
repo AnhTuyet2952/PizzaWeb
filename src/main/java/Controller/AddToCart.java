@@ -26,16 +26,18 @@ public class AddToCart extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String url = "";
+		// Lấy mã sản phẩm từ request
 		String productId = request.getParameter("productId");
 
+		//Lấy giỏ hàng từ session hoặc tạo mới nếu chưa có
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		String url = "/pizza-gh-pages/pizza-gh-pages/menu.jsp";
-
 		if (cart == null) {
 			cart = new Cart();
 			request.getSession().setAttribute("cart", cart);
 		}
 		HttpSession session = request.getSession();
+		// Tính tổng số lượng sản phẩm trong giỏ hàng và lưu vào session
 		int totalQuantity = cart.calculateTotalQuantity();
 		session.setAttribute("totalQuantity", totalQuantity);
 		// Lấy ngôn ngữ từ session
@@ -46,7 +48,7 @@ public class AddToCart extends HttpServlet {
 
 		if (existingItem != null) {
 			// Nếu sản phẩm đã tồn tại, tăng số lượng lên
-			existingItem.setQuantity(Math.max(existingItem.getQuantity() + 1, 1));
+			existingItem.setQuantity(Math.max(existingItem.getQuantity() + 1, 1));//k trả về số âm
 		} else {
 			// Nếu sản phẩm chưa tồn tại, thêm sản phẩm mới vào giỏ hàng
 			Product product = productDAO.selectById(productId);

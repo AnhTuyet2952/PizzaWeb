@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!doctype html>
 <html>
 <head>
@@ -28,6 +29,7 @@
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/pizza.png" type="image/png">
 <title>Forgot Password</title>
 <link
 	href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'
@@ -79,20 +81,21 @@ body {
 	color: red;
 }
 </style>
-</style>
 </head>
 <body oncontextmenu='return false' class='snippet-body'>
+  <fmt:setLocale value="${sessionScope.language}" />
+	<fmt:setBundle basename="lang.messages" var="bnd"/>
 	<div class="container padding-bottom-3x mb-2 mt-5">
 		<div class="row justify-content-center">
 			<div class="col-lg-8 col-md-10">
 			
 				<div class="forgot">
-					<h2>Quên mật khẩu?</h2>
-					<p>Thực hiện việc thay đổi mật khẩu theo 3 bước sau. Điều này sẽ giúp bạn bảo mật an toàn mật khẩu</p>
+					<h2><fmt:message bundle="${bnd}" key="forgot.title" /></h2>
+					<p><fmt:message bundle="${bnd}" key="forgot.yeucau" /></p>
 					<ol class="list-unstyled">
-						<li><span class="text-primary text-medium">1. </span>Nhập địa chỉ email của bạn</li>
-						<li><span class="text-primary text-medium">2. </span>Hệ thống của chúng tôi sẽ gửi mã OTP tới email của bạn</li>
-						<li><span class="text-primary text-medium">3. </span>Nhập mã OTP bạn nhận được</li>
+						<li><span class="text-primary text-medium">1. </span><fmt:message bundle="${bnd}" key="forgot.nhapmail" /></li>
+						<li><span class="text-primary text-medium">2. </span><fmt:message bundle="${bnd}" key="forgot.otp" /></li>
+						<li><span class="text-primary text-medium">3. </span><fmt:message bundle="${bnd}" key="forgot.nhanotp" /></li>
 					</ol>
 				</div>
 				<form class="card mt-4" action="${pageContext.request.contextPath}/forgotPassword" method="POST">
@@ -100,17 +103,34 @@ body {
 						<div class="form-group">
 						<div style="text-align: center;" class="rq" id="baoLoi">${param.error}</div> 
 					
-							<label for="email-for-pass">Nhập địa chỉ email của bạn</label> <input
+							<label for="email-for-pass"><fmt:message bundle="${bnd}" key="forgot.email" /></label> <input
 								class="form-control" type="email" name="email" id="email-for-pass" required="required"><small
-								class="form-text text-muted">Chúng tôi sẽ gửi mã OTP tới email bạn đã nhập</small>
+								class="form-text text-muted"><fmt:message bundle="${bnd}" key="forgot.guiotp" />p</small>
 						</div>
 					</div>
 					<div class="card-footer">
-						<button class="btn btn-success" type="submit">Tạo mật khẩu mới</button>
-						<a class="btn btn-danger" href="login.jsp">Quay trở lại trang đăng nhập</a>
+						<button class="btn btn-success" type="submit"><fmt:message bundle="${bnd}" key="forgot.taomk" /></button>
+						<a class="btn btn-danger" href="login.jsp"><fmt:message bundle="${bnd}" key="forgot.return" /></a>
 					</div>
 				</form>
 			</div>
+			 <form action="${pageContext.request.contextPath}/changeLanguage"
+				method="post">
+					<fmt:setLocale value="${sessionScope.language}" />
+					<!-- Các hình ảnh chuyển ngôn ngữ -->
+						<button type="submit" name="lang" value="en"
+							style="border: none; padding: 0; background: none; cursor: pointer;">
+							<img style="height: 30px; width: 30px;" src="images/england.jpg"
+								alt="English" ${sessionScope.language == 'en' ? 'checked' : ''}>
+						</button>
+						<button type="submit" name="lang" value="vi"
+							style="border: none; padding: 0; background: none; cursor: pointer;">
+							<img style="height: 30px; width: 30px;"
+								src="images/vietnamese.jpg" alt="Tiếng Việt"
+								${sessionScope.language == 'vi' ? 'checked' : ''}>
+						</button>
+						<input type="hidden" name="submitType" value="image">
+			</form>
 		</div>
 	</div>
 	<footer class="ftco-footer ftco-section img">

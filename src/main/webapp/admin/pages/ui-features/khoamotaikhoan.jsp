@@ -50,37 +50,37 @@
 								<div class="col-lg-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<h4 class="card-title">Danh sách những người dùng</h4>
+											<h4 class="card-title"style="color: #FFA500">Danh sách những người dùng</h4>
 											<p class="card-description"></p>
 											<div class="table-responsive">
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Id</th>
-															<th>User</th>
-															<th>Username</th>
-															<th>name</th>
-															<th>Birthday</th>
-															<th>Sexual</th>
-															<th>Email</th>
-															<th>Phone</th>
-															<th>Key</th>
+															<th style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone</th>
+															<th style="color: white">Key</th>
 														</tr>
 													</thead>
 													<tbody>
 														<c:forEach items="${customerDAO.selectCustomer()}"
 															var="customer">
 															<tr>
-																<td class="py-1">${customer.userId}</td>
+																<td class="py-1" style="color: white">${customer.userId}</td>
 																<td class="py-1"><img height="150" width="200"
 																	src="${pageContext.request.contextPath}/${customer.avatar}" />
 																</td>
-																<td>${customer.username }</td>
-																<td>${customer.name }</td>
-																<td>${customer.birthday.toString()}</td>
-																<td>${customer.sexual }</td>
-																<td>${customer.email}</td>
-																<td>${customer.phoneNumber }</td>
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td style="color: white">${customer.phoneNumber }</td>
 																<td>
 																	 <form action="${pageContext.request.contextPath}/KhoaTaiKhoanUser" method="post">
                             <input type="hidden" name="userId" value="${customer.userId}" />
@@ -94,38 +94,38 @@
 											</div>
 										</div>
 												<div class="card-body">
-											<h4 class="card-title">Danh Sách Tài Khoản Đã Bị Khóa</h4>
+											<h4 class="card-title" style="color: #FFA500">Danh Sách Tài Khoản Đã Bị Khóa</h4>
 
 											<p class="card-description"></p>
 											<div class="table-responsive">
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Id</th>
-															<th>User</th>
-															<th>Username</th>
-															<th>name</th>
-															<th>Birthday</th>
-															<th>Sexual</th>
-															<th>Email</th>
-															<th>Phone</th>
-															<th>Key</th>
+															<th style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone</th>
+															<th style="color: white">Key</th>
 														</tr>
 													</thead>
 													<tbody>
 														<c:forEach items="${customerDAO.selectAccountlockout()}"
 															var="customer">
 															<tr>
-																<td class="py-1">${customer.userId}</td>
+																<td class="py-1" style="color: white">${customer.userId}</td>
 																<td class="py-1"><img height="150" width="200"
 																	src="${pageContext.request.contextPath}/${customer.avatar}" />
 																</td>
-																<td>${customer.username }</td>
-																<td>${customer.name }</td>
-																<td>${customer.birthday.toString()}</td>
-																<td>${customer.sexual }</td>
-																<td>${customer.email}</td>
-																<td>${customer.phoneNumber }</td>
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td style="color: white">${customer.phoneNumber }</td>
 																<td>
 																	 <form action="${pageContext.request.contextPath}/MoKhoaTaiKhoan" method="post">
                             <input type="hidden" name="userId" value="${customer.userId}" />

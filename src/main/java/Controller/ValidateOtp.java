@@ -37,25 +37,37 @@ public class ValidateOtp extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
-		int value=Integer.parseInt(request.getParameter("otp"));
+		try {
+			int value=Integer.parseInt(request.getParameter("otp"));
+		} catch (NumberFormatException e) {
+			request.setAttribute("message","Sai mã OTP");
+	       	 ErrorBean eb = new ErrorBean();
+	       	 eb.setError((String)request.getAttribute("message"));
+	       	 request.setAttribute("errorBean", eb);
+	       	 
+	       	  String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/EnterOtp.jsp";
+	            response.sendRedirect(url + "?error=" + URLEncoder.encode(eb.getError(), "UTF-8"));
+	            return;
+		}
+		int value=Integer.parseInt(request.getParameter("enterOtp"));
+		System.out.println("value: "+ value);
 		int otp= (int) session.getAttribute("otp");
-		
+		System.out.println("otp: "+ otp);
 		
 		
 		RequestDispatcher dispatcher=null;
 		
 		
-		if (value==otp) 
-		{
+		if (value==otp) {
 			
 				request.setAttribute("email", request.getParameter("email"));
 				request.setAttribute("status", "success");
+				session.removeAttribute("otp");
 			String url =  request.getContextPath() + "/pizza-gh-pages/pizza-gh-pages/newPassword.jsp";
             response.sendRedirect(url);
 			
 		}
-		else
-		{
+		else{
 			request.setAttribute("message","Sai mã OTP");
        	 ErrorBean eb = new ErrorBean();
        	 eb.setError((String)request.getAttribute("message"));

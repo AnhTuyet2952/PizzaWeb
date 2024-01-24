@@ -46,45 +46,47 @@
 						<h3 class="page-title">Chúc bạn một ngày tốt lành</h3>
 
 					</div>
+										<c:set var="fixedAdminUserId" value="2" />
+											<c:if test="${customer.userId eq fixedAdminUserId}">
 					<div class="row">
 						<div class="col-lg-12 grid-margin">
 							<div class="card">
 								<div class="col-lg-12 grid-margin stretch-card">
 									<div class="card">
 										<div class="card-body">
-											<h4 class="card-title">Danh sách những người dùng</h4>
+											<h4 class="card-title" style="color: #FFA500">Danh sách những người dùng</h4>
 											<p class="card-description"></p>
 											<div class="table-responsive">
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Id</th>
-															<th>User</th>
-															<th>Username</th>
-															<th>name</th>
-															<th>Birthday</th>
-															<th>Sexual</th>
-															<th>Email</th>
-															<th>Phone</th>
-															<th>Key</th>
+															<th  style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone</th>
+															<th style="color: white">Key</th>
 														</tr>
 													</thead>
 													<tbody>
 														<c:forEach items="${customerDAO.selectCustomer()}"
 															var="customer">
 															<tr>
-																<td class="py-1">${customer.userId}</td>
-																<td class="py-1"><img height="150" width="200"
+																<td class="py-1" style="color: white">${customer.userId}</td>
+																<td class="py-1" style="color: white"><img height="150" width="200"
 																	src="${pageContext.request.contextPath}/${customer.avatar}" />
 																</td>
-																<td>${customer.username }</td>
-																<td>${customer.name }</td>
-																<td>${customer.birthday.toString()}</td>
-																<td>${customer.sexual }</td>
-																<td>${customer.email}</td>
-																<td>${customer.phoneNumber }</td>
-																<td>
-																	<form
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td style="color: white">${customer.phoneNumber }</td>
+									
+																<td><form
 																		action="${pageContext.request.contextPath}/CapQuyenAdmin"
 																		method="post">
 																		<input type="hidden" name="userId"
@@ -101,57 +103,57 @@
 											</div>
 										</div>
 										<div class="card-body">
-											<h4 class="card-title">Danh Sách Admin</h4>
+											
+												<h4 class="card-title" style="color: #FFA500">Danh Sách Admin</h4>
 
-											<p class="card-description"></p>
-											<div class="table-responsive">
-												<table class="table table-striped">
-													<thead>
-														<tr>
-															<th>Id</th>
-															<th>User</th>
-															<th>Username</th>
-															<th>name</th>
-															<th>Birthday</th>
-															<th>Sexual</th>
-															<th>Email</th>
-															<th>Phone</th>
-															<th>Key</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:set var="fixedAdminUserId" value="2" />
-														<!-- Đặt userId của admin cố định -->
-
-														<c:forEach items="${customerDAO.selectAdmin()}"
-															var="customer">
+												<p class="card-description"></p>
+												<div class="table-responsive">
+													<table class="table table-striped">
+														<thead>
 															<tr>
-																<td class="py-1">${customer.userId}</td>
-																<td class="py-1"><img height="150" width="200"
-																	src="${pageContext.request.contextPath}/${customer.avatar}" /></td>
-																<td>${customer.username }</td>
-																<td>${customer.name }</td>
-																<td>${customer.birthday.toString()}</td>
-																<td>${customer.sexual }</td>
-																<td>${customer.email}</td>
-																<td>${customer.phoneNumber }</td>
-																<td><c:if
-																		test="${customer.userId ne fixedAdminUserId}">
-																		<form
-																			action="${pageContext.request.contextPath}/XoaQuyenAdmin"
-																			method="post">
-																			<input type="hidden" name="userId"
-																				value="${customer.userId}" />
-																			<button type="submit"
-																				class="btn btn-outline-warning btn-fw">Xóa
-																				quyền</button>
-																		</form>
-																	</c:if></td>
+																<th style="color: white">Id</th>
+																<th style="color: white">User</th>
+																<th style="color: white">Username</th>
+																<th style="color: white">name</th>
+																<th style="color: white">Birthday</th>
+																<th style="color: white">Sexual</th>
+																<th style="color: white">Email</th>
+																<th style="color: white">Phone</th>
+																<th style="color: white">Key</th>
 															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
-											</div>
+														</thead>
+														<tbody>
+															<!-- Đặt userId của admin cố định -->
+
+															<c:forEach items="${customerDAO.selectAdmin()}"
+																var="customer">
+																<tr>
+																	<td class="py-1" style="color: white">${customer.userId}</td>
+																	<td class="py-1"><img height="150" width="200"
+																		src="${pageContext.request.contextPath}/${customer.avatar}" /></td>
+																	<td style="color: white">${customer.username }</td>
+																	<td style="color: white">${customer.name }</td>
+																	<td style="color: white">${customer.birthday.toString()}</td>
+																	<td style="color: white">${customer.sexual }</td>
+																	<td style="color: white">${customer.email}</td>
+																	<td style="color: white">${customer.phoneNumber }</td>
+																	<td><c:if
+																			test="${customer.userId ne fixedAdminUserId}">
+																			<form
+																				action="${pageContext.request.contextPath}/XoaQuyenAdmin"
+																				method="post">
+																				<input type="hidden" name="userId"
+																					value="${customer.userId}" />
+																				<button type="submit"
+																					class="btn btn-outline-warning btn-fw">Xóa
+																					quyền</button>
+																			</form>
+																		</c:if></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
 										</div>
 									</div>
 								</div>
@@ -159,6 +161,100 @@
 
 						</div>
 					</div>
+					</c:if>
+					<c:if test="${customer.userId ne fixedAdminUserId}">
+    <!-- Thông báo khi userId không bằng 2 -->
+    <h4>Bạn không có quyền thay đổi.</h4>
+    <div class="row">
+						<div class="col-lg-12 grid-margin">
+							<div class="card">
+								<div class="col-lg-12 grid-margin stretch-card">
+									<div class="card">
+										<div class="card-body">
+											<h4 class="card-title" style="color: #FFA500">Danh sách những người dùng</h4>
+											<p class="card-description"></p>
+											<div class="table-responsive">
+												<table class="table table-striped">
+													<thead>
+														<tr>
+															<th style="color: white">Id</th>
+															<th style="color: white">User</th>
+															<th style="color: white">Username</th>
+															<th style="color: white">name</th>
+															<th style="color: white">Birthday</th>
+															<th style="color: white">Sexual</th>
+															<th style="color: white">Email</th>
+															<th style="color: white">Phone</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${customerDAO.selectCustomer()}"
+															var="customer">
+															<tr>
+																<td class="py-1" style="color: white">${customer.userId}</td>
+																<td class="py-1"><img height="150" width="200"
+																	src="${pageContext.request.contextPath}/${customer.avatar}" />
+																</td>
+																<td style="color: white">${customer.username }</td>
+																<td style="color: white">${customer.name }</td>
+																<td style="color: white">${customer.birthday.toString()}</td>
+																<td style="color: white">${customer.sexual }</td>
+																<td style="color: white">${customer.email}</td>
+																<td>${customer.phoneNumber }</td>
+									
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="card-body">
+											
+												<h4 class="card-title" style="color: #FFA500">Danh Sách Admin</h4>
+
+												<p class="card-description"></p>
+												<div class="table-responsive">
+													<table class="table table-striped">
+														<thead>
+															<tr>
+																<th style="color: white">Id</th>
+																<th style="color: white">User</th>
+																<th style="color: white">Username</th>
+																<th style="color: white">name</th>
+																<th style="color: white">Birthday</th>
+																<th style="color: white">Sexual</th>
+																<th style="color: white">Email</th>
+																<th style="color: white">Phone</th>
+															</tr>
+														</thead>
+														<tbody>
+															<!-- Đặt userId của admin cố định -->
+
+															<c:forEach items="${customerDAO.selectAdmin()}"
+																var="customer">
+																<tr>
+																	<td class="py-1" style="color: white">${customer.userId}</td>
+																	<td class="py-1"><img height="150" width="200"
+																		src="${pageContext.request.contextPath}/${customer.avatar}" /></td>
+																	<td style="color: white">${customer.username }</td>
+																	<td style="color: white">${customer.name }</td>
+																	<td style="color: white">${customer.birthday.toString()}</td>
+																	<td style="color: white">${customer.sexual }</td>
+																	<td style="color: white">${customer.email}</td>
+																	<td style="color: white">${customer.phoneNumber }</td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+</c:if>
 				</div>
 
 				<!-- partial -->
